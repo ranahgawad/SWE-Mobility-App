@@ -10,6 +10,7 @@ public class Driver extends User
     private ArrayList<String> favoriteAreas;
     private ArrayList<RideRequest> rideRequests;
     private float averageRating;
+    public UserNotificationManager notificationSender;
 
     Driver(String username, String password, String email, String mobileNumber, String licenseNumber, String id)
     {
@@ -17,11 +18,33 @@ public class Driver extends User
         this.licenseNumber = licenseNumber;
         this.id = id;
         rideRequests = new ArrayList<RideRequest>();
-
+        favoriteAreas = new ArrayList<String>();
+        notificationSender = new UserNotificationManager();
     }
-    public void sendOffer()
-    {
 
+    @Override
+    public void setSuspended(boolean suspended) {
+        super.setSuspended(suspended);
+    }
+
+
+    public void setFavoriteAreas(String...  areas)
+    {
+        for (String area : areas) {
+            this.favoriteAreas.add(area);
+        }
+    }
+
+    public ArrayList<String> getFavoriteAreas() {
+        return favoriteAreas;
+    }
+
+    public void sendOffer(Double bill, RideRequest request)
+    {
+        Offer offer = new Offer(this, bill, request);
+        notificationSender = new UserNotificationManager(request);
+        notificationSender.subscribe(request,request.getRequester());
+        notificationSender.notify(request, offer);
     }
 
     public void finishRide()
@@ -35,14 +58,10 @@ public class Driver extends User
         rideRequests.add((RideRequest)data);
     }
 
-    @Override
-    public void setSuspended(boolean suspended) {
-        super.setSuspended(suspended);
-    }
-
     void print()
     {
         System.out.println(rideRequests);
+        //System.out.println(favoriteAreas);
     }
 
 }

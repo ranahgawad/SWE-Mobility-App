@@ -21,7 +21,7 @@ public class Admin extends User
       driverRegistration.add((Registration)data);
     }
 
-    public void registerDriver(DriverRegistration registration)
+    public void verifyDriver(DriverRegistration registration)
     {
         //Driver driver = new Driver();
     }

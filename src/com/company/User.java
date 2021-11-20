@@ -26,4 +26,11 @@ public abstract class User <T>
     }
 
     public abstract void update(T type, T data);
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "Name: '" + username + '\'' +
+                 '}';
+    }
 }

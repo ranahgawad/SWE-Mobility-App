@@ -1,26 +1,62 @@
 package com.company;
 
-public class Ride {
+
+import java.util.ArrayList;
+
+class RideRequest
+{
+    public static UserNotificationManager notificationSender = new UserNotificationManager();
     private String destination;
     private String source;
     private Passenger requester;
     private Driver receiver;
 
-    public Ride(String destination,String source, Driver receiver)
+    public RideRequest(String destination,String source, Passenger requester)
     {
         this.destination = destination;
         this.source = source;
-        //this.requester = requester;
+        this.requester = requester;
         this.receiver = receiver;
+        notificationSender.setListeners(destination);
+
     }
     public String getDestination() {
         return destination;
     }
 
+    public Passenger getRequester() {
+        return requester;
+    }
+
+
+    public void setReceiver(Driver receiver) {
+        this.receiver = receiver;
+    }
+
+
+    public void subscribeDriver(Driver driver)
+    {
+        ArrayList<String> areas = driver.getFavoriteAreas();
+        for(int i = 0; i < areas.size(); i++)
+        {
+            if(notificationSender.getListeners(areas.get(i)) != null)
+            {
+                notificationSender.subscribe(areas.get(i), driver);
+            }
+
+        }
+    }
+
+    public void sendRequest()
+    {
+        notificationSender.notify(destination,this);
+    }
+
+
     @Override
     public String toString() {
-        return "Ride{" +
-                "destination='" + destination + '\'' +
+        return "RideRequest{" +
+                ", destination='" + destination + '\'' +
                 ", source='" + source + '\'' +
                 ", requester=" + requester +
                 ", receiver=" + receiver +
@@ -28,27 +64,35 @@ public class Ride {
     }
 }
 
-class RideRequest
+class Offer
 {
+    Driver driver;
+    Double offer;
+    RideRequest request;
     public UserNotificationManager notificationSender;
-    private Ride ride;
-    //private Status status;
 
-    public RideRequest(Ride ride)
+    public Offer(Driver driver, Double offer, RideRequest request)
     {
-        this.ride = ride;
-        notificationSender = new UserNotificationManager("el dokki");
+        this.driver = driver;
+        this.offer = offer;
+        this.request = request;
+        notificationSender = new UserNotificationManager(this.request);
     }
 
-    public void sendRequest()
-    {
-        notificationSender.notify("el dokki",this);
+    public RideRequest getRequest() {
+        return request;
+    }
+
+    public Driver getDriver() {
+        return driver;
     }
 
     @Override
     public String toString() {
-        return "RideRequest{" +
-                "ride=" + ride +
+        return "Offer{" +
+                "driver=" + driver +
+                ", offer=" + offer +
+                ", request=" + request +
                 '}';
     }
 }

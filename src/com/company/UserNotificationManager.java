@@ -13,6 +13,16 @@ public class UserNotificationManager <T> {
             this.listeners.put(type, new ArrayList<>());
         }
     }
+
+    public  void setListeners(T type)
+    {
+        this.listeners.put(type, new ArrayList<>());
+    }
+
+    public List<User> getListeners(T type)
+    {
+        return this.listeners.get(type);
+    }
     public void subscribe(T type, User user) {
         List<User> users = listeners.get(type);
         users.add(user);

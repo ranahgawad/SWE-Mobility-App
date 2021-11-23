@@ -27,6 +27,17 @@ class Ride{
         connection.insert(this);
     }
 
+    public boolean getisStarted()
+    {
+        return isStarted;
+    }
+
+    public boolean getisFinished()
+    {
+        return isFinished;
+    }
+
+
     public void setDestination(String destination) {
         this.destination = destination;
     }
@@ -74,9 +85,7 @@ class RideRequest {
     Ride ride;
   RideRequest(String source, String destination, Passenger requester)
   {
-      ride.setDestination(destination);
-      ride.setSource(source);
-      ride.setRequester(requester);
+      ride = new Ride(source,destination, requester);
       notificationSender.setListeners(ride.getDestination());
   }
 

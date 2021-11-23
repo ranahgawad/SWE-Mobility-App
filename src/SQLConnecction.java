@@ -109,8 +109,9 @@ public class SQLConnecction extends Database {
         }
     }
 
+
     public void insert(Ride ride){
-        String sqlstatement = "INSERT INTO RideRequest(passengerID, rideRequestID, source, destination) Values(?,?,?,?)";
+        String sqlstatement = "INSERT INTO Ride(passengerID, rideID, source, destination, started, finished) Values(?,?,?,?,?,?)";
         try{
             conn = DatabaseFileConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
@@ -118,12 +119,15 @@ public class SQLConnecction extends Database {
             prestmnt.setInt(2, ride.getRideID());
             prestmnt.setString(3, ride.getSource());
             prestmnt.setString(4, ride.getDestination());
+            prestmnt.setBoolean(5, ride.getisStarted());
+            prestmnt.setBoolean(6, ride.getisFinished());
             prestmnt.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
     public void execute(DBOperation dbo, User user){
 
 

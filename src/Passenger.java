@@ -39,15 +39,14 @@ public class Passenger extends User
 
     public void acceptOffer(Offer offer)
     {
-        offer.getRequest().setReceiver(offer.getDriver());
+        offer.getRequest().getRide().setReceiver(offer.getDriver());
+        offer.getRequest().getRide().setStarted(true);
+
     }
 
-//    void print()
-//    {
-//        System.out.println(rideOffers);
-//    }
 
-    public void viewRideOffers(){
+
+    public void printRideOffers(){
         System.out.println(rideOffers);
     }
 }

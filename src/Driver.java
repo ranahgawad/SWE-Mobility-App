@@ -51,12 +51,33 @@ public class Driver extends User {
     public void sendOffer(Double bill, RideRequest request) {
         Offer offer = new Offer(this, bill, request);
         notificationSender = new UserNotificationManager(request);
-        notificationSender.subscribe(request, request.getRequester());
+        notificationSender.subscribe(request, request.getRide().getRequester());
         notificationSender.notify(request, offer);
+    }
+
+    public void subscribeToArea()
+    {
+        for(int i = 0; i < favoriteAreas.size(); i++)
+        {
+            if(RideRequest.notificationSender.getListeners(favoriteAreas.get(i)) != null)
+            {
+                RideRequest.notificationSender.subscribe(favoriteAreas.get(i), this);
+            }
+            else
+            {
+                RideRequest.notificationSender.setListeners(favoriteAreas.get(i));
+                RideRequest.notificationSender.subscribe(favoriteAreas.get(i), this);
+            }
+        }
     }
 
     public void finishRide() {
 
+    }
+
+    public RideRequest getRequest(int index)
+    {
+        return rideRequests.get(index);
     }
 
     @Override
@@ -64,7 +85,7 @@ public class Driver extends User {
         rideRequests.add((RideRequest) data);
     }
 
-    void print() {
+    void printRequests() {
         System.out.println(rideRequests);
         //System.out.println(favoriteAreas);
     }

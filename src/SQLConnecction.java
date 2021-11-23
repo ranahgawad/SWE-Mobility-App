@@ -109,15 +109,15 @@ public class SQLConnecction extends Database {
         }
     }
 
-    public void insert(RideRequest ridereqest){
+    public void insert(Ride ride){
         String sqlstatement = "INSERT INTO RideRequest(passengerID, rideRequestID, source, destination) Values(?,?,?,?)";
         try{
             conn = DatabaseFileConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-            prestmnt.setInt(1, ridereqest.getRequester().getPassengerID());
-            prestmnt.setInt(2, ridereqest.getRideRequestID());
-            prestmnt.setString(3, ridereqest.getSource());
-            prestmnt.setString(4, ridereqest.getDestination());
+            prestmnt.setInt(1, ride.getRequester().getPassengerID());
+            prestmnt.setInt(2, ride.getRideID());
+            prestmnt.setString(3, ride.getSource());
+            prestmnt.setString(4, ride.getDestination());
             prestmnt.executeUpdate();
 
         } catch (SQLException e) {

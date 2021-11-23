@@ -66,8 +66,14 @@ class Main {
         admin.suspend(((PassengerRegistration) passenger1Reg).getPassenger());
         System.out.println(((PassengerRegistration) passenger1Reg).getPassenger().getisSuspended());
 
+        driver.setFavoriteAreas("haram");
+        driver.subscribeToArea();
         // Requesting a ride
         ((PassengerRegistration) passenger1Reg).getPassenger().requestRide("haram", "dokki");
+        driver.printRequests();
+        driver.sendOffer(35.0, driver.getRequest(0));
+        ((PassengerRegistration) passenger1Reg).getPassenger().printRideOffers();
+
 
     }
 }

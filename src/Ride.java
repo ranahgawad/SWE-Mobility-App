@@ -3,7 +3,7 @@
 
 import java.util.ArrayList;
 
-class Ride{
+class Ride {
 
     RideRequest rideRequest;
     private boolean isStarted;
@@ -14,6 +14,7 @@ class Ride{
     private Driver receiver;
     public static int count = 0;
     private int rideID;
+
     public Ride(String source, String destination, Passenger requester) {
         isStarted = false;
         isFinished = false;
@@ -27,13 +28,11 @@ class Ride{
         connection.insert(this);
     }
 
-    public boolean getisStarted()
-    {
+    public boolean getisStarted() {
         return isStarted;
     }
 
-    public boolean getisFinished()
-    {
+    public boolean getisFinished() {
         return isFinished;
     }
 
@@ -73,21 +72,22 @@ class Ride{
 
     public int getRideID() {
         return rideID;
-}
+    }
 
-
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
 }
 
 
 class RideRequest {
     public static UserNotificationManager notificationSender = new UserNotificationManager();
-
     Ride ride;
-  RideRequest(String source, String destination, Passenger requester)
-  {
-      ride = new Ride(source,destination, requester);
-      notificationSender.setListeners(ride.getDestination());
-  }
+
+    RideRequest(String source, String destination, Passenger requester) {
+        ride = new Ride(source, destination, requester);
+        notificationSender.setListeners(ride.getDestination());
+    }
 
 
     public Ride getRide() {
@@ -129,7 +129,6 @@ class Offer {
     public Driver getDriver() {
         return driver;
     }
-
 
 
     @Override

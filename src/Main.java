@@ -66,13 +66,29 @@ class Main {
         admin.suspend(((PassengerRegistration) passenger1Reg).getPassenger());
         System.out.println(((PassengerRegistration) passenger1Reg).getPassenger().getisSuspended());
 
+        // Adding Favorite areas
         driver.setFavoriteAreas("haram");
         driver.subscribeToArea();
         // Requesting a ride
-        ((PassengerRegistration) passenger1Reg).getPassenger().requestRide("haram", "dokki");
+        Passenger testPassenger = ((PassengerRegistration) passenger1Reg).getPassenger();
+        testPassenger.requestRide("haram", "dokki");
         driver.printRequests();
+        // Sending offer
         driver.sendOffer(35.0, driver.getRequest(0));
-        ((PassengerRegistration) passenger1Reg).getPassenger().printRideOffers();
+        testPassenger.printRideOffers();
+        // accepting offer
+        testPassenger.acceptOffer(testPassenger.getOffer(0));
+
+        // finishing and rating ride
+        driver.finishRide();
+        testPassenger.rateDriver(3);
+        System.out.println(driver.getAverageRating());
+
+        testPassenger.rateDriver(1);
+        System.out.println(driver.getAverageRating());
+
+
+
 
 
     }

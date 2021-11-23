@@ -109,6 +109,18 @@ public class SQLConnecction extends Database {
         }
     }
 
+    public void updateDriverRating(Driver driver, float rating){
+        String sqlstatement = "UPDATE Driver SET averageRating="+rating+" WHERE driverID="+ driver.getDriverID();
+        try {
+            conn = DatabaseFileConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public void insert(Ride ride){
         String sqlstatement = "INSERT INTO Ride(passengerID, rideID, source, destination, started, finished) Values(?,?,?,?,?,?)";
@@ -127,6 +139,31 @@ public class SQLConnecction extends Database {
             System.out.println(e.getMessage());
         }
     }
+
+    public void updateRideisStarted(Ride ride, int started){
+        String sqlstatement = "UPDATE Ride SET started="+started+" WHERE rideID="+ ride.getRideID();
+        try{
+            conn = DatabaseFileConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void updateRideisFinished(Ride ride, int finished){
+        String sqlstatement = "UPDATE Ride SET finished="+finished+" WHERE rideID="+ ride.getRideID();
+        try{
+            conn = DatabaseFileConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public void execute(DBOperation dbo, User user){
 

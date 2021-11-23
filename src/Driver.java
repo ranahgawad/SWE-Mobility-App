@@ -13,9 +13,11 @@ public class Driver extends User {
     private ArrayList<RideRequest> rideRequests;
     private float averageRating;
     public UserNotificationManager notificationSender;
+    private ArrayList<Integer> driverRatings ;
 
     Driver(String username, String password, String email, String mobileNumber, String licenseNumber, String nationalID) {
         super(username, password, email, mobileNumber);
+        this.averageRating =0;
         this.licenseNumber = licenseNumber;
         this.nationalID = nationalID;
         rideRequests = new ArrayList<RideRequest>();
@@ -23,6 +25,7 @@ public class Driver extends User {
         notificationSender = new UserNotificationManager();
         count++;
         this.driverID = count;
+        driverRatings = new ArrayList<>();
         SQLConnecction connection = SQLConnecction.getInstance();
         connection.insert(this);
 
@@ -72,7 +75,35 @@ public class Driver extends User {
     }
 
     public void finishRide() {
+        SQLConnecction connection = SQLConnecction.getInstance();
+        RideRequest rideReq;
+        for(int i=0; i< rideRequests.size();i++){
+            if(rideRequests.get(i).getRide().getisStarted() == true){
+                rideReq = rideRequests.get(i);
+                rideReq.getRide().setFinished(true);
+                rideRequests.remove(rideReq);
+                connection.updateRideisFinished(rideReq.getRide(), 1);
+                return;
+            }
+        }
 
+    }
+
+    public void addRating(int rating) {
+
+        driverRatings.add(rating);
+        setAverageRating();
+    }
+
+    public void setAverageRating(){
+        int sum =0;
+        for(int i=0; i<driverRatings.size(); i++){
+            sum+= driverRatings.get(i);
+        }
+        float driverRating = (float) (this.averageRating = sum / driverRatings.size());
+
+        SQLConnecction connection = SQLConnecction.getInstance();
+        connection.updateDriverRating(this, driverRating);
     }
 
     public RideRequest getRequest(int index)

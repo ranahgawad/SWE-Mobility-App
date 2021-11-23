@@ -41,9 +41,30 @@ public class Passenger extends User
     {
         offer.getRequest().getRide().setReceiver(offer.getDriver());
         offer.getRequest().getRide().setStarted(true);
-
+        SQLConnecction connection = SQLConnecction.getInstance();
+        connection.updateRideisStarted(offer.getRequest().getRide(), 1);
+        for (int i=0; i<rideOffers.size(); i++){
+            if(rideOffers.get(i) != offer){
+                rideOffers.remove(i);
+            }
+        }
     }
 
+
+    public Offer getOffer(int index)
+    {
+        return rideOffers.get(index);
+    }
+
+    public void rateDriver(int rating){
+
+        if(rideOffers.isEmpty()){
+            System.out.println("Cannot rate driver more than once");
+        }else{
+            rideOffers.get(0).getDriver().addRating(rating);
+            rideOffers.remove(0);
+        }
+    }
 
 
     public void printRideOffers(){

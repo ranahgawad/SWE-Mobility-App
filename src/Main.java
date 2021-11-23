@@ -59,7 +59,7 @@ class Main {
         // Logging after verifying
         admin.verifyDriver(((DriverRegistration) driver2reg).getDriver());
         Login log3 = new Login("driver2", "12345");
-        
+
 
         // Suspending driver and passenger
         admin.suspend(((DriverRegistration) driver2reg).getDriver());
@@ -84,13 +84,24 @@ class Main {
         testPassenger.rateDriver(3);
         System.out.println(driver.getAverageRating());
 
+        // testing rating a ride more than once
         testPassenger.rateDriver(1);
         System.out.println(driver.getAverageRating());
 
+        // requesting a new ride
+        System.out.println("new Ride");
+        testPassenger.requestRide("haram", "maadi");
+        driver.printRequests();
+        driver.sendOffer(70.0, driver.getRequest(0));
+        testPassenger.printRideOffers();
 
+        // accepting offer
+        testPassenger.acceptOffer(testPassenger.getOffer(0));
 
-
-
+        // finishing and rating ride
+        driver.finishRide();
+        testPassenger.rateDriver(5);
+        System.out.println(driver.getAverageRating());
     }
 }
 

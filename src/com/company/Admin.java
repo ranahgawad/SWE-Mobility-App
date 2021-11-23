@@ -1,4 +1,4 @@
-package com.company;
+//package com.company;
 
 import java.util.ArrayList;
 
@@ -12,8 +12,9 @@ public class Admin extends User
     }
     public void suspend(User user)
     {
-
         user.setSuspended(true);
+        SQLConnecction connection = SQLConnecction.getInstance();
+        connection.updateUserSuspened(user);
     }
 
     @Override
@@ -21,9 +22,11 @@ public class Admin extends User
       driverRegistration.add((Registration)data);
     }
 
-    public void verifyDriver(DriverRegistration registration)
+    public void verifyDriver(Driver driver)
     {
-        //Driver driver = new Driver();
+        driver.setVerfied(true);
+        SQLConnecction connection = SQLConnecction.getInstance();
+        connection.updateDriverVerification(driver, 1);
     }
 
     public void print()

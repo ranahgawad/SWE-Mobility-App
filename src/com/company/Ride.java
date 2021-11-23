@@ -1,25 +1,31 @@
-package com.company;
+//package com.company;
 
 
 import java.util.ArrayList;
 
-class RideRequest
-{
+class RideRequest {
     public static UserNotificationManager notificationSender = new UserNotificationManager();
+    public static int count = 0;
+    private int rideRequestID;
     private String destination;
     private String source;
     private Passenger requester;
     private Driver receiver;
 
-    public RideRequest(String destination,String source, Passenger requester)
-    {
+    public RideRequest(String destination, String source, Passenger requester) {
         this.destination = destination;
         this.source = source;
         this.requester = requester;
         this.receiver = receiver;
+        count++;
+        this.rideRequestID = count;
+        SQLConnecction connection = SQLConnecction.getInstance();
+        connection.insert(this);
         notificationSender.setListeners(destination);
 
+
     }
+
     public String getDestination() {
         return destination;
     }
@@ -34,22 +40,26 @@ class RideRequest
     }
 
 
-    public void subscribeDriver(Driver driver)
-    {
+    public int getRideRequestID() {
+        return rideRequestID;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void subscribeDriver(Driver driver) {
         ArrayList<String> areas = driver.getFavoriteAreas();
-        for(int i = 0; i < areas.size(); i++)
-        {
-            if(notificationSender.getListeners(areas.get(i)) != null)
-            {
+        for (int i = 0; i < areas.size(); i++) {
+            if (notificationSender.getListeners(areas.get(i)) != null) {
                 notificationSender.subscribe(areas.get(i), driver);
             }
 
         }
     }
 
-    public void sendRequest()
-    {
-        notificationSender.notify(destination,this);
+    public void sendRequest() {
+        notificationSender.notify(destination, this);
     }
 
 
@@ -64,15 +74,13 @@ class RideRequest
     }
 }
 
-class Offer
-{
+class Offer {
     Driver driver;
     Double offer;
     RideRequest request;
     public UserNotificationManager notificationSender;
 
-    public Offer(Driver driver, Double offer, RideRequest request)
-    {
+    public Offer(Driver driver, Double offer, RideRequest request) {
         this.driver = driver;
         this.offer = offer;
         this.request = request;
@@ -95,4 +103,9 @@ class Offer
                 ", request=" + request +
                 '}';
     }
+}
+
+class Ride{
+    RideRequest rideRequest;
+
 }

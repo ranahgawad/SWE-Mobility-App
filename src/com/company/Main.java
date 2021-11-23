@@ -1,15 +1,16 @@
-package com.company;
+//package com.company;
 
+import javax.xml.crypto.Data;
+import java.sql.*;
 import java.util.*;
-class Main
-{
-    class Offer
-    {
+
+
+class Main {
+    class Offer {
         private double offer;
         private Driver driver;
 
-        Offer(double offer, Driver driver)
-        {
+        Offer(double offer, Driver driver) {
             this.offer = offer;
             this.driver = driver;
         }
@@ -31,35 +32,45 @@ class Main
         }
 
 
-}
-    public static void main(String[] args)
-    {
+    }
+
+    public static void main(String[] args) throws SQLException {
+
+
         Admin admin = new Admin();
-        DriverRegistration reg =  new DriverRegistration("driver1","12345","driver@gmail","012","7262","2019");
-        reg.notificationSender.subscribe("driver registration",admin);
-        reg.registerUser();
-        admin.print();
-        Passenger passenger = new Passenger("passenger1", "12345", "passenger@gmail","012");
-        Driver driver1 = new Driver("driver1","12345","driver1@gmail","011","7262","2019");
-        Driver driver2 = new Driver("driver2","54321","driver2@gmail","012","2627","2010");
-        RideRequest request1 = new RideRequest("el dokki","giza",passenger);
-        RideRequest request2 = new RideRequest("el daher","giza",passenger);
-        driver1.setFavoriteAreas("el dokki");
-        driver2.setFavoriteAreas("el daher");
-       request1.subscribeDriver(driver1);
-       request1.sendRequest();
-        driver1.print();
 
-        request2.subscribeDriver(driver2);
-        request2.sendRequest();
-        driver2.print();
+        Registration driver1reg = new DriverRegistration("driver1", "54321", "driver2@gmail", "012", "2627", "2010");
+        Registration driver2reg = new DriverRegistration("driver2", "12345", "driver1@gmail", "011", "7262", "2019");
+        Registration passenger1Reg = new PassengerRegistration("laila1", "12345", "laila@gmail.com", "011");
+
+        // Logging in passenger and driver
+        Login log = new Login("laila1", "12345");
+        Login log2 = new Login("driver2", "12345");
+
+        Driver driver = new Driver("driver3", "12345", "driver1@gmail", "011", "7262", "2019");
+        DriverRegistration driver4 = new DriverRegistration("driver4", "12345", "driver1@gmail", "011", "7262", "2019");
+
+        // Verfiying a driver
+        admin.verifyDriver(((DriverRegistration) driver4).getDriver());
+        System.out.println(((DriverRegistration) driver4).getDriver().getisVerified());
+        admin.verifyDriver(((DriverRegistration) driver4).getDriver());
 
 
+        // Logging after verifying
+        admin.verifyDriver(((DriverRegistration) driver2reg).getDriver());
+        Login log3 = new Login("driver2", "12345");
 
-        driver1.sendOffer(35.0, request1);
-        driver2.sendOffer(37.0, request2);
 
-       passenger.print();
+
+        // Suspending driver and passenger
+        admin.suspend(((DriverRegistration) driver2reg).getDriver());
+        admin.suspend(((PassengerRegistration) passenger1Reg).getPassenger());
+        System.out.println(((PassengerRegistration) passenger1Reg).getPassenger().getisSuspended());
+
+        // Requesting a ride
+        ((PassengerRegistration) passenger1Reg).getPassenger().requestRide("haram", "dokki");
+
+
     }
 }
 

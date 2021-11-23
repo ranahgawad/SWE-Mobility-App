@@ -1,4 +1,4 @@
-package com.company;
+//package com.company;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class UserNotificationManager <T> {
 
+    // t is the thing the person will be notified about
     private Map<T, List<User>> listeners = new HashMap<>();
 
     public UserNotificationManager(T... types) {

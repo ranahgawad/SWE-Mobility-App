@@ -1,13 +1,16 @@
-package com.company;
+//package com.company;
+
+import java.util.ArrayList;
 
 public abstract class User <T>
 {
+//    public static int ID;
     private String username;
     private String password;
     private String email;
     private String mobileNumber;
-    private boolean isSuspended;
-
+    private boolean isSuspended=false;
+    private boolean isLoggedIn = false;
     User()
     {
 
@@ -32,5 +35,34 @@ public abstract class User <T>
         return "User{" +
                 "Name: '" + username + '\'' +
                  '}';
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean getisSuspended(){
+        return isSuspended;
+    }
+
+    public void setLoggedIn(boolean logged){
+        this.isLoggedIn = logged;
+    }
+
+    public boolean getLoggedIn() {
+        return isLoggedIn;
     }
 }

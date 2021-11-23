@@ -36,7 +36,7 @@ class PassengerRegistration extends Registration {
     PassengerRegistration(String username, String password, String email, String mobileNumber) {
         super(username, password, email, mobileNumber);
         passenger = new Passenger(username, password, email, mobileNumber);
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(passenger);
         userList.add(passenger);
 
@@ -64,7 +64,7 @@ class DriverRegistration extends Registration {
         this.nationalID = this.nationalID;
         notificationSender = new UserNotificationManager("driver registration");
         driver = new Driver(username, password, email, mobileNumber, licenseNumber, nationalID);
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(driver);
         userList.add(driver);
     }

@@ -13,7 +13,7 @@ public class Admin extends User
     public void suspend(User user)
     {
         user.setSuspended(true);
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.updateUserSuspened(user);
     }
 
@@ -25,7 +25,7 @@ public class Admin extends User
     public void verifyDriver(Driver driver)
     {
         driver.setVerfied(true);
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.updateDriverVerification(driver, 1);
     }
 

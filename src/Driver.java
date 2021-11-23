@@ -26,7 +26,7 @@ public class Driver extends User {
         count++;
         this.driverID = count;
         driverRatings = new ArrayList<>();
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
 
     }
@@ -75,7 +75,7 @@ public class Driver extends User {
     }
 
     public void finishRide() {
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         RideRequest rideReq;
         for(int i=0; i< rideRequests.size();i++){
             if(rideRequests.get(i).getRide().getisStarted() == true){
@@ -102,7 +102,7 @@ public class Driver extends User {
         }
         float driverRating = (float) (this.averageRating = sum / driverRatings.size());
 
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.updateDriverRating(this, driverRating);
     }
 

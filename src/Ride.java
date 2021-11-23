@@ -1,8 +1,6 @@
 //package com.company;
 
 
-import java.util.ArrayList;
-
 class Ride {
 
     RideRequest rideRequest;
@@ -24,7 +22,7 @@ class Ride {
         this.receiver = receiver;
         count++;
         this.rideID = count;
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
     }
 

@@ -1,22 +1,19 @@
-import org.sqlite.SQLiteException;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class SQLConnecction extends Database {
-    private static SQLConnecction instance;
+public class SQLImplementation extends Database {
+    private static SQLImplementation instance;
     private Connection conn;
 
 
-    private SQLConnecction(){
+    private SQLImplementation(){
 
     }
-    public static SQLConnecction getInstance(){
+    public static SQLImplementation getInstance(){
         if(instance == null){
-            instance = new SQLConnecction();
+            instance = new SQLImplementation();
         }
         return instance;
     }

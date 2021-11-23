@@ -13,7 +13,7 @@ public class Passenger extends User
         rideOffers = new ArrayList<Offer>();
         count++ ;
         this.PassengerID = count;
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
     }
 
@@ -41,7 +41,7 @@ public class Passenger extends User
     {
         offer.getRequest().getRide().setReceiver(offer.getDriver());
         offer.getRequest().getRide().setStarted(true);
-        SQLConnecction connection = SQLConnecction.getInstance();
+        SQLImplementation connection = SQLImplementation.getInstance();
         connection.updateRideisStarted(offer.getRequest().getRide(), 1);
         for (int i=0; i<rideOffers.size(); i++){
             if(rideOffers.get(i) != offer){

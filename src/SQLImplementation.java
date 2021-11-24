@@ -25,7 +25,7 @@ public class SQLImplementation {
         if(user instanceof Passenger) {
             String sqlstatement = "INSERT INTO Passenger(passengerID, username, email, mobileNumber,password) Values(?,?,?,?,?)";
             try {
-                conn = DatabaseFileConnection.getConnectiontoDataBase();
+                conn = DatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.setInt(1, ((Passenger) user).getPassengerID());
                 prestmnt.setString(2, user.getUsername());
@@ -40,7 +40,7 @@ public class SQLImplementation {
         }else if(user instanceof Driver){
             String sqlstatement = "INSERT INTO Driver(driverID, username, password, email,mobileNumber, isSuspended, isVerified, licenceNumber, averageRating, nationalID) Values(?,?,?,?,?,?,?,?,?,?)";
             try {
-                conn = DatabaseFileConnection.getConnectiontoDataBase();
+                conn = DatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.setInt(1, ((Driver) user).getDriverID());
 //                prestmnt.setInt(1, 5);
@@ -74,7 +74,7 @@ public class SQLImplementation {
         if(user instanceof Passenger){
             String sqlstatement = "UPDATE Passenger SET isSuspended=1 WHERE passengerID="+ ((Passenger) user).getPassengerID();
             try {
-                conn = DatabaseFileConnection.getConnectiontoDataBase();
+                conn = DatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.executeUpdate();
 
@@ -85,7 +85,7 @@ public class SQLImplementation {
         else if(user instanceof Driver){
             String sqlstatement = "UPDATE Driver SET isSuspended=1 WHERE driverID="+ ((Driver) user).getDriverID();
             try {
-                conn = DatabaseFileConnection.getConnectiontoDataBase();
+                conn = DatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.executeUpdate();
 
@@ -97,7 +97,7 @@ public class SQLImplementation {
     public void updateDriverVerification(Driver driver, int state){
         String sqlstatement = "UPDATE Driver SET isVerified="+state+" WHERE driverID="+ driver.getDriverID();
         try {
-            conn = DatabaseFileConnection.getConnectiontoDataBase();
+            conn = DatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
 
@@ -109,7 +109,7 @@ public class SQLImplementation {
     public void updateDriverRating(Driver driver, float rating){
         String sqlstatement = "UPDATE Driver SET averageRating="+rating+" WHERE driverID="+ driver.getDriverID();
         try {
-            conn = DatabaseFileConnection.getConnectiontoDataBase();
+            conn = DatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
 
@@ -122,7 +122,7 @@ public class SQLImplementation {
     public void insert(Ride ride){
         String sqlstatement = "INSERT INTO Ride(passengerID, rideID, source, destination, started, finished) Values(?,?,?,?,?,?)";
         try{
-            conn = DatabaseFileConnection.getConnectiontoDataBase();
+            conn = DatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.setInt(1, ride.getRequester().getPassengerID());
             prestmnt.setInt(2, ride.getRideID());
@@ -140,7 +140,7 @@ public class SQLImplementation {
     public void updateRideisStarted(Ride ride, int started){
         String sqlstatement = "UPDATE Ride SET started="+started+" WHERE rideID="+ ride.getRideID();
         try{
-            conn = DatabaseFileConnection.getConnectiontoDataBase();
+            conn = DatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
 
@@ -152,7 +152,7 @@ public class SQLImplementation {
     public void updateRideisFinished(Ride ride, int finished){
         String sqlstatement = "UPDATE Ride SET finished="+finished+" WHERE rideID="+ ride.getRideID();
         try{
-            conn = DatabaseFileConnection.getConnectiontoDataBase();
+            conn = DatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
 

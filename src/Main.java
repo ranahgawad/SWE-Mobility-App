@@ -6,33 +6,6 @@ import java.util.*;
 
 
 class Main {
-    class Offer {
-        private double offer;
-        private Driver driver;
-
-        Offer(double offer, Driver driver) {
-            this.offer = offer;
-            this.driver = driver;
-        }
-
-        public void setDriver(Driver driver) {
-            this.driver = driver;
-        }
-
-        public void setOffer(double offer) {
-            this.offer = offer;
-        }
-
-        public double getOffer() {
-            return offer;
-        }
-
-        public Driver getDriver() {
-            return driver;
-        }
-
-
-    }
 
     public static void main(String[] args) throws SQLException {
 

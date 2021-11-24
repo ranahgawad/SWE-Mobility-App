@@ -3,7 +3,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class SQLImplementation extends Database {
+public class SQLImplementation {
     private static SQLImplementation instance;
     private Connection conn;
 
@@ -162,8 +162,5 @@ public class SQLImplementation extends Database {
     }
 
 
-    public void execute(DBOperation dbo, User user){
 
-
-    }
 }

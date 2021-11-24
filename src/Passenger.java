@@ -39,21 +39,31 @@ public class Passenger extends User
 
     public void acceptOffer(Offer offer)
     {
-        offer.getRequest().getRide().setReceiver(offer.getDriver());
-        offer.getRequest().getRide().setStarted(true);
-        SQLImplementation connection = SQLImplementation.getInstance();
-        connection.updateRideisStarted(offer.getRequest().getRide(), 1);
-        for (int i=0; i<rideOffers.size(); i++){
-            if(rideOffers.get(i) != offer){
-                rideOffers.remove(i);
+        if(rideOffers == null || rideOffers.size() == 0){
+            System.out.println("There are no ride offers to be accepted");
+        }else{
+            offer.getRequest().getRide().setReceiver(offer.getDriver());
+            offer.getRequest().getRide().setStarted(true);
+            SQLImplementation connection = SQLImplementation.getInstance();
+            connection.updateRideisStarted(offer.getRequest().getRide(), 1);
+            for (int i=0; i<rideOffers.size(); i++){
+                if(rideOffers.get(i) != offer){
+                    rideOffers.remove(i);
+                }
             }
         }
+
     }
 
 
     public Offer getOffer(int index)
     {
-        return rideOffers.get(index);
+        if(rideOffers == null || rideOffers.size() == 0){
+            System.out.println("Currently there are no ride offers, If you made sure you requested a ride please wait for drivers to send you offers.");
+            return null;
+        }else{
+            return rideOffers.get(index);
+        }
     }
 
     public void rateDriver(int rating){
@@ -68,7 +78,12 @@ public class Passenger extends User
 
 
     public void printRideOffers(){
-        System.out.println(rideOffers);
+        if(rideOffers == null || rideOffers.size() ==0){
+            System.out.println("Currently there are no ride offers, If you made sure you requested a ride please wait for drivers to send you offers.");
+        }else{
+            System.out.println(rideOffers);
+        }
+
     }
 }
 

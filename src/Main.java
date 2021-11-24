@@ -49,7 +49,7 @@ class Main {
         System.out.println("Logging in as a registered passenger: ");
         Login log = new Login("lailaAhmed", "idk12345");
 
-        System.out.println("Logging in as an unverified driver");
+        System.out.println("Logging in as an unverified driver: ");
         Login log2 = new Login("mohebGamal2", "lannister12345");
 
         System.out.println("Inserting  wrong inputs while logging in: ");

@@ -30,6 +30,16 @@ public class Driver extends User {
         connection.insert(this);
 
     }
+    public void  printDriverRatings() {
+        for( int i= 0 ; i < driverRatings.size();i++){
+            System.out.println(driverRatings.get(i));
+        }
+    }
+    public void printfavoriteAreas(){
+        for( int i= 0 ; i < favoriteAreas.size();i++){
+            System.out.println(favoriteAreas.get(i));
+        }
+    }
 
     @Override
     public void setSuspended(boolean suspended) {

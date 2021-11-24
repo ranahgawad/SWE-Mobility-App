@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Login {
     ArrayList<User> users = Registration.getUserList();
     Login(String username, String password) throws SQLException {
+        Boolean nameFound = false;
         for(int i=0; i< users.size(); i++){
             if(users.get(i).getUsername() == username && users.get(i).getPassword() == password){
                 if(users.get(i).getisSuspended() == true){
@@ -14,13 +15,19 @@ public class Login {
                     System.out.println("Your account is not verified yet");
                     return;
                 }
-                System.out.println("Hello "+username);
+                System.out.println("Hello " + username);
                 users.get(i).setLoggedIn(true);
                 return;
-
+            }
+            if (users.get(i).getUsername()==username&&users.get(i).getPassword() != password){
+                nameFound = true;
             }
         }
-
-
+        if(nameFound == true){
+            System.out.println("Incorrect username or password");
+        }
+        else{
+            System.out.println("Please register first");
+        }
     }
 }

@@ -1,14 +1,13 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DatabaseFileConnection {
+public class DatabaseConnection {
 
-    private static DatabaseFileConnection connectionInstance;
+    private static DatabaseConnection connectionInstance;
     private static Connection connectiontoDataBase;
 
-    private DatabaseFileConnection(){
+    private DatabaseConnection(){
 
     }
 
@@ -24,9 +23,9 @@ public class DatabaseFileConnection {
         return connection;
     }
 
-    public static DatabaseFileConnection getConnectionInstance(){
+    public static DatabaseConnection getConnectionInstance(){
         if(connectionInstance == null){
-            connectionInstance = new DatabaseFileConnection();
+            connectionInstance = new DatabaseConnection();
         }
         return connectionInstance;
     }

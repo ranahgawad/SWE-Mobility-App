@@ -2,12 +2,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public class SQLDatabaseConnection {
 
-    private static DatabaseConnection connectionInstance;
+    private static SQLDatabaseConnection connectionInstance;
     private static Connection connectiontoDataBase;
 
-    private DatabaseConnection(){
+    private SQLDatabaseConnection(){
 
     }
 
@@ -21,13 +21,6 @@ public class DatabaseConnection {
             System.out.println(e.getMessage());
         }
         return connection;
-    }
-
-    public static DatabaseConnection getConnectionInstance(){
-        if(connectionInstance == null){
-            connectionInstance = new DatabaseConnection();
-        }
-        return connectionInstance;
     }
 
     public static Connection getConnectiontoDataBase(){

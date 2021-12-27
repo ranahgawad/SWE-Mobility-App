@@ -13,7 +13,7 @@ public class Admin extends User
     public void suspend(User user)
     {
         user.setSuspended(true);
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         connection.updateUserSuspened(user);
     }
 
@@ -25,7 +25,7 @@ public class Admin extends User
     public void verifyDriver(Driver driver)
     {
         driver.setVerfied(true);
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         connection.updateDriverVerification(driver, 1);
     }
 
@@ -33,4 +33,21 @@ public class Admin extends User
     {
         System.out.println(driverRegistration);
     }
+
+    public void getAllPassengers(){
+        IPersistence connection = SQLImplementation.getInstance();
+        connection.getAllPasengers();
+    }
+
+    public void getAllDrivers(){
+        IPersistence connection = SQLImplementation.getInstance();
+        connection.getAllDrivers();
+    }
+
+    public void getPendingDriverVerifications(){
+        IPersistence connection = SQLImplementation.getInstance();
+        connection.getPendingDriverVerifications();
+    }
+
+
 }

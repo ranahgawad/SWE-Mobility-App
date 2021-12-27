@@ -1,9 +1,7 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 
-public class SQLImplementation {
+public class SQLImplementation implements IPersistence {
     private static SQLImplementation instance;
     private Connection conn;
 
@@ -21,11 +19,12 @@ public class SQLImplementation {
 
 
 
+    @Override
     public void insert(User user) {
         if(user instanceof Passenger) {
             String sqlstatement = "INSERT INTO Passenger(passengerID, username, email, mobileNumber,password) Values(?,?,?,?,?)";
             try {
-                conn = DatabaseConnection.getConnectiontoDataBase();
+                conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.setInt(1, ((Passenger) user).getPassengerID());
                 prestmnt.setString(2, user.getUsername());
@@ -40,7 +39,7 @@ public class SQLImplementation {
         }else if(user instanceof Driver){
             String sqlstatement = "INSERT INTO Driver(driverID, username, password, email,mobileNumber, isSuspended, isVerified, licenceNumber, averageRating, nationalID) Values(?,?,?,?,?,?,?,?,?,?)";
             try {
-                conn = DatabaseConnection.getConnectiontoDataBase();
+                conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.setInt(1, ((Driver) user).getDriverID());
 //                prestmnt.setInt(1, 5);
@@ -64,17 +63,20 @@ public class SQLImplementation {
             }
         }
     }
+    @Override
     public void delete(User user){
 
     }
+    @Override
     public void select(User user){
 
     }
+    @Override
     public void updateUserSuspened(User user){
         if(user instanceof Passenger){
             String sqlstatement = "UPDATE Passenger SET isSuspended=1 WHERE passengerID="+ ((Passenger) user).getPassengerID();
             try {
-                conn = DatabaseConnection.getConnectiontoDataBase();
+                conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.executeUpdate();
 
@@ -85,7 +87,7 @@ public class SQLImplementation {
         else if(user instanceof Driver){
             String sqlstatement = "UPDATE Driver SET isSuspended=1 WHERE driverID="+ ((Driver) user).getDriverID();
             try {
-                conn = DatabaseConnection.getConnectiontoDataBase();
+                conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.executeUpdate();
 
@@ -94,10 +96,11 @@ public class SQLImplementation {
             }
         }
     }
+    @Override
     public void updateDriverVerification(Driver driver, int state){
         String sqlstatement = "UPDATE Driver SET isVerified="+state+" WHERE driverID="+ driver.getDriverID();
         try {
-            conn = DatabaseConnection.getConnectiontoDataBase();
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
 
@@ -106,10 +109,11 @@ public class SQLImplementation {
         }
     }
 
+    @Override
     public void updateDriverRating(Driver driver, float rating){
         String sqlstatement = "UPDATE Driver SET averageRating="+rating+" WHERE driverID="+ driver.getDriverID();
         try {
-            conn = DatabaseConnection.getConnectiontoDataBase();
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
 
@@ -119,10 +123,11 @@ public class SQLImplementation {
     }
 
 
+    @Override
     public void insert(Ride ride){
         String sqlstatement = "INSERT INTO Ride(passengerID, rideID, source, destination, started, finished) Values(?,?,?,?,?,?)";
         try{
-            conn = DatabaseConnection.getConnectiontoDataBase();
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.setInt(1, ride.getRequester().getPassengerID());
             prestmnt.setInt(2, ride.getRideID());
@@ -137,10 +142,11 @@ public class SQLImplementation {
         }
     }
 
+    @Override
     public void updateRideisStarted(Ride ride, int started){
         String sqlstatement = "UPDATE Ride SET started="+started+" WHERE rideID="+ ride.getRideID();
         try{
-            conn = DatabaseConnection.getConnectiontoDataBase();
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
 
@@ -149,10 +155,11 @@ public class SQLImplementation {
         }
     }
 
+    @Override
     public void updateRideisFinished(Ride ride, int finished){
         String sqlstatement = "UPDATE Ride SET finished="+finished+" WHERE rideID="+ ride.getRideID();
         try{
-            conn = DatabaseConnection.getConnectiontoDataBase();
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
 
@@ -161,6 +168,54 @@ public class SQLImplementation {
         }
     }
 
+    @Override
+    public void getAllPasengers() {
+        String sqlstatement = "SELECT * FROM Passenger";
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
 
+            while(result.next()){
+                System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Passenger suspended: " + result.getInt("isSuspended"));
+            }
 
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void getPendingDriverVerifications() {
+        String sqlstatement = "SELECT * FROM Driver WHERE isVerified=0";
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
+
+            while(result.next()){
+                System.out.println("driverID:"+result.getInt("driverID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",isDriverSuspended: " + result.getInt("isSuspended")+ ",isDriverVerified: " + result.getInt("isVerified")+",licenceNumber: " + result.getInt("licenceNumber")+",nationalID: " + result.getString("nationalID"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void getAllDrivers() {
+        String sqlstatement = "SELECT * FROM Driver";
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
+
+            while(result.next()){
+                System.out.println("driverID:"+result.getInt("driverID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",isDriverSuspended: " + result.getInt("isSuspended")+ ",isDriverVerified: " + result.getInt("isVerified")+",licenceNumber: " + result.getInt("licenceNumber")+",nationalID: " + result.getString("nationalID")+ ",averageRating: " + result.getDouble("averageRating"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

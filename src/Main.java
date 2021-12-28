@@ -83,24 +83,29 @@ class Main {
         driver.sendOffer(70.0, driver.getRequest(0));
         testPassenger.printRideOffers();
 
+
         System.out.println("offer accepted");
         testPassenger.acceptOffer(testPassenger.getOffer(0));
+        driver.arriveAtLocation();
+        driver.finishRide();
+
+        System.out.println("\nShowing the events that happended on the last ride");
+        admin.showEvents(driver.getFinishedRides().get(driver.getFinishedRides().size() -1 ));
 
         System.out.println("\n" + "rating a driver: ");
-        driver.finishRide();
         testPassenger.rateDriver(5);
         System.out.println("Driver's average rating:" + driver.getAverageRating());
 
         System.out.println("\n" + "List all driver ratings");
         driver.printDriverRatings();
 
-        System.out.println("Retriving all passengers");
+        System.out.println("\nRetriving all passengers");
         admin.getAllPassengers();
 
-        System.out.println("Retriving all drivers");
+        System.out.println("\nRetriving all drivers");
         admin.getAllDrivers();
 
-        System.out.println("Retriving all drivers pending requests");
+        System.out.println("\nRetriving all drivers pending requests");
         admin.getPendingDriverVerifications();
     }
 }

@@ -1,6 +1,8 @@
 //package com.company;
 
 
+import java.util.ArrayList;
+
 class Ride {
 
     RideRequest rideRequest;
@@ -12,6 +14,7 @@ class Ride {
     private Driver receiver;
     public static int count = 0;
     private int rideID;
+    private ArrayList<Event> rideEvents;
 
     public Ride(String source, String destination, Passenger requester) {
         isStarted = false;
@@ -22,9 +25,15 @@ class Ride {
         this.receiver = receiver;
         count++;
         this.rideID = count;
+        this.rideEvents = new ArrayList<>();
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
     }
+
+    public ArrayList<Event> getRideEvents() {
+        return rideEvents;
+    }
+
 
     public boolean getisStarted() {
         return isStarted;

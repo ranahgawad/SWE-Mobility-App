@@ -1,6 +1,8 @@
 //package com.company;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Passenger extends User
 {
@@ -42,8 +44,11 @@ public class Passenger extends User
         if(rideOffers == null || rideOffers.size() == 0){
             System.out.println("There are no ride offers to be accepted");
         }else{
+            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
             offer.getRequest().getRide().setReceiver(offer.getDriver());
             offer.getRequest().getRide().setStarted(true);
+            offer.getRequest().getRide().getRideEvents().add(new rideOfferAccepted(date, offer.getRequest().getRide().getRequester().getUsername()));
             SQLImplementation connection = SQLImplementation.getInstance();
             connection.updateRideisStarted(offer.getRequest().getRide(), 1);
             for (int i=0; i<rideOffers.size(); i++){

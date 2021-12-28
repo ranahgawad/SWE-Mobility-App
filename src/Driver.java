@@ -1,6 +1,8 @@
 //package com.company;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Driver extends User {
     private static int count = 0;
@@ -14,6 +16,7 @@ public class Driver extends User {
     private float averageRating;
     public UserNotificationManager notificationSender;
     private ArrayList<Integer> driverRatings ;
+    private ArrayList<Ride> finishedRides;
 
     Driver(String username, String password, String email, String mobileNumber, String licenseNumber, String nationalID) {
         super(username, password, email, mobileNumber);
@@ -26,6 +29,7 @@ public class Driver extends User {
         count++;
         this.driverID = count;
         driverRatings = new ArrayList<>();
+        finishedRides = new ArrayList<>();
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
 
@@ -62,10 +66,14 @@ public class Driver extends User {
     }
 
     public void sendOffer(Double bill, RideRequest request) {
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
         Offer offer = new Offer(this, bill, request);
+        offer.getRequest().getRide().getRideEvents().add(new rideOfferEvent(date, this.getUsername(), bill));
         notificationSender = new UserNotificationManager(request);
         notificationSender.subscribe(request, request.getRide().getRequester());
         notificationSender.notify(request, offer);
+
     }
 
     public void subscribeToArea()
@@ -89,14 +97,31 @@ public class Driver extends User {
         RideRequest rideReq;
         for(int i=0; i< rideRequests.size();i++){
             if(rideRequests.get(i).getRide().getisStarted() == true){
+                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+                Date date = new Date(System.currentTimeMillis());
                 rideReq = rideRequests.get(i);
                 rideReq.getRide().setFinished(true);
+                rideReq.getRide().getRideEvents().add(new rideEndEvent(date,this.getUsername(), rideReq.getRide().getRequester().getUsername()));
+                finishedRides.add(rideReq.getRide());
                 rideRequests.remove(rideReq);
                 connection.updateRideisFinished(rideReq.getRide(), 1);
                 return;
             }
         }
 
+    }
+
+    public void arriveAtLocation(){
+        RideRequest rideReq;
+        for(int i=0; i< rideRequests.size();i++){
+            if(rideRequests.get(i).getRide().getisStarted() == true){
+                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+                Date date = new Date(System.currentTimeMillis());
+                rideReq = rideRequests.get(i);
+                rideReq.getRide().getRideEvents().add(new captainArrivalEvent(date,this.getUsername(), rideReq.getRide().getRequester().getUsername()));
+                return;
+            }
+        }
     }
 
     public void addRating(int rating) {
@@ -149,5 +174,13 @@ public class Driver extends User {
 
     public String getNationalID() {
         return nationalID;
+    }
+
+    public ArrayList<RideRequest> getRideRequests() {
+        return rideRequests;
+    }
+
+    public ArrayList<Ride> getFinishedRides() {
+        return finishedRides;
     }
 }

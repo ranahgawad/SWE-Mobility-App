@@ -49,5 +49,12 @@ public class Admin extends User
         connection.getPendingDriverVerifications();
     }
 
+    public void showEvents(Ride ride){
+       ArrayList<Event> rideEvents = ride.getRideEvents();
+        for(int i=0; i< rideEvents.size(); i++){
+            System.out.println(rideEvents.get(i).toString());
+        }
+    }
+
 
 }

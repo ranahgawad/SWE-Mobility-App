@@ -34,7 +34,6 @@ public class Driver extends User {
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
 
-
     }
     public void  printDriverRatings() {
         for( int i= 0 ; i < driverRatings.size();i++){

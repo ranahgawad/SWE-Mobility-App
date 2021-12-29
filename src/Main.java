@@ -29,24 +29,24 @@ class Main {
         Registration passenger2Reg = new PassengerRegistration("bakiza", "bakiza12345", "bakiza@gmail.com", "012");
 
         System.out.println("\n" + "Verifying a driver: ");
-        admin.verifyDriver(((DriverRegistration) driver2reg).getDriver());
+        admin.getAdminModel().verifyDriver(((DriverRegistration) driver2reg).getDriver());
         if (((DriverRegistration) driver2reg).getDriver().getisVerified()) {
             System.out.println(((DriverRegistration) driver2reg).getDriver().getUsername() + "is verified");
         }
 
         System.out.println("\n" + "Logging in as a driver after being verified: ");
-        admin.verifyDriver(((DriverRegistration) driver2reg).getDriver());
+        admin.getAdminModel().verifyDriver(((DriverRegistration) driver2reg).getDriver());
         Login log5 = new Login("mohebGamal2", "lannister12345");
 
 
         System.out.println("\n" + "Suspending a passenger: ");
-        admin.suspend(((PassengerRegistration) passenger1Reg).getPassenger());
+        admin.getAdminModel().suspend(((PassengerRegistration) passenger1Reg).getPassenger());
         if (((PassengerRegistration) passenger1Reg).getPassenger().getisSuspended()) {
             Login log6 = new Login("lailaAhmed", "idk12345");
         }
 
         System.out.println("\n" + "Suspending a driver: ");
-        admin.suspend(((DriverRegistration) driver2reg).getDriver());
+        admin.getAdminModel().suspend(((DriverRegistration) driver2reg).getDriver());
         if (((DriverRegistration) driver2reg).getDriver().getisSuspended()) {
             Login log7 = new Login("mohebGamal2", "lannister12345");
         }
@@ -58,55 +58,55 @@ class Main {
 
         System.out.println("\n" + "Requesting a ride: ");
         Passenger testPassenger = ((PassengerRegistration) passenger1Reg).getPassenger();
-        testPassenger.requestRide("haram", "dokki");
+        testPassenger.getPassengerModel().requestRide("haram", "dokki");
         driver.printRequests();
 
         System.out.println("\n" + "Sending an offer: ");
         driver.sendOffer(35.0, driver.getRequest(0));
-        testPassenger.printRideOffers();
+        testPassenger.getPassengerModel().printRideOffers();
         System.out.println("offer accepted");
-        testPassenger.acceptOffer(testPassenger.getOffer(0));
+        testPassenger.getPassengerModel().acceptOffer(testPassenger.getPassengerModel().getOffer(0));
 
         System.out.println("\n" + "rating a driver: ");
         driver.finishRide();
-        testPassenger.rateDriver(3);
+        testPassenger.getPassengerModel().rateDriver(3);
         System.out.println("Driver's average rating:" + driver.getAverageRating());
 
         System.out.println("\n" + "rating a driver more than once:");
-        testPassenger.rateDriver(1);
+        testPassenger.getPassengerModel().rateDriver(1);
         System.out.println("Driver's average rating:" + driver.getAverageRating());
 
         System.out.println("\n" + "Requesting new ride:");
-        testPassenger.requestRide("haram", "maadi");
+        testPassenger.getPassengerModel().requestRide("haram", "maadi");
         driver.printRequests();
         System.out.println("\n" + "Sending an offer: ");
         driver.sendOffer(70.0, driver.getRequest(0));
-        testPassenger.printRideOffers();
+        testPassenger.getPassengerModel().printRideOffers();
 
 
         System.out.println("offer accepted");
-        testPassenger.acceptOffer(testPassenger.getOffer(0));
+        testPassenger.getPassengerModel().acceptOffer(testPassenger.getPassengerModel().getOffer(0));
         driver.arriveAtLocation();
         driver.finishRide();
 
         System.out.println("\nShowing the events that happended on the last ride");
-        admin.showEvents(driver.getFinishedRides().get(driver.getFinishedRides().size() -1 ));
+        admin.getAdminModel().showEvents(driver.getFinishedRides().get(driver.getFinishedRides().size() -1 ));
 
         System.out.println("\n" + "rating a driver: ");
-        testPassenger.rateDriver(5);
+        testPassenger.getPassengerModel().rateDriver(5);
         System.out.println("Driver's average rating:" + driver.getAverageRating());
 
         System.out.println("\n" + "List all driver ratings");
         driver.printDriverRatings();
 
         System.out.println("\nRetriving all passengers");
-        admin.getAllPassengers();
+        admin.getAdminModel().getAllPassengers();
 
         System.out.println("\nRetriving all drivers");
-        admin.getAllDrivers();
+        admin.getAdminModel().getAllDrivers();
 
         System.out.println("\nRetriving all drivers pending requests");
-        admin.getPendingDriverVerifications();
+        admin.getAdminModel().getPendingDriverVerifications();
     }
 }
 

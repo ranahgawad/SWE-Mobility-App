@@ -15,19 +15,22 @@ class Ride {
     public static int count = 0;
     private int rideID;
     private ArrayList<Event> rideEvents;
+    private int num_passengers;
 
-    public Ride(String source, String destination, Passenger requester) {
+    public Ride(String source, String destination, Passenger requester, int num_passengers) {
         isStarted = false;
         isFinished = false;
         this.destination = destination;
         this.source = source;
         this.requester = requester;
         this.receiver = receiver;
+        this.num_passengers = num_passengers;
         count++;
         this.rideID = count;
         this.rideEvents = new ArrayList<>();
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
+
     }
 
     public ArrayList<Event> getRideEvents() {
@@ -58,6 +61,7 @@ class Ride {
 
     public void setStarted(boolean started) {
         isStarted = started;
+        this.receiver.setAvailable(false);
     }
 
     public String getDestination() {
@@ -71,6 +75,7 @@ class Ride {
 
     public void setReceiver(Driver receiver) {
         this.receiver = receiver;
+        this.receiver.setAvailable(false);
     }
 
     public String getSource() {
@@ -83,6 +88,7 @@ class Ride {
 
     public void setFinished(boolean finished) {
         isFinished = finished;
+        this.receiver.setAvailable(true);
     }
 }
 
@@ -91,10 +97,16 @@ class RideRequest {
     public static UserNotificationManager notificationSender = new UserNotificationManager();
     Ride ride;
 
-    RideRequest(String source, String destination, Passenger requester) {
-        ride = new Ride(source, destination, requester);
+    RideRequest(String source, String destination, Passenger requester, int num_passengers) {
+        ride = new Ride(source, destination, requester, num_passengers);
         notificationSender.setListeners(ride.getDestination());
     }
+
+    RideRequest(String source, String destination, Passenger requester) {
+        ride = new Ride(source, destination, requester, 1);
+        notificationSender.setListeners(ride.getDestination());
+    }
+
 
 
     public Ride getRide() {

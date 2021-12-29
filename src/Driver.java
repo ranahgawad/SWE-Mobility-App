@@ -10,7 +10,7 @@ public class Driver extends User {
     private boolean isVerfied = false;
     private String licenseNumber;
     private String nationalID;
-    //    private boolean isAvailable;
+    private boolean isAvailable;
     private ArrayList<String> favoriteAreas;
     private ArrayList<RideRequest> rideRequests;
     private float averageRating;
@@ -30,8 +30,10 @@ public class Driver extends User {
         this.driverID = count;
         driverRatings = new ArrayList<>();
         finishedRides = new ArrayList<>();
+        isAvailable = true;
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
+
 
     }
     public void  printDriverRatings() {
@@ -47,6 +49,7 @@ public class Driver extends User {
 
     @Override
     public void setSuspended(boolean suspended) {
+        isAvailable = false;
         super.setSuspended(suspended);
 
     }
@@ -76,6 +79,11 @@ public class Driver extends User {
 
     }
 
+    void setAvailable(boolean availability)
+    {
+        isAvailable = availability;
+    }
+
     public void subscribeToArea()
     {
         for(int i = 0; i < favoriteAreas.size(); i++)
@@ -95,6 +103,7 @@ public class Driver extends User {
     public void finishRide() {
         SQLImplementation connection = SQLImplementation.getInstance();
         RideRequest rideReq;
+        isAvailable = true;
         for(int i=0; i< rideRequests.size();i++){
             if(rideRequests.get(i).getRide().getisStarted() == true){
                 SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
@@ -148,7 +157,8 @@ public class Driver extends User {
 
     @Override
     public void update(Object type, Object data) {
-        rideRequests.add((RideRequest) data);
+        if(isAvailable == true)
+            rideRequests.add((RideRequest) data);
     }
 
     void printRequests() {

@@ -23,11 +23,17 @@ public class Passenger extends User
         super.setSuspended(suspended);
     }
 
+    public void requestRide(String source, String destination, int num_passengers)
+    {
+        RideRequest request = new RideRequest(source, destination, this, num_passengers);
+        request.sendRequest();
+    }
     public void requestRide(String source, String destination)
     {
         RideRequest request = new RideRequest(source, destination, this);
         request.sendRequest();
     }
+
 
 
     @Override

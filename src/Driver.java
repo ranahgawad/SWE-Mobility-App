@@ -12,6 +12,7 @@ public class Driver extends User {
     private ArrayList<String> favoriteAreas;
     private ArrayList<RideRequest> rideRequests;
     private float averageRating;
+    private DriverModel driverModel;
     public UserNotificationManager notificationSender;
     private ArrayList<Integer> driverRatings ;
     private ArrayList<Ride> finishedRides;
@@ -30,6 +31,7 @@ public class Driver extends User {
         this.driverID = count;
         driverRatings = new ArrayList<>();
         finishedRides = new ArrayList<>();
+        driverModel = new DriverModel(this);
         isAvailable = true;
     }
     public void  printDriverRatings() {
@@ -123,6 +125,10 @@ public class Driver extends User {
     void printRequests() {
         System.out.println(rideRequests);
         //System.out.println(favoriteAreas);
+    }
+
+    public DriverModel getDriverModel() {
+        return driverModel;
     }
 
     public int getDriverID() {

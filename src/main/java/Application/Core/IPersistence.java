@@ -24,7 +24,7 @@ public interface IPersistence {
 
     List<Passenger> getAllPasengers();
 
-    ArrayList<Driver> getAllDrivers();
+    List<Driver> getAllDrivers();
 
-    ArrayList<Driver> getPendingDriverVerifications();
+    List<Driver> getPendingDriverVerifications();
 }

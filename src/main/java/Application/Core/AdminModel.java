@@ -1,8 +1,10 @@
 package Application.Core;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.util.List;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class AdminModel {
     Admin admin;
 
@@ -14,12 +16,12 @@ public class AdminModel {
         return connection.getAllPasengers();
     }
 
-    public ArrayList<Driver> getAllDrivers(){
+    public List<Driver> getAllDrivers(){
         IPersistence connection = SQLImplementation.getInstance();
         return  connection.getAllDrivers();
     }
 
-    public static ArrayList<Driver> getPendingDriverVerifications(){
+    public static List<Driver> getPendingDriverVerifications(){
         IPersistence connection = SQLImplementation.getInstance();
         return connection.getPendingDriverVerifications();
     }

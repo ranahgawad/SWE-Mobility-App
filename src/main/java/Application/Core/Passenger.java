@@ -17,8 +17,8 @@ public class Passenger extends User
         count++ ;
         this.PassengerID = count;
         passengerModel = new PassengerModel(this);
-        SQLImplementation connection = SQLImplementation.getInstance();
-        connection.insert(this);
+//        SQLImplementation connection = SQLImplementation.getInstance();
+//        connection.insert(this);
     }
 
     @Override

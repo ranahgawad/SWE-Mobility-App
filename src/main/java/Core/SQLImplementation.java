@@ -2,6 +2,7 @@ package Core;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SQLImplementation implements IPersistence {
@@ -164,9 +165,9 @@ public class SQLImplementation implements IPersistence {
     }
 
     @Override
-    public ArrayList<Passenger> getAllPasengers() {
+    public List<Passenger> getAllPasengers() {
         String sqlstatement = "SELECT * FROM Passenger";
-        ArrayList<Passenger> passengers = new ArrayList<>();
+        List<Passenger> passengers = new ArrayList<>();
         try{
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();

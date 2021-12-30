@@ -9,11 +9,9 @@ public class AdminModel {
     AdminModel(Admin admin){
         this.admin = admin;
     }
-    public Object[] getAllPassengers(){
+    public static List<Passenger> getAllPassengers(){
         IPersistence connection = SQLImplementation.getInstance();
-        ArrayList<Passenger> passengers= connection.getAllPasengers();
-        return passengers.toArray();
-
+        return connection.getAllPasengers();
     }
 
     public ArrayList<Driver> getAllDrivers(){

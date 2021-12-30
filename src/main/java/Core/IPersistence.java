@@ -1,6 +1,7 @@
 package Core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IPersistence {
     void insert(User user);
@@ -21,7 +22,7 @@ public interface IPersistence {
 
     void updateRideisFinished(Ride ride, int finished);
 
-    ArrayList<Passenger> getAllPasengers();
+    List<Passenger> getAllPasengers();
 
     ArrayList<Driver> getAllDrivers();
 

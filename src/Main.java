@@ -53,7 +53,7 @@ class Main {
 
         System.out.println("\n" + "adding favorite areas");
         driver.setFavoriteAreas("haram");
-        driver.subscribeToArea();
+        driver.getDriverModel().subscribeToArea();
         driver.printfavoriteAreas();
 
         System.out.println("\n" + "Requesting a ride: ");
@@ -62,13 +62,13 @@ class Main {
         driver.printRequests();
 
         System.out.println("\n" + "Sending an offer: ");
-        driver.sendOffer(35.0, driver.getRequest(0));
+        driver.getDriverModel().sendOffer(35.0, driver.getRequest(0));
         testPassenger.getPassengerModel().printRideOffers();
         System.out.println("offer accepted");
         testPassenger.getPassengerModel().acceptOffer(testPassenger.getPassengerModel().getOffer(0));
 
         System.out.println("\n" + "rating a driver: ");
-        driver.finishRide();
+        driver.getDriverModel().finishRide();
         testPassenger.getPassengerModel().rateDriver(3);
         System.out.println("Driver's average rating:" + driver.getAverageRating());
 
@@ -80,14 +80,14 @@ class Main {
         testPassenger.getPassengerModel().requestRide("haram", "maadi");
         driver.printRequests();
         System.out.println("\n" + "Sending an offer: ");
-        driver.sendOffer(70.0, driver.getRequest(0));
+        driver.getDriverModel().sendOffer(70.0, driver.getRequest(0));
         testPassenger.getPassengerModel().printRideOffers();
 
 
         System.out.println("offer accepted");
         testPassenger.getPassengerModel().acceptOffer(testPassenger.getPassengerModel().getOffer(0));
-        driver.arriveAtLocation();
-        driver.finishRide();
+        driver.getDriverModel().arriveAtLocation();
+        driver.getDriverModel().finishRide();
 
         System.out.println("\nShowing the events that happended on the last ride");
         admin.getAdminModel().showEvents(driver.getFinishedRides().get(driver.getFinishedRides().size() -1 ));

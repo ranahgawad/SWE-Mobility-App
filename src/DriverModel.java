@@ -10,7 +10,7 @@ public class DriverModel {
         this.driver = driver;
         notificationSender = new UserNotificationManager();
     }
-    public void sendOffer(Driver driver, Double bill, RideRequest request) {
+    public void sendOffer(Double bill, RideRequest request) {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
         Offer offer = new Offer(driver, bill, request);

@@ -1,31 +1,27 @@
 package Application.Core;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
 import java.util.List;
+
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class AdminModel {
-
     Admin admin;
 
     AdminModel(Admin admin){
         this.admin = admin;
     }
-    public Object[] getAllPassengers(){
+    public static List<Passenger> getAllPassengers(){
         IPersistence connection = SQLImplementation.getInstance();
-        ArrayList<Passenger> passengers= connection.getAllPasengers();
-        return passengers.toArray();
-
+        return connection.getAllPasengers();
     }
 
-    public ArrayList<Driver> getAllDrivers(){
+    public List<Driver> getAllDrivers(){
         IPersistence connection = SQLImplementation.getInstance();
         return  connection.getAllDrivers();
     }
 
-    public static ArrayList<Driver> getPendingDriverVerifications(){
+    public static List<Driver> getPendingDriverVerifications(){
         IPersistence connection = SQLImplementation.getInstance();
         return connection.getPendingDriverVerifications();
     }

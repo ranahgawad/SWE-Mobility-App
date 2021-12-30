@@ -2,6 +2,7 @@ package Application.Core;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SQLImplementation implements IPersistence {
@@ -164,13 +165,14 @@ public class SQLImplementation implements IPersistence {
     }
 
     @Override
-    public ArrayList<Passenger> getAllPasengers() {
+    public List<Passenger> getAllPasengers() {
         String sqlstatement = "SELECT * FROM Passenger";
-        ArrayList<Passenger> passengers = new ArrayList<>();
+        List<Passenger> passengers = new ArrayList<>();
         try{
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();
             ResultSet result = prestmnt.executeQuery(sqlstatement);
+            
 
             while(result.next()){
                 int id = result.getInt("passengerID");
@@ -197,9 +199,9 @@ public class SQLImplementation implements IPersistence {
     }
 
     @Override
-    public  ArrayList<Driver> getPendingDriverVerifications() {
+    public List<Driver> getPendingDriverVerifications() {
         String sqlstatement = "SELECT * FROM Driver WHERE isVerified=0";
-        ArrayList<Driver> drivers = new ArrayList<>();
+        List<Driver> drivers = new ArrayList<>();
         try{
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();
@@ -220,7 +222,7 @@ public class SQLImplementation implements IPersistence {
                 }
                 Driver d = new Driver(username, password, email, mobile,licenceNumber, nationalID);
                 drivers.add(d);
-//                System.out.println("driverID:"+result.getInt("driverID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",isDriverSuspended: " + result.getInt("isSuspended")+ ",isDriverVerified: " + result.getInt("isVerified")+",licenceNumber: " + result.getInt("licenceNumber")+",nationalID: " + result.getString("nationalID"));
+                System.out.println("driverID:"+result.getInt("driverID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",isDriverSuspended: " + result.getInt("isSuspended")+ ",isDriverVerified: " + result.getInt("isVerified")+",licenceNumber: " + result.getInt("licenceNumber")+",nationalID: " + result.getString("nationalID"));
             }
 
         } catch (SQLException e) {
@@ -230,9 +232,9 @@ public class SQLImplementation implements IPersistence {
     }
 
     @Override
-    public ArrayList<Driver> getAllDrivers() {
+    public List<Driver> getAllDrivers() {
         String sqlstatement = "SELECT * FROM Driver";
-        ArrayList<Driver> drivers = new ArrayList<>();
+        List<Driver> drivers = new ArrayList<>();
         try{
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();
@@ -253,7 +255,7 @@ public class SQLImplementation implements IPersistence {
                 }
                 Driver d = new Driver(username, password, email, mobile,licenceNumber, nationalID);
                 drivers.add(d);
-//                System.out.println("driverID:"+result.getInt("driverID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",isDriverSuspended: " + result.getInt("isSuspended")+ ",isDriverVerified: " + result.getInt("isVerified")+",licenceNumber: " + result.getInt("licenceNumber")+",nationalID: " + result.getString("nationalID")+ ",averageRating: " + result.getDouble("averageRating"));
+                System.out.println("driverID:"+result.getInt("driverID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",isDriverSuspended: " + result.getInt("isSuspended")+ ",isDriverVerified: " + result.getInt("isVerified")+",licenceNumber: " + result.getInt("licenceNumber")+",nationalID: " + result.getString("nationalID")+ ",averageRating: " + result.getDouble("averageRating"));
             }
 
         } catch (SQLException e) {

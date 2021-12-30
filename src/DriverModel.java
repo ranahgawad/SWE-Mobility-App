@@ -54,7 +54,21 @@ public class DriverModel {
         }
     }
 
-
+    public void subscribeToArea()
+    {
+        for(int i = 0; i < driver.getFavoriteAreas().size(); i++)
+        {
+            if(RideRequest.notificationSender.getListeners(driver.getFavoriteAreas().get(i)) != null)
+            {
+                RideRequest.notificationSender.subscribe(driver.getFavoriteAreas().get(i), driver);
+            }
+            else
+            {
+                RideRequest.notificationSender.setListeners(driver.getFavoriteAreas().get(i));
+                RideRequest.notificationSender.subscribe(driver.getFavoriteAreas().get(i), driver);
+            }
+        }
+    }
 
     void insert(Driver driver)
     {

@@ -70,21 +70,7 @@ public class Driver extends User {
         isAvailable = availability;
     }
 
-    public void subscribeToArea()
-    {
-        for(int i = 0; i < favoriteAreas.size(); i++)
-        {
-            if(RideRequest.notificationSender.getListeners(favoriteAreas.get(i)) != null)
-            {
-                RideRequest.notificationSender.subscribe(favoriteAreas.get(i), this);
-            }
-            else
-            {
-                RideRequest.notificationSender.setListeners(favoriteAreas.get(i));
-                RideRequest.notificationSender.subscribe(favoriteAreas.get(i), this);
-            }
-        }
-    }
+
 
     public void addRating(int rating) {
 

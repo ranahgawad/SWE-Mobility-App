@@ -27,14 +27,11 @@ public class DriverModel {
         SQLImplementation connection = SQLImplementation.getInstance();
         RideRequest rideReq;
         driver.setAvailable(true);
-<<<<<<< HEAD:src/main/java/Core/DriverModel.java
-        for(int i = 0; i< driver.getRideRequests().size(); i++){
-=======
         driver.setCurrentCapacity(driver.getCurrentCapacity() + 1);
-        for(int i=0; i< driver.getRideRequests().size();i++){
->>>>>>> 36925442001baf5ed09c85f48a62ccb0988b5468:src/DriverModel.java
-            if(driver.getRideRequests().get(i).getRide().getisStarted() == true){
-                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        for (int i = 0; i < driver.getRideRequests().size(); i++) {
+
+            if (driver.getRideRequests().get(i).getRide().getisStarted() == true) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
                 Date date = new Date(System.currentTimeMillis());
                 rideReq = driver.getRideRequests().get(i);
                 rideReq.getRide().setFinished(true);
@@ -45,6 +42,7 @@ public class DriverModel {
                 return;
             }
         }
+
 
     }
 

@@ -31,9 +31,6 @@ public class Driver extends User {
         driverRatings = new ArrayList<>();
         finishedRides = new ArrayList<>();
         isAvailable = true;
-        SQLImplementation connection = SQLImplementation.getInstance();
-        connection.insert(this);
-
     }
     public void  printDriverRatings() {
         for( int i= 0 ; i < driverRatings.size();i++){
@@ -67,16 +64,6 @@ public class Driver extends User {
         return favoriteAreas;
     }
 
-    public void sendOffer(Double bill, RideRequest request) {
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
-        Offer offer = new Offer(this, bill, request);
-        offer.getRequest().getRide().getRideEvents().add(new rideOfferEvent(date, this.getUsername(), bill));
-        notificationSender = new UserNotificationManager(request);
-        notificationSender.subscribe(request, request.getRide().getRequester());
-        notificationSender.notify(request, offer);
-
-    }
 
     void setAvailable(boolean availability)
     {
@@ -95,39 +82,6 @@ public class Driver extends User {
             {
                 RideRequest.notificationSender.setListeners(favoriteAreas.get(i));
                 RideRequest.notificationSender.subscribe(favoriteAreas.get(i), this);
-            }
-        }
-    }
-
-    public void finishRide() {
-        SQLImplementation connection = SQLImplementation.getInstance();
-        RideRequest rideReq;
-        isAvailable = true;
-        for(int i=0; i< rideRequests.size();i++){
-            if(rideRequests.get(i).getRide().getisStarted() == true){
-                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-                Date date = new Date(System.currentTimeMillis());
-                rideReq = rideRequests.get(i);
-                rideReq.getRide().setFinished(true);
-                rideReq.getRide().getRideEvents().add(new rideEndEvent(date,this.getUsername(), rideReq.getRide().getRequester().getUsername()));
-                finishedRides.add(rideReq.getRide());
-                rideRequests.remove(rideReq);
-                connection.updateRideisFinished(rideReq.getRide(), 1);
-                return;
-            }
-        }
-
-    }
-
-    public void arriveAtLocation(){
-        RideRequest rideReq;
-        for(int i=0; i< rideRequests.size();i++){
-            if(rideRequests.get(i).getRide().getisStarted() == true){
-                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-                Date date = new Date(System.currentTimeMillis());
-                rideReq = rideRequests.get(i);
-                rideReq.getRide().getRideEvents().add(new captainArrivalEvent(date,this.getUsername(), rideReq.getRide().getRequester().getUsername()));
-                return;
             }
         }
     }

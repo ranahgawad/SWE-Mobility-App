@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PassengerModel {
-    private Passenger passenger;
+   private Passenger passenger;
     PassengerModel(Passenger passenger){
         this.passenger = passenger;
     }

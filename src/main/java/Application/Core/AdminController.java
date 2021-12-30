@@ -30,9 +30,9 @@ public class AdminController {
     @GetMapping("/admin/getPendingVerifications")
     public List<Driver> getPendingDriverVerifications(){
 
-
         return AdminModel.getPendingDriverVerifications();
     }
+
     @GetMapping("/hello")
     public String Hello(){
         return "hello";

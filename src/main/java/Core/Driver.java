@@ -16,6 +16,8 @@ public class Driver extends User {
     public UserNotificationManager notificationSender;
     private ArrayList<Integer> driverRatings ;
     private ArrayList<Ride> finishedRides;
+    private int carCapacity;
+    private int currentCapacity;
 
     Driver(String username, String password, String email, String mobileNumber, String licenseNumber, String nationalID) {
         super(username, password, email, mobileNumber);
@@ -71,6 +73,26 @@ public class Driver extends User {
     }
 
 
+    public void setCarCapacity(int capacity)
+    {
+        carCapacity = capacity;
+        currentCapacity = carCapacity;
+    }
+
+    public int getCarCapacity(int capacity)
+    {
+        return carCapacity;
+    }
+
+    public void setCurrentCapacity(int capacity)
+    {
+        currentCapacity = capacity;
+    }
+
+    public int getCurrentCapacity()
+    {
+        return currentCapacity;
+    }
 
     public void addRating(int rating) {
 
@@ -96,7 +118,7 @@ public class Driver extends User {
 
     @Override
     public void update(Object type, Object data) {
-        if(isAvailable == true)
+        if(isAvailable == true || currentCapacity > 0)
             rideRequests.add((RideRequest) data);
     }
 

@@ -33,6 +33,7 @@ public class PassengerModel {
             offer.getRequest().getRide().setReceiver(offer.getDriver());
             offer.getRequest().getRide().setStarted(true);
             offer.getRequest().getRide().getRideEvents().add(new rideOfferAccepted(date, offer.getRequest().getRide().getRequester().getUsername()));
+            offer.getDriver().setCurrentCapacity(offer.getDriver().getCurrentCapacity() - 1);
             SQLImplementation connection = SQLImplementation.getInstance();
             connection.updateRideisStarted(offer.getRequest().getRide(), 1);
             for (int i=0; i<this.passenger.getRideOffers().size(); i++){

@@ -1,9 +1,13 @@
 package Application.Core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class AdminModel {
+
     Admin admin;
 
     AdminModel(Admin admin){

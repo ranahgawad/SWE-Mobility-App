@@ -25,6 +25,7 @@ public class DriverModel {
         SQLImplementation connection = SQLImplementation.getInstance();
         RideRequest rideReq;
         driver.setAvailable(true);
+        driver.setCurrentCapacity(driver.getCurrentCapacity() + 1);
         for(int i=0; i< driver.getRideRequests().size();i++){
             if(driver.getRideRequests().get(i).getRide().getisStarted() == true){
                 SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");

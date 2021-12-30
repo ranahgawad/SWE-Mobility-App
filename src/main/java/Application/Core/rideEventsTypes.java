@@ -1,4 +1,4 @@
-package Core;
+package Application.Core;
 
 public enum rideEventsTypes {
     RIDE_OFFER,

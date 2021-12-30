@@ -1,4 +1,4 @@
-package Core;
+package Application.Core;
 
 import java.util.Date;
 
@@ -34,7 +34,7 @@ public class rideOfferAccepted implements Event{
 
     @Override
     public String toString() {
-        return "Core.rideOfferAccepted{" +
+        return "Application.Core.rideOfferAccepted{" +
                 "eventName=" + eventName +
                 ", eventTime=" + eventTime +
                 ", passengerName='" + passengerName + '\'' +

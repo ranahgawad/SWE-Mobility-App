@@ -1,4 +1,4 @@
-package Core;//package com.company;
+package Application.Core;//package com.company;
 
 import java.util.ArrayList;
 
@@ -76,7 +76,7 @@ class DriverRegistration extends Registration {
 
     @Override
     public String toString() {
-        return "Core.DriverRegistration{" +
+        return "Application.Core.DriverRegistration{" +
                 "licenseNumber='" + licenseNumber + '\'' +
                 ", id='" + nationalID + '\'' +
                 '}';

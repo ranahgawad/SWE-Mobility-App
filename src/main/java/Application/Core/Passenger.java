@@ -1,4 +1,4 @@
-package Core;//package com.company;
+package Application.Core;//package com.company;
 
 import java.util.ArrayList;
 

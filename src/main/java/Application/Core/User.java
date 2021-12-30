@@ -1,6 +1,4 @@
-package Core;//package com.company;
-
-import java.util.ArrayList;
+package Application.Core;//package com.company;
 
 public abstract class User <T>
 {
@@ -32,7 +30,7 @@ public abstract class User <T>
 
     @Override
     public String toString() {
-        return "Core.User{" +
+        return "Application.Core.User{" +
                 "Name: '" + username + '\'' +
                  '}';
     }

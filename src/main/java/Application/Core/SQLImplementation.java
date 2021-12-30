@@ -1,4 +1,4 @@
-package Core;
+package Application.Core;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -187,7 +187,7 @@ public class SQLImplementation implements IPersistence {
                }
                Passenger p = new Passenger(username, password, email, mobile);
                passengers.add(p);
-//               System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Core.Passenger suspended: " + result.getInt("isSuspended"));
+//               System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Application.Core.Passenger suspended: " + result.getInt("isSuspended"));
             }
 
 

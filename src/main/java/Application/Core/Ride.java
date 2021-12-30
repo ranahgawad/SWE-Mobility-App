@@ -1,4 +1,4 @@
-package Core;//package com.company;
+package Application.Core;//package com.company;
 
 
 import java.util.ArrayList;
@@ -120,7 +120,7 @@ class RideRequest {
 
     @Override
     public String toString() {
-        return "Core.RideRequest{" +
+        return "Application.Core.RideRequest{" +
                 "destination='" + ride.getDestination() + '\'' +
                 ", source='" + ride.getSource() + '\'' +
                 ", requester=" + ride.getRequester() +
@@ -152,7 +152,7 @@ class Offer {
 
     @Override
     public String toString() {
-        return "Core.Offer{" +
+        return "Application.Core.Offer{" +
                 "driver=" + driver +
                 ", offer=" + offer +
                 ", request=" + request +

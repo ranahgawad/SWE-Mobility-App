@@ -1,4 +1,4 @@
-package Core;
+package Application.Core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class AdminModel {
         return  connection.getAllDrivers();
     }
 
-    public ArrayList<Driver> getPendingDriverVerifications(){
+    public static ArrayList<Driver> getPendingDriverVerifications(){
         IPersistence connection = SQLImplementation.getInstance();
         return connection.getPendingDriverVerifications();
     }

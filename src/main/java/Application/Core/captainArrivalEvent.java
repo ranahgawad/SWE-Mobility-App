@@ -1,4 +1,4 @@
-package Core;
+package Application.Core;
 
 import java.util.Date;
 
@@ -49,7 +49,7 @@ public class captainArrivalEvent implements Event{
 
     @Override
     public String toString() {
-        return "Core.captainArrivalEvent{" +
+        return "Application.Core.captainArrivalEvent{" +
                 "eventName=" + eventName +
                 ", eventTime=" + eventTime +
                 ", driverName='" + driverName + '\'' +

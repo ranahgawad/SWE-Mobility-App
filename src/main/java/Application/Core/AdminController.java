@@ -28,20 +28,9 @@ public class AdminController {
         return AdminModel.getPendingDriverVerifications();
     }
 
-    @GetMapping("/hello")
-    public String Hello(){
-        return "hello";
-    }
-
     @GetMapping("/admin/showRideEvents")
     public List<Event> showEvents(@RequestBody Ride ride){
        return AdminModel.showRideEvents(ride);
-    }
-
-
-    @GetMapping("/admin/test")
-    public boolean test(){
-        return true;
     }
 
 
@@ -52,11 +41,14 @@ public class AdminController {
     }
 
 
+    @PutMapping("/admin/suspendUser")
+    public boolean suspend(@RequestBody User user)
+    {
+        return  AdminModel.suspend(user);
+    }
 
-//
-//    @GetMapping("/admin/suspendUser")
-//    public void suspend(Application.Core.User user)
-//    {
-//        adminModel.suspend(user);
-//    }
+    @PostMapping("/admin/addpublicholiday")
+    public boolean addPublicHoliday(@RequestBody publicHolidays publicHolidays){
+        return AdminModel.addPublicHoliday(publicHolidays);
+    }
 }

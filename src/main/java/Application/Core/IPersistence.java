@@ -17,7 +17,7 @@ public interface IPersistence {
 
     void insert(Ride ride);
 
-    void insert(publicHolidays publicHolidays);
+    boolean insert(publicHolidays publicHolidays);
 
     boolean updateRideisStarted(Ride ride, int started);
 

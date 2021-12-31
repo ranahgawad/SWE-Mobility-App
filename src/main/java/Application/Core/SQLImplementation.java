@@ -1,6 +1,5 @@
 package Application.Core;
 
-import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -180,18 +179,22 @@ public class SQLImplementation implements IPersistence {
     }
 
     @Override
-    public void insert(publicHolidays publicHolidays) {
+    public boolean insert(publicHolidays publicHolidays) {
         String sqlstatement = "INSERT INTO publicHolidays(publicHolidayName, publicHolidayDate) Values(?,?)";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.setString(1, publicHolidays.getPublicHolidayName());
             prestmnt.setString(2, publicHolidays.getPublicHolidayDate());
-            prestmnt.executeUpdate();
+            int rowsAffected = prestmnt.executeUpdate();
 
+            if (rowsAffected > 0) {
+                return true;
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
 
@@ -441,17 +444,22 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
-    public void insert(String destination) {
+    public boolean insert(String destination) {
         String sqlstatement = "INSERT INTO discountDestinations(destination) Values(?)";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.setString(1, destination);
             prestmnt.executeUpdate();
+            int rowsAffected = prestmnt.executeUpdate();
 
+            if (rowsAffected > 0) {
+                return true;
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
     public boolean checkDiscountedDestinations(String destination) {
@@ -467,17 +475,22 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
-    public void updateDriverBalance(Driver driver) {
+    public boolean updateDriverBalance(Driver driver) {
         String sqlstatement = "UPDATE Driver SET balance=" + driver.getBalance() + " WHERE username ='" + driver.getUsername() +"'";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.executeUpdate();
+            int rowsAffected = prestmnt.executeUpdate();
 
+            if (rowsAffected > 0) {
+                return true;
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
+        return false;
     }
 
     public boolean checkPublicHoliday(String currDate) {

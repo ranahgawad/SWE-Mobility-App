@@ -20,6 +20,4 @@ public class RegesterationController {
     public boolean PassengerReg(@RequestBody Driver driver){
         return DriverRegistration.Register(driver);
     }
-
-
 }

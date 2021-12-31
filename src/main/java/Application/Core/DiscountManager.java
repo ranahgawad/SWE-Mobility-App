@@ -24,9 +24,9 @@ public class DiscountManager {
         return connection.checkPublicHoliday(currDate);
     }
 
-    public static void addDiscount(String destination){
+    public static boolean addDiscount(String destination){
         SQLImplementation connection = SQLImplementation.getInstance();
-        connection.insert(destination);
+        return connection.insert(destination);
     }
     public static boolean checkDiscountedDestinations(String destination){
         SQLImplementation connection = SQLImplementation.getInstance();

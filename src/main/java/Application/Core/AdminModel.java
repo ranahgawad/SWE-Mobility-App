@@ -33,14 +33,12 @@ public class AdminModel {
         }
         return rideEvents;
     }
-    public void addDiscount(String destination){
-        DiscountManager.addDiscount(destination);
-
+    public static boolean addDiscount(String destination){
+       return DiscountManager.addDiscount(destination);
     }
-    public void addPublicHoliday(publicHolidays publicHolidays){
-        publicHolidays.addPublicHoliday(publicHolidays);
+    public static boolean addPublicHoliday(publicHolidays publicHolidays){
+        return publicHolidays.addPublicHoliday(publicHolidays);
     }
-
 
     public static boolean verifyDriver(Driver driver)
     {

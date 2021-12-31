@@ -23,8 +23,8 @@ public class publicHolidays {
     public void setPublicHolidayName(String publicHolidayName) {
         this.publicHolidayName = publicHolidayName;
     }
-    public void addPublicHoliday(publicHolidays publicHolidays){
+    public boolean addPublicHoliday(publicHolidays publicHolidays){
         SQLImplementation connection = SQLImplementation.getInstance();
-        connection.insert(publicHolidays);
+        return connection.insert(publicHolidays);
     }
 }

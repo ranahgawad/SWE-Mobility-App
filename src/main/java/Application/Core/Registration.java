@@ -1,9 +1,12 @@
 package Application.Core;//package com.company;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public abstract class Registration {
 
     public static ArrayList<User> userList = new ArrayList<User>();
@@ -24,49 +27,15 @@ public abstract class Registration {
 
     }
 
-    public abstract void registerUser();
-
     public static ArrayList<User> getUserList() {
         return userList;
     }
 
 }
 
-class PassengerRegistration extends Registration {
-    private Passenger passenger;
-    private String birthdayDate;
 
 
-
-
-    public String getBirthdayDate() {
-        return birthdayDate;
-    }
-
-    public void setBirthdayDate(String birthdayDate) {
-        this.birthdayDate = birthdayDate;
-    }
-
-    PassengerRegistration(String username, String password, String email, String mobileNumber, String birthdayDate)  {
-        super(username, password, email, mobileNumber);
-        this.birthdayDate=birthdayDate;
-        passenger = new Passenger(username, password, email, mobileNumber,birthdayDate);
-        SQLImplementation connection = SQLImplementation.getInstance();
-        connection.insert(passenger);
-        userList.add(passenger);
-
-    }
-
-    @Override
-    public void registerUser() {
-
-    }
-
-    public Passenger getPassenger() {
-        return passenger;
-    }
-}
-
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 class DriverRegistration extends Registration {
     private String licenseNumber;
     private String nationalID;
@@ -82,19 +51,6 @@ class DriverRegistration extends Registration {
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(driver);
         userList.add(driver);
-    }
-
-    @Override
-    public void registerUser() {
-        notificationSender.notify("driver registration", this);
-    }
-
-    @Override
-    public String toString() {
-        return "Application.Core.DriverRegistration{" +
-                "licenseNumber='" + licenseNumber + '\'' +
-                ", id='" + nationalID + '\'' +
-                '}';
     }
 
     public Driver getDriver() {

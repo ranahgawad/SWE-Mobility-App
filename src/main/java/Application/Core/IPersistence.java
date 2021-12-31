@@ -9,25 +9,25 @@ public interface IPersistence {
 
     void select(User user);
 
-    void updateUserSuspened(User user);
+    boolean updateUserSuspened(User user);
 
-    void updateDriverVerification(Driver driver, int state);
+    boolean updateDriverVerification(Driver driver, int state);
 
-    void updateDriverRating(Driver driver, float rating);
+    boolean updateDriverRating(Driver driver, float rating);
 
     void insert(Ride ride);
 
     void insert(publicHolidays publicHolidays);
 
-    void updateRideisStarted(Ride ride, int started);
+    boolean updateRideisStarted(Ride ride, int started);
 
-    void updateRideisFinished(Ride ride, int finished);
+    boolean updateRideisFinished(Ride ride, int finished);
 
-    void updateCountRides(Passenger passenger, int countRides);
+    boolean updateCountRides(Passenger passenger, int countRides);
 
-    void updateDiscount(Ride ride, double dicount);
+    boolean updateDiscount(Ride ride, double dicount);
 
-    void updatePrice(Ride ride, double price);
+    boolean updatePrice(Ride ride, double price);
 
 
     void clearTable(String tableName);

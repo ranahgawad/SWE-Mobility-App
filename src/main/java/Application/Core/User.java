@@ -1,6 +1,9 @@
 package Application.Core;//package com.company;
 
-public abstract class User <T>
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public class User <T>
 {
 //    public static int ID;
     private String username;
@@ -9,9 +12,13 @@ public abstract class User <T>
     private String mobileNumber;
     private boolean isSuspended=false;
     private boolean isLoggedIn = false;
-    User()
-    {
+    User(){
 
+    }
+    public User(String username, String password)
+    {
+        this.username = username;
+        this.password = password;
     }
     public User(String username, String password, String email, String mobileNumber)
     {
@@ -26,7 +33,9 @@ public abstract class User <T>
         isSuspended = suspended;
     }
 
-    public abstract void update(T type, T data);
+    public void update(T type, T data){
+
+    };
 
     @Override
     public String toString() {

@@ -263,6 +263,9 @@ public class SQLImplementation implements IPersistence {
                 drivers.add(d);
                 System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID"));
             }
+            for(int i=0; i<drivers.size(); i++){
+                System.out.println(drivers.get(i).toString());
+            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -450,7 +453,6 @@ public class SQLImplementation implements IPersistence {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.setString(1, destination);
-            prestmnt.executeUpdate();
             int rowsAffected = prestmnt.executeUpdate();
 
             if (rowsAffected > 0) {

@@ -51,4 +51,9 @@ public class AdminController {
     public boolean addPublicHoliday(@RequestBody publicHolidays publicHolidays){
         return AdminModel.addPublicHoliday(publicHolidays);
     }
+
+    @PostMapping("/admin/adddiscount/{destination}")
+    public boolean addDiscount(@PathVariable  String destination){
+        return AdminModel.addDiscount(destination);
+    }
 }

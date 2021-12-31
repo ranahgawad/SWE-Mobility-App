@@ -26,7 +26,7 @@ public class SQLImplementation implements IPersistence {
     @Override
     public void insert(User user) {
         if(user instanceof Passenger) {
-            String sqlstatement = "INSERT INTO Passenger(passengerID, username, email, mobileNumber,password) Values(?,?,?,?,?)";
+            String sqlstatement = "INSERT INTO Passenger(passengerID, username, email, mobileNumber,password, countRides, birthdayDate) Values(?,?,?,?,?,?,?)";
             try {
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
@@ -48,7 +48,6 @@ public class SQLImplementation implements IPersistence {
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.setInt(1, ((Driver) user).getDriverID());
-//                prestmnt.setInt(1, 5);
                 prestmnt.setString(2, user.getUsername());
                 prestmnt.setString(3, user.getPassword());
                 prestmnt.setString(4, user.getEmail());
@@ -60,9 +59,7 @@ public class SQLImplementation implements IPersistence {
                 prestmnt.setString(10, ((Driver) user).getNationalID());
                 prestmnt.setDouble(11, ((Driver) user).getBalance());
                 prestmnt.executeUpdate();
-//                if(conn != null){
-//                    conn.close();
-//                }
+
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -308,7 +305,7 @@ public class SQLImplementation implements IPersistence {
 //                }else{
 //                   isSuspended = false;
 //               }
-               Passenger p = new Passenger( result.getString("username"), result.getString("password"),  result.getString("email"), result.getString("mobileNumber"));
+               Passenger p = new Passenger( result.getString("username"), result.getString("password"),  result.getString("email"), result.getString("mobileNumber"), result.getString("birthDay"));
                passengers.add(p);
               System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Application.Core.Passenger suspended: " + result.getInt("isSuspended"));
                 System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Passenger suspended: " + result.getInt("isSuspended")+" ,countRides: "+result.getInt("countRides" )+ " ,birthdayDate: "+result.getString("birthdayDate"));

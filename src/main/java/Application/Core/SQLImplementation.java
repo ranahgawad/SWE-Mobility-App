@@ -10,7 +10,7 @@ public class SQLImplementation implements IPersistence {
     private Connection conn;
 
 
-    private SQLImplementation(){
+    public SQLImplementation(){
 
     }
     public static SQLImplementation getInstance(){
@@ -165,6 +165,19 @@ public class SQLImplementation implements IPersistence {
     }
 
     @Override
+    public void clearTable(String tableName) {
+        String sqlstatement = "DELETE FROM " + tableName +";";
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
     public List<Passenger> getAllPasengers() {
         String sqlstatement = "SELECT * FROM Passenger";
         List<Passenger> passengers = new ArrayList<>();
@@ -255,4 +268,6 @@ public class SQLImplementation implements IPersistence {
         }
         return drivers;
     }
+
+
 }

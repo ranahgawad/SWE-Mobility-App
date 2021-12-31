@@ -22,9 +22,12 @@ public interface IPersistence {
 
     void updateRideisFinished(Ride ride, int finished);
 
+    void clearTable(String tableName);
+
     List<Passenger> getAllPasengers();
 
     List<Driver> getAllDrivers();
 
     List<Driver> getPendingDriverVerifications();
+
 }

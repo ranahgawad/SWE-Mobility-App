@@ -1,7 +1,6 @@
 package Application.Core;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

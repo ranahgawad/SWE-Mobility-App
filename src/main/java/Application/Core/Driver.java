@@ -1,14 +1,11 @@
 package Application.Core;//package com.company;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-<<<<<<< HEAD
+
 
 import java.util.ArrayList;
-
-=======
-
 import java.util.ArrayList;
->>>>>>> ec763374c364d97653419dc09cc7e7077baea8a5
+
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Driver extends User {
     private static int count = 0;

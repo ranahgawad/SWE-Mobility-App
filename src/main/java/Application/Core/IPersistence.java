@@ -37,6 +37,8 @@ public interface IPersistence {
 
     List<Driver> getAllDrivers();
 
+    Driver getCurrentDriver(User user);
+
     List<Driver> getPendingDriverVerifications();
 
 }

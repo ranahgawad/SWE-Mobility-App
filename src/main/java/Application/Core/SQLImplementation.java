@@ -273,6 +273,41 @@ public class SQLImplementation implements IPersistence {
         return drivers;
     }
 
+    public Driver getCurrentDriver(User user) {
+        String sqlstatement = "SELECT * FROM Driver" + " WHERE username ='" + user.getUsername() + "' AND password ='" + user.getPassword() + "'";
+        Driver driver = null;
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            ResultSet result = prestmnt.executeQuery();
+            while (result.next()) {
+                if (result.getString("username") != null && result.getString("password") != null) {
+                    String username = result.getString("username");
+                    String email = result.getString("email");
+                    String mobile = result.getString("mobileNumber");
+                    String password = result.getString("password");
+                    String licenceNumber = String.valueOf(result.getInt("licenceNumber"));
+                    String nationalID = String.valueOf(result.getInt("licenceNumber"));
+                    boolean isSuspended;
+                    if (result.getInt("isSuspended") == 1) {
+                        isSuspended = true;
+                    } else {
+                        isSuspended = false;
+                    }
+                    driver = new Driver(username, password, email, mobile, licenceNumber, nationalID);
+
+                    System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID") + ",averageRating: " + result.getDouble("averageRating"));
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+
+        }
+        return driver;
+    }
+
     @Override
     public List<Driver> getAllDrivers() {
         String sqlstatement = "SELECT * FROM Driver";

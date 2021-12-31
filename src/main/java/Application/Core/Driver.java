@@ -166,4 +166,24 @@ public class Driver extends User {
     public ArrayList<Ride> getFinishedRides() {
         return finishedRides;
     }
+
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "driverID=" + driverID +
+                ", isVerfied=" + isVerfied +
+                ", licenseNumber='" + licenseNumber + '\'' +
+                ", nationalID='" + nationalID + '\'' +
+                ", isAvailable=" + isAvailable +
+                ", favoriteAreas=" + favoriteAreas +
+                ", rideRequests=" + rideRequests +
+                ", averageRating=" + averageRating +
+                ", driverModel=" + driverModel +
+                ", notificationSender=" + notificationSender +
+                ", driverRatings=" + driverRatings +
+                ", finishedRides=" + finishedRides +
+                ", carCapacity=" + carCapacity +
+                ", currentCapacity=" + currentCapacity +
+                '}';
+    }
 }

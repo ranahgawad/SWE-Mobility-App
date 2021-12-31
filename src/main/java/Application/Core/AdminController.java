@@ -32,6 +32,7 @@ public class AdminController {
 
         return AdminModel.getPendingDriverVerifications();
     }
+
     @GetMapping("/hello")
     public String Hello(){
         return "hello";

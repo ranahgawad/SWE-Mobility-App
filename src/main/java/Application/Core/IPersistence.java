@@ -3,7 +3,7 @@ package Application.Core;
 import java.util.List;
 
 public interface IPersistence {
-    void insert(User user);
+    boolean insert(User user);
 
     void delete(User user);
 
@@ -29,6 +29,7 @@ public interface IPersistence {
 
     boolean updatePrice(Ride ride, double price);
 
+     boolean insertUser(User user);
 
     void clearTable(String tableName);
 

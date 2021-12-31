@@ -16,16 +16,21 @@ class PassengerRegistration extends Registration {
         this.birthdayDate = birthdayDate;
     }
 
-    public PassengerRegistration(String username, String password, String email, String mobileNumber, String birthdayDate)  {
-
+     PassengerRegistration(String username, String password, String email, String mobileNumber, String birthdayDate)  {
         this.birthdayDate=birthdayDate;
         passenger = new Passenger(username, password, email, mobileNumber,birthdayDate);
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(passenger);
         connection.insertUser((User) passenger);
-        userList.add(passenger);
     }
 
+    static boolean Regestier(Passenger passenger){
+        SQLImplementation connection = SQLImplementation.getInstance();
+        if(connection.insert(passenger) && connection.insertUser((User) passenger))
+            return true;
+        else
+            return false;
+    }
     public Passenger getPassenger() {
         return passenger;
     }

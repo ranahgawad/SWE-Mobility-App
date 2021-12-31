@@ -42,7 +42,7 @@ public class SQLImplementation implements IPersistence {
 
 
     // Registeration
-    public void insertUser(User user) {
+    public boolean insertUser(User user) {
         String sqlstatement = "INSERT INTO Users(username, password) Values(?,?)";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
@@ -52,59 +52,63 @@ public class SQLImplementation implements IPersistence {
             int rowsAffected = prestmnt.executeUpdate();
 
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "User successfully inserted!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Coule not insertUser!", "notInserted", JOptionPane.ERROR_MESSAGE);
+                return true;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
 
     @Override
-    public void insert(User user) {
+    public boolean insert(User user) {
         if (user instanceof Passenger) {
-            String sqlstatement = "INSERT INTO Passenger(passengerID, username, email, mobileNumber,password, countRides, birthdayDate) Values(?,?,?,?,?,?,?)";
+            String sqlstatement = "INSERT INTO Passenger(username, email, mobileNumber,password, countRides, birthdayDate) Values(?,?,?,?,?,?)";
             try {
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-                prestmnt.setInt(1, ((Passenger) user).getPassengerID());
-                prestmnt.setString(2, user.getUsername());
-                prestmnt.setString(3, user.getEmail());
-                prestmnt.setString(4, user.getMobileNumber());
-                prestmnt.setString(5, user.getPassword());
-                prestmnt.setInt(6, ((Passenger) user).getCountRides());
-                prestmnt.setString(7, (((Passenger) user).getBirthdayDate()));
-                prestmnt.executeUpdate();
+                prestmnt.setString(1, user.getUsername());
+                prestmnt.setString(2, user.getEmail());
+                prestmnt.setString(3, user.getMobileNumber());
+                prestmnt.setString(4, user.getPassword());
+                prestmnt.setInt(5, ((Passenger) user).getCountRides());
+                prestmnt.setString(6, (((Passenger) user).getBirthdayDate()));
+                int rowsAffected = prestmnt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    return true;
+                }
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         } else if (user instanceof Driver) {
-            String sqlstatement = "INSERT INTO Driver(driverID, username, password, email,mobileNumber, isSuspended, isVerified, licenceNumber, averageRating, nationalID,balance) Values(?,?,?,?,?,?,?,?,?,?,?)";
+            String sqlstatement = "INSERT INTO Driver(username, password, email,mobileNumber, isSuspended, isVerified, licenceNumber, averageRating, nationalID,balance) Values(?,?,?,?,?,?,?,?,?,?)";
             try {
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-                prestmnt.setInt(1, ((Driver) user).getDriverID());
-                prestmnt.setString(2, user.getUsername());
-                prestmnt.setString(3, user.getPassword());
-                prestmnt.setString(4, user.getEmail());
-                prestmnt.setString(5, user.getMobileNumber());
-                prestmnt.setBoolean(6, ((Driver) user).getisSuspended());
-                prestmnt.setBoolean(7, ((Driver) user).getisVerified());
-                prestmnt.setString(8, ((Driver) user).getLicenseNumber());
-                prestmnt.setFloat(9, ((Driver) user).getAverageRating());
-                prestmnt.setString(10, ((Driver) user).getNationalID());
-                prestmnt.setDouble(11, ((Driver) user).getBalance());
-                prestmnt.executeUpdate();
-
-
+//                prestmnt.setInt(1, ((Driver) user).getDriverID());
+                prestmnt.setString(1, user.getUsername());
+                prestmnt.setString(2, user.getPassword());
+                prestmnt.setString(3, user.getEmail());
+                prestmnt.setString(4, user.getMobileNumber());
+                prestmnt.setBoolean(5, ((Driver) user).getisSuspended());
+                prestmnt.setBoolean(6, ((Driver) user).getisVerified());
+                prestmnt.setString(7, ((Driver) user).getLicenseNumber());
+                prestmnt.setFloat(8, ((Driver) user).getAverageRating());
+                prestmnt.setString(9, ((Driver) user).getNationalID());
+                prestmnt.setDouble(10, ((Driver) user).getBalance());
+                int rowsAffected = prestmnt.executeUpdate();
+                if (rowsAffected > 0) {
+                    return true;
+                }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
+        return false;
     }
 
     @Override
@@ -121,7 +125,7 @@ public class SQLImplementation implements IPersistence {
     @Override
     public boolean updateUserSuspened(User user) {
         if (user instanceof Passenger) {
-            String sqlstatement = "UPDATE Passenger SET isSuspended=1 WHERE passengerID=" + ((Passenger) user).getPassengerID();
+            String sqlstatement = "UPDATE Passenger SET isSuspended=1" + " WHERE username ='" + user.getUsername() +"'";
             try {
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
@@ -137,7 +141,7 @@ public class SQLImplementation implements IPersistence {
             }
             return false;
         } else if (user instanceof Driver) {
-            String sqlstatement = "UPDATE Driver SET isSuspended=1 WHERE driverID=" + ((Driver) user).getDriverID();
+            String sqlstatement = "UPDATE Driver SET isSuspended=1" + " WHERE username ='" + user.getUsername() +"'";
             try {
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
@@ -301,7 +305,7 @@ public class SQLImplementation implements IPersistence {
 
     @Override
     public boolean updateDriverRating(Driver driver, float rating) {
-        String sqlstatement = "UPDATE Driver SET averageRating=" + rating + " WHERE driverID=" + driver.getDriverID();
+        String sqlstatement = "UPDATE Driver SET averageRating=" + rating + " WHERE username ='" + driver.getUsername() +"'";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
@@ -380,7 +384,7 @@ public class SQLImplementation implements IPersistence {
 
     @Override
     public boolean updateCountRides(Passenger passenger, int countRides) {
-        String sqlstatement = "UPDATE Passenger SET countRides=" + countRides + " WHERE passengerID=" + passenger.getPassengerID();
+        String sqlstatement = "UPDATE Passenger SET countRides=" + countRides + " WHERE username ='" + passenger.getUsername() +"'";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
@@ -451,7 +455,7 @@ public class SQLImplementation implements IPersistence {
     }
 
     public boolean checkDiscountedDestinations(String destination) {
-        String sqlstatement = "SELECT * FROM discountDestinations Where destination = destination";
+        String sqlstatement = "SELECT * FROM discountDestinations" + " WHERE destination ='" + destination +"'";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();
@@ -464,7 +468,7 @@ public class SQLImplementation implements IPersistence {
     }
 
     public void updateDriverBalance(Driver driver) {
-        String sqlstatement = "UPDATE Driver SET balance=" + driver.getBalance() + " WHERE driverID=" + driver.getDriverID();
+        String sqlstatement = "UPDATE Driver SET balance=" + driver.getBalance() + " WHERE username ='" + driver.getUsername() +"'";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);

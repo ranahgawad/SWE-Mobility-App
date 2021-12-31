@@ -46,15 +46,14 @@ public class AdminModel {
     {
         driver.setVerfied(true);
         IPersistence connection = SQLImplementation.getInstance();
-        connection.updateDriverVerification(driver, 1);
-        return true;
+        return connection.updateDriverVerification(driver, 1);
+
     }
     public static boolean suspend(User user)
     {
         user.setSuspended(true);
         IPersistence connection = SQLImplementation.getInstance();
-        connection.updateUserSuspened(user);
-        return true;
+        return connection.updateUserSuspened(user);
     }
 
 

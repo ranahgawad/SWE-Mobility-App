@@ -22,6 +22,7 @@ public class SQLImplementation implements IPersistence {
         return instance;
     }
 
+    //Login
     public boolean userExists(String username, String password) {
         String sqlstatement = "SELECT * FROM Users" + " WHERE username ='" + username + "' AND password ='" + password + "'";
         try {
@@ -39,6 +40,8 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
+
+    // Registeration
     public void insertUser(User user) {
         String sqlstatement = "INSERT INTO Users(username, password) Values(?,?)";
         try {
@@ -114,6 +117,7 @@ public class SQLImplementation implements IPersistence {
 
     }
 
+    // Admin
     @Override
     public boolean updateUserSuspened(User user) {
         if (user instanceof Passenger) {
@@ -154,7 +158,7 @@ public class SQLImplementation implements IPersistence {
 
     @Override
     public boolean updateDriverVerification(Driver driver, int state) {
-        String sqlstatement = "UPDATE Driver SET isVerified=" + state + " WHERE driverID=" + driver.getDriverID();
+        String sqlstatement = "UPDATE Driver SET isVerified=" + state + " WHERE username ='" + driver.getUsername() +"'";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
@@ -170,6 +174,130 @@ public class SQLImplementation implements IPersistence {
         }
         return false;
     }
+
+    @Override
+    public void insert(publicHolidays publicHolidays) {
+        String sqlstatement = "INSERT INTO publicHolidays(publicHolidayName, publicHolidayDate) Values(?,?)";
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.setString(1, publicHolidays.getPublicHolidayName());
+            prestmnt.setString(2, publicHolidays.getPublicHolidayDate());
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    @Override
+    public void clearTable(String tableName) {
+        String sqlstatement = "DELETE FROM " + tableName + ";";
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Passenger> getAllPasengers() {
+        String sqlstatement = "SELECT * FROM Passenger";
+        List<Passenger> passengers = new ArrayList<>();
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
+//            int id;
+//            String username;
+//            String email;
+//            String mobile;
+//            String password;
+            while (result.next()) {
+//               boolean isSuspended ;
+//               if (result.getInt("isSuspended") == 1) {
+//                   isSuspended = true;
+//                }else{
+//                   isSuspended = false;
+//               }
+                Passenger p = new Passenger(result.getString("username"), result.getString("password"), result.getString("email"), result.getString("mobileNumber"), result.getString("birthDay"));
+                passengers.add(p);
+                System.out.println("PassengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",Is Application.Core.Passenger suspended: " + result.getInt("isSuspended"));
+                System.out.println("PassengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",Is Passenger suspended: " + result.getInt("isSuspended") + " ,countRides: " + result.getInt("countRides") + " ,birthdayDate: " + result.getString("birthdayDate"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return passengers;
+    }
+
+    @Override
+    public List<Driver> getPendingDriverVerifications() {
+        String sqlstatement = "SELECT * FROM Driver WHERE isVerified=0";
+        List<Driver> drivers = new ArrayList<>();
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
+
+            while (result.next()) {
+//                boolean isSuspended ;
+//                if (result.getInt("isSuspended") == 1) {
+//                    isSuspended = true;
+//                }else{
+//                    isSuspended = false;
+//                }
+                Driver d = new Driver(result.getString("username"), result.getString("password"), result.getString("email"), result.getString("mobileNumber"), String.valueOf(result.getInt("licenceNumber")), String.valueOf(result.getInt("licenceNumber")));
+                drivers.add(d);
+                System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return drivers;
+    }
+
+    @Override
+    public List<Driver> getAllDrivers() {
+        String sqlstatement = "SELECT * FROM Driver";
+        List<Driver> drivers = new ArrayList<>();
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
+
+            while (result.next()) {
+                String username = result.getString("username");
+                String email = result.getString("email");
+                String mobile = result.getString("mobileNumber");
+                String password = result.getString("password");
+                String licenceNumber = String.valueOf(result.getInt("licenceNumber"));
+                String nationalID = String.valueOf(result.getInt("licenceNumber"));
+                boolean isSuspended;
+                if (result.getInt("isSuspended") == 1) {
+                    isSuspended = true;
+                } else {
+                    isSuspended = false;
+                }
+                Driver d = new Driver(username, password, email, mobile, licenceNumber, nationalID);
+                drivers.add(d);
+                System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID") + ",averageRating: " + result.getDouble("averageRating"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return drivers;
+    }
+
+
+    // ----- End of Admin ---///
 
     @Override
     public boolean updateDriverRating(Driver driver, float rating) {
@@ -203,21 +331,6 @@ public class SQLImplementation implements IPersistence {
             prestmnt.setString(4, ride.getDestination());
             prestmnt.setBoolean(5, ride.getisStarted());
             prestmnt.setBoolean(6, ride.getisFinished());
-            prestmnt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public void insert(publicHolidays publicHolidays) {
-        String sqlstatement = "INSERT INTO publicHolidays(publicHolidayName, publicHolidayDate) Values(?,?)";
-        try {
-            conn = SQLDatabaseConnection.getConnectiontoDataBase();
-            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-            prestmnt.setString(1, publicHolidays.getPublicHolidayName());
-            prestmnt.setString(2, publicHolidays.getPublicHolidayDate());
             prestmnt.executeUpdate();
 
         } catch (SQLException e) {
@@ -378,108 +491,5 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
-    @Override
-    public void clearTable(String tableName) {
-        String sqlstatement = "DELETE FROM " + tableName + ";";
-        try {
-            conn = SQLDatabaseConnection.getConnectiontoDataBase();
-            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-            prestmnt.executeUpdate();
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public List<Passenger> getAllPasengers() {
-        String sqlstatement = "SELECT * FROM Passenger";
-        List<Passenger> passengers = new ArrayList<>();
-        try {
-            conn = SQLDatabaseConnection.getConnectiontoDataBase();
-            Statement prestmnt = conn.createStatement();
-            ResultSet result = prestmnt.executeQuery(sqlstatement);
-//            int id;
-//            String username;
-//            String email;
-//            String mobile;
-//            String password;
-            while (result.next()) {
-//               boolean isSuspended ;
-//               if (result.getInt("isSuspended") == 1) {
-//                   isSuspended = true;
-//                }else{
-//                   isSuspended = false;
-//               }
-                Passenger p = new Passenger(result.getString("username"), result.getString("password"), result.getString("email"), result.getString("mobileNumber"), result.getString("birthDay"));
-                passengers.add(p);
-                System.out.println("PassengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",Is Application.Core.Passenger suspended: " + result.getInt("isSuspended"));
-                System.out.println("PassengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",Is Passenger suspended: " + result.getInt("isSuspended") + " ,countRides: " + result.getInt("countRides") + " ,birthdayDate: " + result.getString("birthdayDate"));
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return passengers;
-    }
-
-    @Override
-    public List<Driver> getPendingDriverVerifications() {
-        String sqlstatement = "SELECT * FROM Driver WHERE isVerified=0";
-        List<Driver> drivers = new ArrayList<>();
-        try {
-            conn = SQLDatabaseConnection.getConnectiontoDataBase();
-            Statement prestmnt = conn.createStatement();
-            ResultSet result = prestmnt.executeQuery(sqlstatement);
-
-            while (result.next()) {
-//                boolean isSuspended ;
-//                if (result.getInt("isSuspended") == 1) {
-//                    isSuspended = true;
-//                }else{
-//                    isSuspended = false;
-//                }
-                Driver d = new Driver(result.getString("username"), result.getString("password"), result.getString("email"), result.getString("mobileNumber"), String.valueOf(result.getInt("licenceNumber")), String.valueOf(result.getInt("licenceNumber")));
-                drivers.add(d);
-                System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID"));
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return drivers;
-    }
-
-    @Override
-    public List<Driver> getAllDrivers() {
-        String sqlstatement = "SELECT * FROM Driver";
-        List<Driver> drivers = new ArrayList<>();
-        try {
-            conn = SQLDatabaseConnection.getConnectiontoDataBase();
-            Statement prestmnt = conn.createStatement();
-            ResultSet result = prestmnt.executeQuery(sqlstatement);
-
-            while (result.next()) {
-                String username = result.getString("username");
-                String email = result.getString("email");
-                String mobile = result.getString("mobileNumber");
-                String password = result.getString("password");
-                String licenceNumber = String.valueOf(result.getInt("licenceNumber"));
-                String nationalID = String.valueOf(result.getInt("licenceNumber"));
-                boolean isSuspended;
-                if (result.getInt("isSuspended") == 1) {
-                    isSuspended = true;
-                } else {
-                    isSuspended = false;
-                }
-                Driver d = new Driver(username, password, email, mobile, licenceNumber, nationalID);
-                drivers.add(d);
-                System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID") + ",averageRating: " + result.getDouble("averageRating"));
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return drivers;
-    }
 }

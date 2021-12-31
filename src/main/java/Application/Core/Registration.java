@@ -1,6 +1,8 @@
 package Application.Core;//package com.company;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public abstract class Registration {
 
@@ -32,10 +34,23 @@ public abstract class Registration {
 
 class PassengerRegistration extends Registration {
     private Passenger passenger;
+    private String birthdayDate;
 
-    PassengerRegistration(String username, String password, String email, String mobileNumber) {
+
+
+
+    public String getBirthdayDate() {
+        return birthdayDate;
+    }
+
+    public void setBirthdayDate(String birthdayDate) {
+        this.birthdayDate = birthdayDate;
+    }
+
+    PassengerRegistration(String username, String password, String email, String mobileNumber, String birthdayDate)  {
         super(username, password, email, mobileNumber);
-        passenger = new Passenger(username, password, email, mobileNumber);
+        this.birthdayDate=birthdayDate;
+        passenger = new Passenger(username, password, email, mobileNumber,birthdayDate);
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(passenger);
         userList.add(passenger);

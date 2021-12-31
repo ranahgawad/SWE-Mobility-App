@@ -7,7 +7,7 @@ import java.util.Date;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class PassengerModel {
-   private Passenger passenger;
+    private Passenger passenger;
     PassengerModel(Passenger passenger){
         this.passenger = passenger;
     }
@@ -22,7 +22,7 @@ public class PassengerModel {
     }
     public void requestRide(String source, String destination)
     {
-        RideRequest request = new RideRequest(source, destination, passenger);
+        RideRequest request = new RideRequest(source, destination, passenger, 1);
         request.sendRequest();
     }
 
@@ -37,6 +37,8 @@ public class PassengerModel {
             offer.getRequest().getRide().setStarted(true);
             offer.getRequest().getRide().getRideEvents().add(new rideOfferAccepted(date, offer.getRequest().getRide().getRequester().getUsername()));
             offer.getDriver().setCurrentCapacity(offer.getDriver().getCurrentCapacity() - 1);
+            DiscountManager.applyDiscount(offer);
+            offer.getDriver().setBalance(offer.getDriver().getBalance()+offer.getOffer());
             SQLImplementation connection = SQLImplementation.getInstance();
             connection.updateRideisStarted(offer.getRequest().getRide(), 1);
             for (int i=0; i<this.passenger.getRideOffers().size(); i++){
@@ -83,3 +85,4 @@ public class PassengerModel {
 
 
 }
+

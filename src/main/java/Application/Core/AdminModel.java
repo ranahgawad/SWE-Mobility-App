@@ -33,6 +33,14 @@ public class AdminModel {
         }
         return rideEvents;
     }
+    public void addDiscount(String destination){
+        DiscountManager.addDiscount(destination);
+
+    }
+    public void addPublicHoliday(publicHolidays publicHolidays){
+        publicHolidays.addPublicHoliday(publicHolidays);
+    }
+
 
     public static boolean verifyDriver(Driver driver)
     {

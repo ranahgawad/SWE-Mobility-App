@@ -1,10 +1,10 @@
-package Application.Core;//package com.company;
-
+//package com.company;
+package Application.Core;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.ArrayList;
+import java.util.Date;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Driver extends User {
@@ -23,6 +23,7 @@ public class Driver extends User {
     private ArrayList<Ride> finishedRides;
     private int carCapacity;
     private int currentCapacity;
+    private double balance;
 
     Driver(String username, String password, String email, String mobileNumber, String licenseNumber, String nationalID) {
         super(username, password, email, mobileNumber);
@@ -32,6 +33,7 @@ public class Driver extends User {
         rideRequests = new ArrayList<RideRequest>();
         favoriteAreas = new ArrayList<String>();
         notificationSender = new UserNotificationManager();
+        balance=0;
         count++;
         this.driverID = count;
         driverRatings = new ArrayList<>();
@@ -71,6 +73,17 @@ public class Driver extends User {
         return favoriteAreas;
     }
 
+    public void sendOffer(Double bill, RideRequest request) {
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        Offer offer = new Offer(this, bill, request,0.0);
+        offer.setDiscount(DiscountManager.calculateDiscount(offer));
+        offer.getRequest().getRide().getRideEvents().add(new rideOfferEvent(date, this.getUsername(), bill));
+        notificationSender = new UserNotificationManager(request);
+        notificationSender.subscribe(request, request.getRide().getRequester());
+        notificationSender.notify(request, offer);
+
+    }
 
     void setAvailable(boolean availability)
     {
@@ -163,24 +176,12 @@ public class Driver extends User {
     public ArrayList<Ride> getFinishedRides() {
         return finishedRides;
     }
-
-    @Override
-    public String toString() {
-        return "Driver{" +
-                "driverID=" + driverID +
-                ", isVerfied=" + isVerfied +
-                ", licenseNumber='" + licenseNumber + '\'' +
-                ", nationalID='" + nationalID + '\'' +
-                ", isAvailable=" + isAvailable +
-                ", favoriteAreas=" + favoriteAreas +
-                ", rideRequests=" + rideRequests +
-                ", averageRating=" + averageRating +
-                ", driverModel=" + driverModel +
-                ", notificationSender=" + notificationSender +
-                ", driverRatings=" + driverRatings +
-                ", finishedRides=" + finishedRides +
-                ", carCapacity=" + carCapacity +
-                ", currentCapacity=" + currentCapacity +
-                '}';
+    public void setBalance(double balance) {
+        SQLImplementation connection = SQLImplementation.getInstance();
+        this.balance = balance;
+        connection.updateDriverBalance(this);
+    }
+    public double getBalance() {
+        return balance;
     }
 }

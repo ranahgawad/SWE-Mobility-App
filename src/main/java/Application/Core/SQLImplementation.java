@@ -10,7 +10,7 @@ public class SQLImplementation implements IPersistence {
     private Connection conn;
 
 
-    public SQLImplementation(){
+    private SQLImplementation(){
 
     }
     public static SQLImplementation getInstance(){
@@ -19,6 +19,9 @@ public class SQLImplementation implements IPersistence {
         }
         return instance;
     }
+
+
+
 
     @Override
     public void insert(User user) {
@@ -32,17 +35,20 @@ public class SQLImplementation implements IPersistence {
                 prestmnt.setString(3, user.getEmail());
                 prestmnt.setString(4, user.getMobileNumber());
                 prestmnt.setString(5, user.getPassword());
+                prestmnt.setInt(6, ((Passenger) user).getCountRides());
+                prestmnt.setString(7,(((Passenger) user).getBirthdayDate()));
                 prestmnt.executeUpdate();
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }else if(user instanceof Driver){
-            String sqlstatement = "INSERT INTO Driver(driverID, username, password, email,mobileNumber, isSuspended, isVerified, licenceNumber, averageRating, nationalID) Values(?,?,?,?,?,?,?,?,?,?)";
+            String sqlstatement = "INSERT INTO Driver(driverID, username, password, email,mobileNumber, isSuspended, isVerified, licenceNumber, averageRating, nationalID,balance) Values(?,?,?,?,?,?,?,?,?,?,?)";
             try {
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.setInt(1, ((Driver) user).getDriverID());
+//                prestmnt.setInt(1, 5);
                 prestmnt.setString(2, user.getUsername());
                 prestmnt.setString(3, user.getPassword());
                 prestmnt.setString(4, user.getEmail());
@@ -52,7 +58,11 @@ public class SQLImplementation implements IPersistence {
                 prestmnt.setString(8, ((Driver) user).getLicenseNumber());
                 prestmnt.setFloat(9, ((Driver) user).getAverageRating());
                 prestmnt.setString(10, ((Driver) user).getNationalID());
+                prestmnt.setDouble(11, ((Driver) user).getBalance());
                 prestmnt.executeUpdate();
+//                if(conn != null){
+//                    conn.close();
+//                }
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -137,6 +147,21 @@ public class SQLImplementation implements IPersistence {
             System.out.println(e.getMessage());
         }
     }
+    @Override
+    public void insert(publicHolidays publicHolidays){
+        String sqlstatement = "INSERT INTO publicHolidays(publicHolidayName, publicHolidayDate) Values(?,?)";
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.setString(1, publicHolidays.getPublicHolidayName());
+            prestmnt.setString(2, publicHolidays.getPublicHolidayDate());
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     @Override
     public void updateRideisStarted(Ride ride, int started){
@@ -162,6 +187,92 @@ public class SQLImplementation implements IPersistence {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void updateCountRides(Passenger passenger, int countRides){
+        String sqlstatement = "UPDATE Passenger SET countRides="+countRides+" WHERE passengerID="+ passenger.getPassengerID();
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateDiscount(Ride ride, double dicount){
+        String sqlstatement = "UPDATE Ride SET Discount="+dicount+" WHERE RideID="+ ride.getRideID();
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    @Override
+    public void updatePrice(Ride ride, double price){
+        String sqlstatement = "UPDATE Ride SET Price="+price+" WHERE RideID="+ ride.getRideID();
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void insert(String destination){
+        String sqlstatement = "INSERT INTO discountDestinations(destination) Values(?)";
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.setString(1, destination);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public boolean checkDiscountedDestinations(String destination){
+        String sqlstatement = "SELECT * FROM discountDestinations Where destination = destination";
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
+            if(result.next()) return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+    public void updateDriverBalance(Driver driver){
+        String sqlstatement = "UPDATE Driver SET balance="+driver.getBalance()+" WHERE driverID="+ driver.getDriverID();
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+    public boolean checkPublicHoliday(String currDate){
+        String sqlstatement = "SELECT * FROM publicHolidays Where publicHolidayDate ="+currDate;
+        try{
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
+            if(result!=null) {return true;}
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     @Override
@@ -200,8 +311,8 @@ public class SQLImplementation implements IPersistence {
                Passenger p = new Passenger( result.getString("username"), result.getString("password"),  result.getString("email"), result.getString("mobileNumber"));
                passengers.add(p);
               System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Application.Core.Passenger suspended: " + result.getInt("isSuspended"));
+                System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Passenger suspended: " + result.getInt("isSuspended")+" ,countRides: "+result.getInt("countRides" )+ " ,birthdayDate: "+result.getString("birthdayDate"));
             }
-
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -268,6 +379,4 @@ public class SQLImplementation implements IPersistence {
         }
         return drivers;
     }
-
-
 }

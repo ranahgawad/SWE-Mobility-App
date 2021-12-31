@@ -17,7 +17,7 @@ public class DriverModel {
     public void sendOffer(Double bill, RideRequest request) {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
-        Offer offer = new Offer(driver, bill, request);
+        Offer offer = new Offer(driver, bill, request, 1);
         offer.getRequest().getRide().getRideEvents().add(new rideOfferEvent(date, driver.getUsername(), bill));
         notificationSender = new UserNotificationManager(request);
         notificationSender.subscribe(request, request.getRide().getRequester());

@@ -9,13 +9,17 @@ public class Passenger extends User
 {
     private static int count=0;
     private int PassengerID;
+    private String birthdayDate;
     private ArrayList<Offer> rideOffers;
     private PassengerModel passengerModel;
+    private static int countRides=0;
 
 
-    Passenger(String username, String password, String email, String mobileNumber)
+    Passenger(String username, String password, String email, String mobileNumber,  String birthdayDate)
     {
+
         super(username, password, email, mobileNumber);
+        this.birthdayDate=birthdayDate;
         rideOffers = new ArrayList<Offer>();
         count++ ;
         this.PassengerID = count;
@@ -31,6 +35,15 @@ public class Passenger extends User
 
     public ArrayList<Offer> getRideOffers() {
         return rideOffers;
+    }
+
+
+    public String getBirthdayDate() {
+        return birthdayDate;
+    }
+
+    public void setBirthdayDate(String birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 
     @Override
@@ -75,6 +88,21 @@ public class Passenger extends User
         return PassengerID;
     }
 
+    public int getCountRides() {
+        return countRides;
+    }
+
+    public void setCountRides() {
+        SQLImplementation connection = SQLImplementation.getInstance();
+        for(int i=0; i< rideOffers.size();i++){
+            if(rideOffers.get(i).getRequest().getRide().getisFinished() == true){
+                countRides++;
+            }
+            connection.updateCountRides((rideOffers.get(i).getRequest().getRide().getRequester()),countRides);
+        }
+
+    }
+
 
     @Override
     public void update(Object type, Object data) {
@@ -84,4 +112,3 @@ public class Passenger extends User
 
 
 }
-

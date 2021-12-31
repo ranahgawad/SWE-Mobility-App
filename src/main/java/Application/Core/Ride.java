@@ -1,6 +1,5 @@
 package Application.Core;//package com.company;
 
-
 import java.util.ArrayList;
 
 public class Ride {
@@ -15,16 +14,14 @@ public class Ride {
     public static int count = 0;
     private int rideID;
     private ArrayList<Event> rideEvents;
-    private int num_passengers;
 
-    public Ride(String source, String destination, Passenger requester, int num_passengers) {
+    public Ride(String source, String destination, Passenger requester) {
         isStarted = false;
         isFinished = false;
         this.destination = destination;
         this.source = source;
         this.requester = requester;
         this.receiver = receiver;
-        this.num_passengers = num_passengers;
         count++;
         this.rideID = count;
         this.rideEvents = new ArrayList<>();
@@ -60,7 +57,6 @@ public class Ride {
 
     public void setStarted(boolean started) {
         isStarted = started;
-        this.receiver.setAvailable(false);
     }
 
     public String getDestination() {
@@ -74,7 +70,6 @@ public class Ride {
 
     public void setReceiver(Driver receiver) {
         this.receiver = receiver;
-        this.receiver.setAvailable(false);
     }
 
     public String getSource() {
@@ -87,7 +82,6 @@ public class Ride {
 
     public void setFinished(boolean finished) {
         isFinished = finished;
-        this.receiver.setAvailable(true);
     }
 }
 
@@ -97,15 +91,9 @@ class RideRequest {
     Ride ride;
 
     RideRequest(String source, String destination, Passenger requester, int num_passengers) {
-        ride = new Ride(source, destination, requester, num_passengers);
+        ride = new Ride(source, destination, requester);
         notificationSender.setListeners(ride.getDestination());
     }
-
-    RideRequest(String source, String destination, Passenger requester) {
-        ride = new Ride(source, destination, requester, 1);
-        notificationSender.setListeners(ride.getDestination());
-    }
-
 
 
     public Ride getRide() {
@@ -126,18 +114,35 @@ class RideRequest {
                 '}';
     }
 }
-
 class Offer {
     Driver driver;
-    Double offer;
+    double offer;
     RideRequest request;
     public UserNotificationManager notificationSender;
-
-    public Offer(Driver driver, Double offer, RideRequest request) {
+    public double discount;
+    public Offer(Driver driver, Double offer, RideRequest request, double discount) {
         this.driver = driver;
         this.offer = offer;
         this.request = request;
+        this.discount=discount;
         notificationSender = new UserNotificationManager(this.request);
+    }
+
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public Double getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Double offer) {
+        this.offer = offer;
     }
 
     public RideRequest getRequest() {
@@ -153,9 +158,19 @@ class Offer {
     public String toString() {
         return "Application.Core.Offer{" +
                 "driver=" + driver +
+                ", discount="+(1-discount)*100+"%"+
                 ", offer=" + offer +
+                ", offer after discount="+offer*discount+
                 ", request=" + request +
                 '}';
     }
 }
+
+
+
+
+
+
+
+
 

@@ -1,6 +1,5 @@
 package Application.Core;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IPersistence {
@@ -18,9 +17,18 @@ public interface IPersistence {
 
     void insert(Ride ride);
 
+    void insert(publicHolidays publicHolidays);
+
     void updateRideisStarted(Ride ride, int started);
 
     void updateRideisFinished(Ride ride, int finished);
+
+    void updateCountRides(Passenger passenger, int countRides);
+
+    void updateDiscount(Ride ride, double dicount);
+
+    void updatePrice(Ride ride, double price);
+
 
     void clearTable(String tableName);
 

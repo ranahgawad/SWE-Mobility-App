@@ -16,7 +16,7 @@ public class AdminModel {
         return connection.getAllPasengers();
     }
 
-    public List<Driver> getAllDrivers(){
+    public static List<Driver> getAllDrivers(){
         IPersistence connection = SQLImplementation.getInstance();
         return  connection.getAllDrivers();
     }
@@ -26,7 +26,7 @@ public class AdminModel {
         return connection.getPendingDriverVerifications();
     }
 
-    public List<Event> showRideEvents(Ride ride){
+    public static List<Event> showRideEvents(Ride ride){
         List<Event> rideEvents = ride.getRideEvents();
         for(int i=0; i< rideEvents.size(); i++){
             System.out.println(rideEvents.get(i).toString());
@@ -34,14 +34,14 @@ public class AdminModel {
         return rideEvents;
     }
 
-    public boolean verifyDriver(Driver driver)
+    public static boolean verifyDriver(Driver driver)
     {
         driver.setVerfied(true);
         IPersistence connection = SQLImplementation.getInstance();
         connection.updateDriverVerification(driver, 1);
         return true;
     }
-    public boolean suspend(User user)
+    public static boolean suspend(User user)
     {
         user.setSuspended(true);
         IPersistence connection = SQLImplementation.getInstance();

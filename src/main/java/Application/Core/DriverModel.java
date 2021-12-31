@@ -1,8 +1,11 @@
 package Application.Core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class DriverModel {
 
     Driver driver;

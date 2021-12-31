@@ -172,23 +172,21 @@ public class SQLImplementation implements IPersistence {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();
             ResultSet result = prestmnt.executeQuery(sqlstatement);
-            
-
+//            int id;
+//            String username;
+//            String email;
+//            String mobile;
+//            String password;
             while(result.next()){
-                int id = result.getInt("passengerID");
-                String username = result.getString("username");
-                String email = result.getString("email");
-                String mobile = result.getString("mobileNumber");
-                String password = result.getString("password");
-               boolean isSuspended ;
-               if (result.getInt("isSuspended") == 1) {
-                   isSuspended = true;
-                }else{
-                   isSuspended = false;
-               }
-               Passenger p = new Passenger(username, password, email, mobile);
+//               boolean isSuspended ;
+//               if (result.getInt("isSuspended") == 1) {
+//                   isSuspended = true;
+//                }else{
+//                   isSuspended = false;
+//               }
+               Passenger p = new Passenger( result.getString("username"), result.getString("password"),  result.getString("email"), result.getString("mobileNumber"));
                passengers.add(p);
-//               System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Application.Core.Passenger suspended: " + result.getInt("isSuspended"));
+              System.out.println("PassengerID:"+result.getInt("passengerID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",Is Application.Core.Passenger suspended: " + result.getInt("isSuspended"));
             }
 
 
@@ -208,19 +206,13 @@ public class SQLImplementation implements IPersistence {
             ResultSet result = prestmnt.executeQuery(sqlstatement);
 
             while(result.next()){
-                String username = result.getString("username");
-                String email = result.getString("email");
-                String mobile = result.getString("mobileNumber");
-                String password = result.getString("password");
-                String licenceNumber = String.valueOf(result.getInt("licenceNumber"));
-                String nationalID = String.valueOf(result.getInt("licenceNumber"));
-                boolean isSuspended ;
-                if (result.getInt("isSuspended") == 1) {
-                    isSuspended = true;
-                }else{
-                    isSuspended = false;
-                }
-                Driver d = new Driver(username, password, email, mobile,licenceNumber, nationalID);
+//                boolean isSuspended ;
+//                if (result.getInt("isSuspended") == 1) {
+//                    isSuspended = true;
+//                }else{
+//                    isSuspended = false;
+//                }
+                Driver d = new Driver(result.getString("username"), result.getString("password"), result.getString("email"), result.getString("mobileNumber"),String.valueOf(result.getInt("licenceNumber")), String.valueOf(result.getInt("licenceNumber")));
                 drivers.add(d);
                 System.out.println("driverID:"+result.getInt("driverID")+ ",username: "+ result.getString("username")+",email: "+ result.getString("email")+ ",mobile number: " + result.getString("mobileNumber")+ ",isDriverSuspended: " + result.getInt("isSuspended")+ ",isDriverVerified: " + result.getInt("isVerified")+",licenceNumber: " + result.getInt("licenceNumber")+",nationalID: " + result.getString("nationalID"));
             }

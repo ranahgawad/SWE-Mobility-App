@@ -24,7 +24,7 @@ public class AdminController {
 
     @GetMapping("/admin/getAllDrivers")
     public List<Driver> getAllDrivers(){
-        return getAllDrivers();
+        return AdminModel.getAllDrivers();
     }
 
     @GetMapping("/admin/getPendingVerifications")
@@ -37,10 +37,12 @@ public class AdminController {
         return "hello";
     }
 
-//    @GetMapping("/admin/showRideEvents")
-//    public ArrayList<Event> showEvents(Ride ride){
-//       return showRideEvents(ride);
-//    }
+    @GetMapping("/admin/showRideEvents")
+    public List<Event> showEvents(@RequestBody Ride ride){
+       return AdminModel.showRideEvents(ride);
+    }
+
+
     @GetMapping("/admin/test")
     public boolean test(){
         return true;
@@ -50,14 +52,10 @@ public class AdminController {
     @PostMapping("/admin/verifyDriver")
     public boolean verifyDriver(@RequestBody Driver driver)
     {
-      return true;
+      return AdminModel.verifyDriver(driver);
     }
 
-//    @GetMapping("/admin/verifyDriver")
-//    public void verifyDriver(Application.Core.Driver driver)
-//    {
-//      adminModel.verifyDriver(driver);
-//    }
+
 
 //
 //    @GetMapping("/admin/suspendUser")

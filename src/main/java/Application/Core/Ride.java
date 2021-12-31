@@ -30,7 +30,6 @@ public class Ride {
         this.rideEvents = new ArrayList<>();
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
-
     }
 
     public ArrayList<Event> getRideEvents() {

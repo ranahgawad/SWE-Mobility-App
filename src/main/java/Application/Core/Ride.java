@@ -1,6 +1,7 @@
 package Application.Core;//package com.company;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 
@@ -26,12 +27,15 @@ public class Ride {
         this.source = source;
         this.requester = requester;
         this.receiver = receiver;
-//        count++;
-//        this.rideID = count;
         this.rideEvents = new ArrayList<>();
+
+    }
+
+
+    public void insertRide(Ride ride){
         SQLImplementation connection = SQLImplementation.getInstance();
-        connection.insert(this);
-        connection.setRideID(this);
+        connection.insert(ride);
+        connection.setRideID(ride);
     }
 
     public ArrayList<Event> getRideEvents() {
@@ -101,6 +105,8 @@ class RideRequest {
 
     RideRequest(String source, String destination, Passenger requester, int num_passengers) {
         ride = new Ride(source, destination, requester);
+        ride.insertRide(ride);
+        Admin.addRide(ride);
         notificationSender.setListeners(ride.getDestination());
     }
 
@@ -126,7 +132,9 @@ class RideRequest {
 class Offer {
     Driver driver;
     double offer;
+    @JsonIgnore
     RideRequest request;
+    @JsonIgnore
     public UserNotificationManager notificationSender;
     public double discount;
     int numPassengers;

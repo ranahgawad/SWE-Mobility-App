@@ -7,7 +7,6 @@ import java.util.Map;
 
 import jdk.nashorn.internal.ir.ObjectNode;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.PostConstruct;
 
 @RestController
@@ -18,7 +17,6 @@ public class PassengerController {
 
     public PassengerController() {
     }
-
 
     @PostMapping("/requestRide")
     public String requestRide(@RequestParam String source,@RequestParam String destination,@RequestParam int num_passengers){

@@ -16,6 +16,7 @@ public class Driver extends User {
     private String nationalID;
     private boolean isAvailable;
     private ArrayList<String> favoriteAreas;
+    @JsonIgnore
     private ArrayList<RideRequest> rideRequests;
     private float averageRating;
     @JsonIgnore

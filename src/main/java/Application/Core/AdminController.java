@@ -2,6 +2,7 @@ package Application.Core;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,10 @@ public class AdminController {
        return AdminModel.showRideEvents(ride);
     }
 
-
+    @GetMapping("/admin/getAllRides")
+    public ArrayList<Ride> getAllRides(){
+        return AdminModel.getAllRides();
+    }
     @PutMapping("/admin/verifyDriver")
     public boolean verifyDriver(@RequestBody Driver driver)
     {

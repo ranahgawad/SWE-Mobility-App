@@ -11,6 +11,7 @@ public class Passenger extends User
     private static int count;
     private int PassengerID;
     private String birthdayDate;
+    @JsonIgnore
     private ArrayList<Offer> rideOffers;
     private static int countRides=0;
     @JsonIgnore
@@ -20,15 +21,10 @@ public class Passenger extends User
 
     Passenger(String username, String password, String email, String mobileNumber,  String birthdayDate)
     {
-
         super(username, password, email, mobileNumber);
         this.birthdayDate=birthdayDate;
         rideOffers = new ArrayList<Offer>();
-//        count++ ;
-//        this.PassengerID = count;
         passengerModel = new PassengerModel(this);
-//        SQLImplementation connection = SQLImplementation.getInstance();
-//        connection.insert(this);
     }
 
     @Override

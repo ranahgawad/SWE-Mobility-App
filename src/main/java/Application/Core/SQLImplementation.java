@@ -267,19 +267,9 @@ public class SQLImplementation implements IPersistence {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();
             ResultSet result = prestmnt.executeQuery(sqlstatement);
-//            int id;
-//            String username;
-//            String email;
-//            String mobile;
-//            String password;
             while (result.next()) {
-//               boolean isSuspended ;
-//               if (result.getInt("isSuspended") == 1) {
-//                   isSuspended = true;
-//                }else{
-//                   isSuspended = false;
-//               }
-                Passenger p = new Passenger(result.getString("username"), result.getString("password"), result.getString("email"), result.getString("mobileNumber"), result.getString("birthDay"));
+                Passenger p = new Passenger(result.getString("username"), result.getString("password"), result.getString("email"), result.getString("mobileNumber"), result.getString("birthdayDate"));
+                p.setPassengerID(result.getInt("passengerID"));
                 passengers.add(p);
                 System.out.println("PassengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",Is Application.Core.Passenger suspended: " + result.getInt("isSuspended"));
                 System.out.println("PassengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",Is Passenger suspended: " + result.getInt("isSuspended") + " ,countRides: " + result.getInt("countRides") + " ,birthdayDate: " + result.getString("birthdayDate"));
@@ -301,13 +291,8 @@ public class SQLImplementation implements IPersistence {
             ResultSet result = prestmnt.executeQuery(sqlstatement);
 
             while (result.next()) {
-//                boolean isSuspended ;
-//                if (result.getInt("isSuspended") == 1) {
-//                    isSuspended = true;
-//                }else{
-//                    isSuspended = false;
-//                }
                 Driver d = new Driver(result.getString("username"), result.getString("password"), result.getString("email"), result.getString("mobileNumber"), String.valueOf(result.getInt("licenceNumber")), String.valueOf(result.getInt("licenceNumber")));
+                d.setDriverID(result.getInt("driverID"));
                 drivers.add(d);
                 System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID"));
             }

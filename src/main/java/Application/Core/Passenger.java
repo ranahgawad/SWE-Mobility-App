@@ -1,6 +1,7 @@
 package Application.Core;//package com.company;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 
@@ -11,8 +12,10 @@ public class Passenger extends User
     private int PassengerID;
     private String birthdayDate;
     private ArrayList<Offer> rideOffers;
-    private PassengerModel passengerModel;
     private static int countRides=0;
+    @JsonIgnore
+    private PassengerModel passengerModel;
+
 
 
     Passenger(String username, String password, String email, String mobileNumber,  String birthdayDate)

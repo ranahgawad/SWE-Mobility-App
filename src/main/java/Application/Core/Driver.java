@@ -1,6 +1,7 @@
 //package com.company;
 package Application.Core;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,13 +18,15 @@ public class Driver extends User {
     private ArrayList<String> favoriteAreas;
     private ArrayList<RideRequest> rideRequests;
     private float averageRating;
-    private DriverModel driverModel;
+    @JsonIgnore
     public UserNotificationManager notificationSender;
     private ArrayList<Integer> driverRatings;
     private ArrayList<Ride> finishedRides;
     private int currentCapacity;
     private int carCapacity;
     private double balance;
+    @JsonIgnore
+    private DriverModel driverModel;
 
     Driver(String username, String password, String email, String mobileNumber, String licenseNumber, String nationalID) {
         super(username, password, email, mobileNumber);

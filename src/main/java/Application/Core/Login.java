@@ -7,17 +7,19 @@ import java.util.ArrayList;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Login {
 
-    public static ArrayList<User> users = Registration.getUserList();
-
      Login(){
      }
-    static boolean perfromLogin(User user) {
+    static boolean perfromLogin(Driver driver) {
         SQLImplementation connection = SQLImplementation.getInstance();
-        return connection.userExists(user.getUsername(), user.getPassword());
+        return connection.driverLogin(driver);
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
+    static boolean perfromLogin(Passenger passenger) {
+        SQLImplementation connection = SQLImplementation.getInstance();
+        return connection.passengerLogin(passenger);
     }
+
+
+
 
 }

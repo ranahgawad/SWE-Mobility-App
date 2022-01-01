@@ -16,7 +16,7 @@ import Application.Core.*;
 
 public class MobilityApplication {
     public static void main(String[] args) {
-        IPersistence db = new SQLImplementation();
+//        IPersistence db = new SQLImplementation();
 //        db.clearTable("Ride");
 //        db.clearTable("Passenger");
 //        db.clearTable("Driver");

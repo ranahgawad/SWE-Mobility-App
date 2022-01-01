@@ -21,13 +21,11 @@ class PassengerRegistration extends Registration {
         passenger = new Passenger(username, password, email, mobileNumber,birthdayDate);
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(passenger);
-        connection.insertUser((User) passenger);
     }
 
     static boolean Regestier(Passenger passenger){
         SQLImplementation connection = SQLImplementation.getInstance();
-        if(connection.insert(passenger) && connection.insertUser((User) passenger)){
-
+        if(connection.insert(passenger)){
             connection.setUserID(passenger);
             return true;
         }

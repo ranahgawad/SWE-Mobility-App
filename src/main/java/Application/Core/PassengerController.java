@@ -26,11 +26,11 @@ public class PassengerController {
         return "request sent";
     }
     @PostMapping ("/login")
-    boolean login(@RequestBody User user)  {
+    boolean login(@RequestBody Passenger user)  {
         SQLImplementation connection = new SQLImplementation();
         pass=connection.getCurrentPassenger(user);
         pass.getPassengerModel().printRideOffers();
-        return Login.perfromLogin(user);
+        return Login.perfromLogin(pass);
     }
 
     @PostMapping ("/rateDriver/{rating}")

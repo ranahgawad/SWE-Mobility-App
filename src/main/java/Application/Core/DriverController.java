@@ -11,11 +11,11 @@ public class DriverController {
 
     Driver driver;
     @PostMapping ("/login")
-    boolean login(@RequestBody User user)  {
+    boolean login(@RequestBody Driver user)  {
         SQLImplementation connection = new SQLImplementation();
         driver=connection.getCurrentDriver(user);
         driver.printRequests();
-        return Login.perfromLogin(user);
+        return Login.perfromLogin(driver);
     }
 
     @GetMapping("/viewRideRequests")

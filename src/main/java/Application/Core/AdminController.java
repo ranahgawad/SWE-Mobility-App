@@ -10,8 +10,6 @@ public class AdminController {
     AdminController(){
 
     }
-
-
     @GetMapping("/admin/getAllPassengers")
     public List<Passenger> getAllPassengers() {
         return AdminModel.getAllPassengers();

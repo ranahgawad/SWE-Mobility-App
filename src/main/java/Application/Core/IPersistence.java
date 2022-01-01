@@ -15,6 +15,10 @@ public interface IPersistence {
 
     boolean updateDriverVerification(Driver driver, int state);
 
+    boolean passengerLogin(Passenger passenger);
+
+    boolean driverLogin(Driver driver);
+
     boolean updateDriverRating(Driver driver, float rating);
 
     void insert(Ride ride);
@@ -31,15 +35,15 @@ public interface IPersistence {
 
     boolean updatePrice(Ride ride, double price);
 
-     boolean insertUser(User user);
-
     void clearTable(String tableName);
 
     List<Passenger> getAllPasengers();
 
     List<Driver> getAllDrivers();
 
-    Driver getCurrentDriver(User user);
+    Driver getCurrentDriver(Driver user);
+
+    Passenger getCurrentPassenger(Passenger user);
 
     List<Driver> getPendingDriverVerifications();
 

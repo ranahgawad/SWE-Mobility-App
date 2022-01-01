@@ -22,14 +22,34 @@ public class SQLImplementation implements IPersistence {
     }
 
     //Login
-    public boolean userExists(String username, String password) {
-        String sqlstatement = "SELECT * FROM Users" + " WHERE username ='" + username + "' AND password ='" + password + "'";
+
+    @Override
+    public boolean passengerLogin(Passenger passenger){
+        String sqlstatement = "SELECT * FROM Passenger" + " WHERE username ='" + passenger.getUsername()+ "' AND password ='" + passenger.getPassword() + "'"  + " AND passengerID="+ passenger.getPassengerID();
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             ResultSet result = prestmnt.executeQuery();
             while (result.next()) {
-                if (result.getString("username") != null && result.getString("password") != null) {
+                if (result.getString("username") != null && result.getString("password") != null ) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean driverLogin(Driver driver){
+        String sqlstatement = "SELECT * FROM Driver" + " WHERE username ='" + driver.getUsername()  +"' AND password ='" + driver.getPassword() + "'" +"AND driverID=" + driver.getDriverID();
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            ResultSet result = prestmnt.executeQuery();
+            while (result.next()) {
+                if (result.getString("username") != null && result.getString("password") != null ) {
                     return true;
                 }
             }
@@ -86,27 +106,6 @@ public class SQLImplementation implements IPersistence {
 
 
     // Registeration
-    public boolean insertUser(User user) {
-        String sqlstatement = "INSERT INTO Users(username, password) Values(?,?)";
-        try {
-            conn = SQLDatabaseConnection.getConnectiontoDataBase();
-            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-            prestmnt.setString(1, user.getUsername());
-            prestmnt.setString(2, user.getPassword());
-            int rowsAffected = prestmnt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                return true;
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-
-
     @Override
     public boolean insert(User user) {
         if (user instanceof Passenger) {
@@ -120,7 +119,6 @@ public class SQLImplementation implements IPersistence {
                 prestmnt.setString(4, user.getPassword());
                 prestmnt.setInt(5, ((Passenger) user).getCountRides());
                 prestmnt.setString(6, (((Passenger) user).getBirthdayDate()));
-//                this.setUserID(user);
                 int rowsAffected = prestmnt.executeUpdate();
 
                 if (rowsAffected > 0) {
@@ -135,7 +133,6 @@ public class SQLImplementation implements IPersistence {
             try {
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-//                prestmnt.setInt(1, ((Driver) user).getDriverID());
                 prestmnt.setString(1, user.getUsername());
                 prestmnt.setString(2, user.getPassword());
                 prestmnt.setString(3, user.getEmail());
@@ -146,7 +143,6 @@ public class SQLImplementation implements IPersistence {
                 prestmnt.setFloat(8, ((Driver) user).getAverageRating());
                 prestmnt.setString(9, ((Driver) user).getNationalID());
                 prestmnt.setDouble(10, ((Driver) user).getBalance());
-//                this.setUserID(user);
                 int rowsAffected = prestmnt.executeUpdate();
                 if (rowsAffected > 0) {
                     return true;
@@ -303,7 +299,7 @@ public class SQLImplementation implements IPersistence {
         return drivers;
     }
 
-    public Driver getCurrentDriver(User user) {
+    public Driver getCurrentDriver(Driver user) {
         String sqlstatement = "SELECT * FROM Driver" + " WHERE username ='" + user.getUsername() + "' AND password ='" + user.getPassword() + "'";
         Driver driver = null;
         try {
@@ -339,8 +335,8 @@ public class SQLImplementation implements IPersistence {
         }
         return driver;
     }
-    public Passenger getCurrentPassenger(User user) {
-        String sqlstatement = "SELECT * FROM Passenger" + " WHERE username ='" + user.getUsername() + "' AND password ='" + user.getPassword() + "'";
+    public Passenger getCurrentPassenger(Passenger pass) {
+        String sqlstatement = "SELECT * FROM Passenger" + " WHERE username ='" + pass.getUsername() + "' AND password ='" + pass.getPassword() + "'";
         Passenger passenger= null;
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
@@ -407,6 +403,7 @@ public class SQLImplementation implements IPersistence {
     }
 
 
+
     // ----- End of Admin ---///
 
     @Override
@@ -436,7 +433,6 @@ public class SQLImplementation implements IPersistence {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.setInt(1, ride.getRequester().getPassengerID());
-//            prestmnt.setInt(2, ride.getRideID());
             prestmnt.setString(2, ride.getSource());
             prestmnt.setString(3, ride.getDestination());
             prestmnt.setBoolean(4, ride.getisStarted());

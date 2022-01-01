@@ -7,7 +7,7 @@ import java.util.Date;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class PassengerModel {
-    private Passenger passenger;
+    private  Passenger passenger;
     PassengerModel(Passenger passenger){
         this.passenger = passenger;
     }
@@ -20,6 +20,10 @@ public class PassengerModel {
         RideRequest request = new RideRequest(source, destination, passenger, num_passengers);
         request.sendRequest();
     }
+    public static void requestRide(RideRequest request){
+        request.sendRequest();
+    }
+
     public void requestRide(String source, String destination)
     {
         RideRequest request = new RideRequest(source, destination, passenger, 1);

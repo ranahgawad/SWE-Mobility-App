@@ -307,6 +307,38 @@ public class SQLImplementation implements IPersistence {
         }
         return driver;
     }
+    public Passenger getCurrentPassenger(User user) {
+        String sqlstatement = "SELECT * FROM Passenger" + " WHERE username =" + user.getUsername() + "' AND password ='" + user.getPassword() + "'";
+        Passenger passenger= null;
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            ResultSet result = prestmnt.executeQuery();
+            while (result.next()) {
+                if (result.getString("username") != null && result.getString("password") != null) {
+                    String username = result.getString("username");
+                    String email = result.getString("email");
+                    String mobile = result.getString("mobileNumber");
+                    String password = result.getString("password");
+                    String birthdayDate = result.getString("birthdayDate");
+                    boolean isSuspended;
+                    if (result.getInt("isSuspended") == 1) {
+                        isSuspended = true;
+                    } else {
+                        isSuspended = false;
+                    }
+                    passenger = new Passenger(username, password, email, mobile, birthdayDate);
+
+                    System.out.println("passengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isPassengerSuspended: " + result.getInt("isSuspended")  );
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+        }
+        return passenger;
+    }
 
     @Override
     public List<Driver> getAllDrivers() {

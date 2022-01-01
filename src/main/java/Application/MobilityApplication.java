@@ -16,8 +16,10 @@ import Application.Core.*;
 
 public class MobilityApplication {
     public static void main(String[] args) {
-//        IPersistence db = new SQLImplementation();
+        IPersistence db = new SQLImplementation();
+        db.clearTable("Ride");
 //        db.clearTable("Passenger");
+//        db.clearTable("Driver");
         //Registration pass = new PassengerRegistration("doha123", "1234", "doha@gmail.com", "011", "12-11-2001");
 //        for(int i=0; i<Registration.getUserList().size();i++){
 //            System.out.println(Registration.getUserList().get(i).getUsername() + " : " + Registration.getUserList().get(i).getPassword() );

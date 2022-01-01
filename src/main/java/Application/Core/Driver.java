@@ -34,9 +34,9 @@ public class Driver extends User {
         favoriteAreas = new ArrayList<String>();
         notificationSender = new UserNotificationManager();
         balance = 0;
-        count++;
+//        count++;
         carCapacity = 4; // default
-        this.driverID = count;
+//        this.driverID = count;
         driverRatings = new ArrayList<>();
         finishedRides = new ArrayList<>();
         driverModel = new DriverModel(this);
@@ -140,6 +140,9 @@ public class Driver extends User {
         //System.out.println(favoriteAreas);
     }
 
+    public void setDriverID(int driverID) {
+        this.driverID = driverID;
+    }
 
     public DriverModel getDriverModel() {
         return driverModel;

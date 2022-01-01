@@ -15,14 +15,21 @@ public class PassengerController {
     public PassengerController() {
     }
 
+//
+//    @PostMapping("/requestRide")
+//    public String requestRide(@RequestParam String source,@RequestParam String destination,@RequestParam int num_passengers){
+//        pass.getPassengerModel().requestRide(source, destination, num_passengers);
+//        return "request sent";
+//    }
 
-    @PostMapping("/requestRide")
-    public String requestRide(@RequestParam String source,@RequestParam String destination,@RequestParam int num_passengers){
-        pass.getPassengerModel().requestRide(source, destination, num_passengers);
+    @PostMapping("/passenger/requestride")
+    public String requestRide(@RequestBody RideRequest rq)
+    {
+        pass.getPassengerModel().requestRide(rq);
         return "request sent";
     }
 
-    @PostMapping ("passenger/login")
+    @PostMapping ("/passenger/login")
     boolean login(@RequestBody User user)  {
          SQLImplementation connection = new SQLImplementation();
          pass=connection.getCurrentPassenger(user);

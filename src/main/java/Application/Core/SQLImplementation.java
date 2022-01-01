@@ -39,6 +39,51 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
+    public void setUserID(User user) {
+        if (user instanceof Passenger) {
+            String sqlstatement = "SELECT * FROM Passenger" + " WHERE username ='" + user.getUsername()  + "'";
+            try {
+                conn = SQLDatabaseConnection.getConnectiontoDataBase();
+                PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+                ResultSet result = prestmnt.executeQuery();
+                while(result.next()) {
+                    ((Passenger) user).setPassengerID(result.getInt("passengerID"));
+                    System.out.println("PassengerID now" + ((Passenger) user).getPassengerID());
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }else if(user instanceof Driver){
+            String sqlstatement = "SELECT * FROM Driver" + " WHERE username ='" + user.getUsername()  + "'";
+            try {
+                conn = SQLDatabaseConnection.getConnectiontoDataBase();
+                PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+                ResultSet result = prestmnt.executeQuery();
+                while(result.next()) {
+                    ((Driver) user).setDriverID(result.getInt("driverID"));
+                    System.out.println("Driver id now is " + ((Driver) user).getDriverID());
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void setRideID(Ride ride){
+        String sqlstatement = "SELECT * FROM Ride" + " WHERE source ='" + ride.getSource()  + "' AND destination ='" + ride.getDestination() + "'" + "' AND passengerID ='" + ride.getRequester().getPassengerID() + "";
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            ResultSet result = prestmnt.executeQuery();
+            while(result.next()) {
+                ride.setRideID(result.getInt("rideID"));
+                System.out.println("Ride ID now " + ride.getRideID());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     // Registeration
     public boolean insertUser(User user) {
@@ -61,6 +106,7 @@ public class SQLImplementation implements IPersistence {
     }
 
 
+
     @Override
     public boolean insert(User user) {
         if (user instanceof Passenger) {
@@ -74,6 +120,7 @@ public class SQLImplementation implements IPersistence {
                 prestmnt.setString(4, user.getPassword());
                 prestmnt.setInt(5, ((Passenger) user).getCountRides());
                 prestmnt.setString(6, (((Passenger) user).getBirthdayDate()));
+//                this.setUserID(user);
                 int rowsAffected = prestmnt.executeUpdate();
 
                 if (rowsAffected > 0) {
@@ -99,6 +146,7 @@ public class SQLImplementation implements IPersistence {
                 prestmnt.setFloat(8, ((Driver) user).getAverageRating());
                 prestmnt.setString(9, ((Driver) user).getNationalID());
                 prestmnt.setDouble(10, ((Driver) user).getBalance());
+//                this.setUserID(user);
                 int rowsAffected = prestmnt.executeUpdate();
                 if (rowsAffected > 0) {
                     return true;
@@ -308,7 +356,7 @@ public class SQLImplementation implements IPersistence {
         return driver;
     }
     public Passenger getCurrentPassenger(User user) {
-        String sqlstatement = "SELECT * FROM Passenger" + " WHERE username =" + user.getUsername() + "' AND password ='" + user.getPassword() + "'";
+        String sqlstatement = "SELECT * FROM Passenger" + " WHERE username ='" + user.getUsername() + "' AND password ='" + user.getPassword() + "'";
         Passenger passenger= null;
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
@@ -398,16 +446,16 @@ public class SQLImplementation implements IPersistence {
 
     @Override
     public void insert(Ride ride) {
-        String sqlstatement = "INSERT INTO Ride(passengerID, rideID, source, destination, started, finished) Values(?,?,?,?,?,?)";
+        String sqlstatement = "INSERT INTO Ride(passengerID, source, destination, started, finished) Values(?,?,?,?,?)";
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             prestmnt.setInt(1, ride.getRequester().getPassengerID());
-            prestmnt.setInt(2, ride.getRideID());
-            prestmnt.setString(3, ride.getSource());
-            prestmnt.setString(4, ride.getDestination());
-            prestmnt.setBoolean(5, ride.getisStarted());
-            prestmnt.setBoolean(6, ride.getisFinished());
+//            prestmnt.setInt(2, ride.getRideID());
+            prestmnt.setString(2, ride.getSource());
+            prestmnt.setString(3, ride.getDestination());
+            prestmnt.setBoolean(4, ride.getisStarted());
+            prestmnt.setBoolean(5, ride.getisFinished());
             prestmnt.executeUpdate();
 
         } catch (SQLException e) {

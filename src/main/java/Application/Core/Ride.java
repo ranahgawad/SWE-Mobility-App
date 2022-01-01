@@ -1,6 +1,10 @@
 package Application.Core;//package com.company;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.util.ArrayList;
+
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 
 public class Ride {
 
@@ -22,11 +26,12 @@ public class Ride {
         this.source = source;
         this.requester = requester;
         this.receiver = receiver;
-        count++;
-        this.rideID = count;
+//        count++;
+//        this.rideID = count;
         this.rideEvents = new ArrayList<>();
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(this);
+        connection.setRideID(this);
     }
 
     public ArrayList<Event> getRideEvents() {
@@ -67,6 +72,9 @@ public class Ride {
         return requester;
     }
 
+    public void setRideID(int rideID) {
+        this.rideID = rideID;
+    }
 
     public void setReceiver(Driver receiver) {
         this.receiver = receiver;
@@ -85,6 +93,7 @@ public class Ride {
     }
 }
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 
 class RideRequest {
     public static UserNotificationManager notificationSender = new UserNotificationManager();

@@ -26,8 +26,11 @@ class PassengerRegistration extends Registration {
 
     static boolean Regestier(Passenger passenger){
         SQLImplementation connection = SQLImplementation.getInstance();
-        if(connection.insert(passenger) && connection.insertUser((User) passenger))
+        if(connection.insert(passenger) && connection.insertUser((User) passenger)){
+
+            connection.setUserID(passenger);
             return true;
+        }
         else
             return false;
     }

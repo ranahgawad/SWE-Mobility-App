@@ -54,10 +54,13 @@ class DriverRegistration extends Registration {
     }
     static boolean Register(Driver driver){
         SQLImplementation connection = SQLImplementation.getInstance();
-        if(connection.insertUser((User) driver) && connection.insert(driver))
+        if(connection.insertUser((User) driver) && connection.insert(driver)) {
+            connection.setUserID(driver);
             return true;
-        else
+        }
+        else {
             return false;
+        }
 
     }
 

@@ -20,7 +20,7 @@ public class PassengerModel {
         RideRequest request = new RideRequest(source, destination, passenger, num_passengers);
         request.sendRequest();
     }
-    public static void requestRide(RideRequest request){
+    public void requestRide(RideRequest request){
         request.sendRequest();
     }
 

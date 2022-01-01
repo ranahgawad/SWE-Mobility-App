@@ -7,7 +7,7 @@ import java.util.ArrayList;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Passenger extends User
 {
-    private static int count=0;
+    private static int count;
     private int PassengerID;
     private String birthdayDate;
     private ArrayList<Offer> rideOffers;
@@ -21,8 +21,8 @@ public class Passenger extends User
         super(username, password, email, mobileNumber);
         this.birthdayDate=birthdayDate;
         rideOffers = new ArrayList<Offer>();
-        count++ ;
-        this.PassengerID = count;
+//        count++ ;
+//        this.PassengerID = count;
         passengerModel = new PassengerModel(this);
 //        SQLImplementation connection = SQLImplementation.getInstance();
 //        connection.insert(this);
@@ -103,6 +103,9 @@ public class Passenger extends User
 
     }
 
+    public void setPassengerID(int passengerID) {
+        PassengerID = passengerID;
+    }
 
     @Override
     public void update(Object type, Object data) {

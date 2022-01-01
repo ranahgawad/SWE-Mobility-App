@@ -51,6 +51,4 @@ public class DriverController {
         return driver + "subscribed to " + driver.getFavoriteAreas();
     }
 
-
-
 }

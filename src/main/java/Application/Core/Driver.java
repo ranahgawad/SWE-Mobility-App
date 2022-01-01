@@ -133,6 +133,7 @@ public class Driver extends User {
     public void update(Object type, Object data) {
         if (isAvailable == true || currentCapacity > 0)
             rideRequests.add((RideRequest) data);
+        System.out.println(rideRequests);
     }
 
     void printRequests() {

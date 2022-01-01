@@ -9,7 +9,9 @@ public interface IPersistence {
 
     void select(User user);
 
-    boolean updateUserSuspened(User user);
+    boolean suspendPassenger(Passenger passenger);
+
+    boolean suspendDriver(Driver driver);
 
     boolean updateDriverVerification(Driver driver, int state);
 

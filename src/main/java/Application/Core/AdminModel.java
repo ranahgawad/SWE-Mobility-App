@@ -47,12 +47,20 @@ public class AdminModel {
         return connection.updateDriverVerification(driver, 1);
 
     }
-    public static boolean suspend(User user)
+    public static boolean suspendDriver(Driver driver)
     {
-        user.setSuspended(true);
+        driver.setSuspended(true);
         IPersistence connection = SQLImplementation.getInstance();
-        return connection.updateUserSuspened(user);
+        return connection.suspendDriver(driver);
     }
+
+    public static boolean suspendPassenger(Passenger pass)
+    {
+        pass.setSuspended(true);
+        IPersistence connection = SQLImplementation.getInstance();
+        return connection.suspendPassenger(pass);
+    }
+
 
 
 }

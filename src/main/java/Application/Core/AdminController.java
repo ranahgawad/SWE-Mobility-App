@@ -41,12 +41,17 @@ public class AdminController {
     }
 
 
-    @PutMapping("/admin/suspendUser")
-    public boolean suspend(@RequestBody User user)
+    @PutMapping("/admin/suspendDriver")
+    public boolean suspendDriver(@RequestBody Driver driver)
     {
-        return  AdminModel.suspend(user);
+        return  AdminModel.suspendDriver(driver);
     }
 
+    @PutMapping("/admin/suspendPassenger")
+    public boolean suspendPassenger(@RequestBody Passenger pass)
+    {
+        return  AdminModel.suspendPassenger(pass);
+    }
     @PostMapping("/admin/addpublicholiday")
     public boolean addPublicHoliday(@RequestBody publicHolidays publicHolidays){
         return AdminModel.addPublicHoliday(publicHolidays);

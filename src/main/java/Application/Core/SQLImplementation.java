@@ -170,39 +170,36 @@ public class SQLImplementation implements IPersistence {
 
     // Admin
     @Override
-    public boolean updateUserSuspened(User user) {
-        if (user instanceof Passenger) {
-            String sqlstatement = "UPDATE Passenger SET isSuspended=1" + " WHERE username ='" + user.getUsername() +"'";
-            try {
-                conn = SQLDatabaseConnection.getConnectiontoDataBase();
-                PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-                int rowsAffected = prestmnt.executeUpdate();
+    public boolean suspendDriver(Driver driver){
+        String sqlstatement = "UPDATE Driver SET isSuspended=1" + " WHERE username ='" + driver.getUsername() +"'";
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            int rowsAffected = prestmnt.executeUpdate();
 
-                if (rowsAffected > 0) {
-                    return true;
-                }
-
-
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
+            if (rowsAffected > 0) {
+                return true;
             }
-            return false;
-        } else if (user instanceof Driver) {
-            String sqlstatement = "UPDATE Driver SET isSuspended=1" + " WHERE username ='" + user.getUsername() +"'";
-            try {
-                conn = SQLDatabaseConnection.getConnectiontoDataBase();
-                PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
-                int rowsAffected = prestmnt.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    return true;
-                }
 
 
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean suspendPassenger(Passenger pass){
+        String sqlstatement = "UPDATE Passenger SET isSuspended=1" + " WHERE username ='" + pass.getUsername() +"'";
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            int rowsAffected = prestmnt.executeUpdate();
+            if (rowsAffected > 0) {
+                return true;
             }
-            return false;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
         return false;
     }

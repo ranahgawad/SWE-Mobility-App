@@ -90,7 +90,7 @@ public class SQLImplementation implements IPersistence {
     }
 
     public void setRideID(Ride ride){
-        String sqlstatement = "SELECT * FROM Ride" + " WHERE source ='" + ride.getSource()  + "' AND destination ='" + ride.getDestination() + "'" + "' AND passengerID ='" + ride.getRequester().getPassengerID() + "";
+        String sqlstatement = "SELECT * FROM Ride WHERE source ='" + ride.getSource() + "' AND destination ='" + ride.getDestination() + "' AND passengerID =" + ride.getRequester().getPassengerID();
         try {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);

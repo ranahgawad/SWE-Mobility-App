@@ -19,35 +19,38 @@ public class Driver extends User {
     private float averageRating;
     private DriverModel driverModel;
     public UserNotificationManager notificationSender;
-    private ArrayList<Integer> driverRatings ;
+    private ArrayList<Integer> driverRatings;
     private ArrayList<Ride> finishedRides;
-    private int carCapacity;
     private int currentCapacity;
+    private int carCapacity;
     private double balance;
 
     Driver(String username, String password, String email, String mobileNumber, String licenseNumber, String nationalID) {
         super(username, password, email, mobileNumber);
-        this.averageRating =0;
+        this.averageRating = 0;
         this.licenseNumber = licenseNumber;
         this.nationalID = nationalID;
         rideRequests = new ArrayList<RideRequest>();
         favoriteAreas = new ArrayList<String>();
         notificationSender = new UserNotificationManager();
-        balance=0;
+        balance = 0;
         count++;
+        carCapacity = 4; // default
         this.driverID = count;
         driverRatings = new ArrayList<>();
         finishedRides = new ArrayList<>();
         driverModel = new DriverModel(this);
         isAvailable = true;
     }
-    public void  printDriverRatings() {
-        for( int i= 0 ; i < driverRatings.size();i++){
+
+    public void printDriverRatings() {
+        for (int i = 0; i < driverRatings.size(); i++) {
             System.out.println(driverRatings.get(i));
         }
     }
-    public void printfavoriteAreas(){
-        for( int i= 0 ; i < favoriteAreas.size();i++){
+
+    public void printfavoriteAreas() {
+        for (int i = 0; i < favoriteAreas.size(); i++) {
             System.out.println(favoriteAreas.get(i));
         }
     }
@@ -74,9 +77,9 @@ public class Driver extends User {
     }
 
     public void sendOffer(Double bill, RideRequest request) {
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
-        Offer offer = new Offer(this, bill, request,0.0);
+        Offer offer = new Offer(this, bill, request, 0.0);
         offer.setDiscount(DiscountManager.calculateDiscount(offer));
         offer.getRequest().getRide().getRideEvents().add(new rideOfferEvent(date, this.getUsername(), bill));
         notificationSender = new UserNotificationManager(request);
@@ -85,30 +88,23 @@ public class Driver extends User {
 
     }
 
-    void setAvailable(boolean availability)
-    {
+    void setAvailable(boolean availability) {
         isAvailable = availability;
     }
 
-
-    public void setCarCapacity(int capacity)
-    {
+    public void setCarCapacity(int capacity) {
         carCapacity = capacity;
-        currentCapacity = carCapacity;
     }
 
-    public int getCarCapacity(int capacity)
-    {
+    public int getCarCapacity() {
         return carCapacity;
     }
 
-    public void setCurrentCapacity(int capacity)
-    {
-        currentCapacity = capacity;
+    public void setCurrentCapacity(int capacity) {
+        currentCapacity = carCapacity;
     }
 
-    public int getCurrentCapacity()
-    {
+    public int getCurrentCapacity() {
         return currentCapacity;
     }
 
@@ -118,10 +114,10 @@ public class Driver extends User {
         setAverageRating();
     }
 
-    public void setAverageRating(){
-        int sum =0;
-        for(int i=0; i<driverRatings.size(); i++){
-            sum+= driverRatings.get(i);
+    public void setAverageRating() {
+        int sum = 0;
+        for (int i = 0; i < driverRatings.size(); i++) {
+            sum += driverRatings.get(i);
         }
         float driverRating = (float) (this.averageRating = sum / driverRatings.size());
 
@@ -129,14 +125,13 @@ public class Driver extends User {
         connection.updateDriverRating(this, driverRating);
     }
 
-    public RideRequest getRequest(int index)
-    {
+    public RideRequest getRequest(int index) {
         return rideRequests.get(index);
     }
 
     @Override
     public void update(Object type, Object data) {
-        if(isAvailable == true || currentCapacity > 0)
+        if (isAvailable == true || currentCapacity > 0)
             rideRequests.add((RideRequest) data);
     }
 
@@ -144,6 +139,7 @@ public class Driver extends User {
         System.out.println(rideRequests);
         //System.out.println(favoriteAreas);
     }
+
 
     public DriverModel getDriverModel() {
         return driverModel;
@@ -176,33 +172,15 @@ public class Driver extends User {
     public ArrayList<Ride> getFinishedRides() {
         return finishedRides;
     }
+
     public void setBalance(double balance) {
         SQLImplementation connection = SQLImplementation.getInstance();
         this.balance = balance;
         connection.updateDriverBalance(this);
     }
+
     public double getBalance() {
         return balance;
     }
-
-    @Override
-    public String toString() {
-        return "Driver{" +
-                "driverID=" + driverID +
-                ", isVerfied=" + isVerfied +
-                ", licenseNumber='" + licenseNumber + '\'' +
-                ", nationalID='" + nationalID + '\'' +
-                ", isAvailable=" + isAvailable +
-                ", favoriteAreas=" + favoriteAreas +
-                ", rideRequests=" + rideRequests +
-                ", averageRating=" + averageRating +
-                ", driverModel=" + driverModel +
-                ", notificationSender=" + notificationSender +
-                ", driverRatings=" + driverRatings +
-                ", finishedRides=" + finishedRides +
-                ", carCapacity=" + carCapacity +
-                ", currentCapacity=" + currentCapacity +
-                ", balance=" + balance +
-                '}';
-    }
 }
+

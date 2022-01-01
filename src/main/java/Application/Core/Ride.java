@@ -120,11 +120,13 @@ class Offer {
     RideRequest request;
     public UserNotificationManager notificationSender;
     public double discount;
+    int numPassengers;
     public Offer(Driver driver, Double offer, RideRequest request, double discount) {
         this.driver = driver;
         this.offer = offer;
         this.request = request;
         this.discount=discount;
+        numPassengers = driver.getCarCapacity() - driver.getCurrentCapacity();
         notificationSender = new UserNotificationManager(this.request);
     }
 
@@ -153,6 +155,9 @@ class Offer {
         return driver;
     }
 
+    public int getNumPassengers() {
+        return numPassengers;
+    }
 
     @Override
     public String toString() {

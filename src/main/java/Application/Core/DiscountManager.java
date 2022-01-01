@@ -24,6 +24,10 @@ public class DiscountManager {
         return connection.checkPublicHoliday(currDate);
     }
 
+    public static boolean containsTwoPassengers(Offer offer){
+        return offer.getNumPassengers() == 2;
+    }
+
     public static boolean addDiscount(String destination){
         SQLImplementation connection = SQLImplementation.getInstance();
         return connection.insert(destination);
@@ -49,6 +53,8 @@ public class DiscountManager {
         if(isPublicHoliday()){
             discount -= DISCOUNT_2;
         }
+        if(containsTwoPassengers(offer))
+            discount -= DISCOUNT_2;
         connection.updateDiscount(offer.getRequest().getRide(),discount);
         return discount;
     }

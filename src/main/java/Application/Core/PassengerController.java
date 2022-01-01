@@ -36,6 +36,7 @@ public class PassengerController {
     @PostMapping ("/rateDriver/{rating}")
     public String rateDriver(@PathVariable int rating) {
         pass.getPassengerModel().rateDriver(rating);
+
         return pass + "rated driver " + rating;
     }
     @PostMapping ("/acceptOffer/{offerNumber}")

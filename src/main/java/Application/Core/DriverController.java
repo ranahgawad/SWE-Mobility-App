@@ -14,6 +14,7 @@ public class DriverController {
     boolean login(@RequestBody User user)  {
         SQLImplementation connection = new SQLImplementation();
         driver=connection.getCurrentDriver(user);
+        driver.printRequests();
         return Login.perfromLogin(user);
     }
 

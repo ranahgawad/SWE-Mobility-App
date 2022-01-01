@@ -85,7 +85,7 @@ public class Passenger extends User
     }
 
     public int getPassengerID() {
-        return PassengerID;
+        return this.PassengerID;
     }
 
     public int getCountRides() {
@@ -104,7 +104,7 @@ public class Passenger extends User
     }
 
     public void setPassengerID(int passengerID) {
-        PassengerID = passengerID;
+        this.PassengerID = passengerID;
     }
 
     @Override

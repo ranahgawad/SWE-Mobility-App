@@ -20,15 +20,6 @@ public class PassengerModel {
         RideRequest request = new RideRequest(source, destination, passenger, num_passengers);
         request.sendRequest();
     }
-    public void requestRide(RideRequest request){
-        request.sendRequest();
-    }
-
-    public void requestRide(String source, String destination)
-    {
-        RideRequest request = new RideRequest(source, destination, passenger, 1);
-        request.sendRequest();
-    }
 
     public void acceptOffer(Offer offer)
     {

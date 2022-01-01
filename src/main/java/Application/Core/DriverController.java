@@ -14,7 +14,6 @@ public class DriverController {
     boolean login(@RequestBody Driver user)  {
         SQLImplementation connection = new SQLImplementation();
         driver=connection.getCurrentDriver(user);
-        driver.printRequests();
         return Login.perfromLogin(driver);
     }
 
@@ -25,7 +24,7 @@ public class DriverController {
 
     }
 
-    @GetMapping("/viewRideRequests/{capacity}")
+    @GetMapping("/setCarCapacity/{capacity}")
     public void setCarCapacity(@PathVariable int capacity)
     {
         driver.setCarCapacity(capacity);
@@ -39,10 +38,16 @@ public class DriverController {
         return "Offer sent";
     }
 
-    @PostMapping("/finishRide")
+    @PutMapping("/finishRide")
     public String finishRide() {
         driver.getDriverModel().finishRide();
         return "Ride is finished.";
+    }
+
+    @PutMapping("/arriveAtLocation")
+    public String arriveAtLocation() {
+        driver.getDriverModel().arriveAtLocation();
+        return "Driver arrived at location.";
     }
 
     @PostMapping("/subscribeToArea/{area}")

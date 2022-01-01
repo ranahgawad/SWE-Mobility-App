@@ -2,6 +2,7 @@ package Application.Core;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -27,11 +28,11 @@ public class AdminModel {
     }
 
     public static List<Event> showRideEvents(Ride ride){
-        List<Event> rideEvents = ride.getRideEvents();
-        for(int i=0; i< rideEvents.size(); i++){
-            System.out.println(rideEvents.get(i).toString());
-        }
-        return rideEvents;
+       for(int i=0; i<Admin.getRides().size(); i++){
+           if(Admin.getRides().get(i).getRideID() == ride.getRideID())
+               return Admin.getRides().get(i).getRideEvents();
+       }
+       return null;
     }
     public static boolean addDiscount(String destination){
        return DiscountManager.addDiscount(destination);
@@ -61,6 +62,8 @@ public class AdminModel {
         return connection.suspendPassenger(pass);
     }
 
-
+    public static ArrayList<Ride> getAllRides(){
+        return Admin.getRides();
+    }
 
 }

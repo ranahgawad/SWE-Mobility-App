@@ -332,6 +332,7 @@ public class SQLImplementation implements IPersistence {
                 if (result.getString("username") != null && result.getString("password") != null) {
                     String username = result.getString("username");
                     String email = result.getString("email");
+                    int id = result.getInt("driverID");
                     String mobile = result.getString("mobileNumber");
                     String password = result.getString("password");
                     String licenceNumber = String.valueOf(result.getInt("licenceNumber"));
@@ -343,6 +344,7 @@ public class SQLImplementation implements IPersistence {
                         isSuspended = false;
                     }
                     driver = new Driver(username, password, email, mobile, licenceNumber, nationalID);
+                    driver.setDriverID(id);
 
                     System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID") + ",averageRating: " + result.getDouble("averageRating"));
                 }
@@ -365,6 +367,7 @@ public class SQLImplementation implements IPersistence {
             while (result.next()) {
                 if (result.getString("username") != null && result.getString("password") != null) {
                     String username = result.getString("username");
+                    int id = result.getInt("passengerID");
                     String email = result.getString("email");
                     String mobile = result.getString("mobileNumber");
                     String password = result.getString("password");
@@ -376,7 +379,7 @@ public class SQLImplementation implements IPersistence {
                         isSuspended = false;
                     }
                     passenger = new Passenger(username, password, email, mobile, birthdayDate);
-
+                    passenger.setPassengerID(id);
                     System.out.println("passengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isPassengerSuspended: " + result.getInt("isSuspended")  );
                 }
             }

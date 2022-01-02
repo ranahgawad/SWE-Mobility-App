@@ -25,7 +25,7 @@ public class DiscountManager {
     }
 
     public static boolean containsTwoPassengers(Offer offer){
-        return offer.getNumPassengers() == 2;
+        return (offer.getRequest().getNumPassengers() + 1) == 2;
     }
 
     public static boolean addDiscount(String destination){

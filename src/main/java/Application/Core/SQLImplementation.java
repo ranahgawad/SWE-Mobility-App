@@ -656,7 +656,7 @@ public class SQLImplementation implements IPersistence {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();
             ResultSet result = prestmnt.executeQuery(sqlstatement);
-            if (result != null) {
+            if (result.next()) {
                 return true;
             }
         } catch (SQLException e) {

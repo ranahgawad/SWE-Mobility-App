@@ -109,14 +109,19 @@ public class Ride {
 class RideRequest {
     public static UserNotificationManager notificationSender = new UserNotificationManager();
     Ride ride;
+    int numPassengers;
 
-    RideRequest(String source, String destination, Passenger requester, int num_passengers) {
+    RideRequest(String source, String destination, Passenger requester, int numPassengers) {
         ride = new Ride(source, destination, requester);
         ride.insertRide(ride);
+        this.numPassengers = numPassengers;
         Admin.addRide(ride);
         notificationSender.setListeners(ride.getDestination());
     }
 
+    public int getNumPassengers() {
+        return numPassengers;
+    }
 
     public Ride getRide() {
         return ride;
@@ -125,6 +130,7 @@ class RideRequest {
     public void sendRequest() {
         notificationSender.notify(ride.getSource(), this);
     }
+
 
 
     @Override

@@ -94,7 +94,12 @@ public class Passenger extends User
 
     @Override
     public void update(Object type, Object data) {
-        rideOffers.add((Offer)data);
+        Offer offer = (Offer)data;
+        if((offer.getNumPassengers() == offer.getRequest().getNumPassengers()))
+        {
+            rideOffers.add((Offer)data);
+        }
+
     }
 
 

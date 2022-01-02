@@ -38,6 +38,7 @@ public class Driver extends User {
         notificationSender = new UserNotificationManager();
         balance = 0;
         carCapacity = 4; // default
+        currentCapacity = carCapacity;
         driverRatings = new ArrayList<>();
         finishedRides = new ArrayList<>();
         driverModel = new DriverModel(this);
@@ -87,6 +88,7 @@ public class Driver extends User {
 
     public void setCarCapacity(int capacity) {
         carCapacity = capacity;
+        currentCapacity = carCapacity;
     }
 
     public int getCarCapacity() {
@@ -94,7 +96,7 @@ public class Driver extends User {
     }
 
     public void setCurrentCapacity(int capacity) {
-        currentCapacity = carCapacity;
+        currentCapacity = capacity;
     }
 
     public int getCurrentCapacity() {
@@ -112,7 +114,8 @@ public class Driver extends User {
 
     @Override
     public void update(Object type, Object data) {
-        if (isAvailable == true || currentCapacity > 0)
+        RideRequest request = (RideRequest)data;
+        if (isAvailable == true || request.getNumPassengers() < currentCapacity)
             rideRequests.add((RideRequest) data);
         System.out.println(rideRequests);
     }

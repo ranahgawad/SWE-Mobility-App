@@ -368,14 +368,21 @@ public class SQLImplementation implements IPersistence {
                     String licenceNumber = String.valueOf(result.getString("licenceNumber"));
                     String nationalID =result.getString("nationalID");
                     boolean isSuspended;
+                    boolean isVerified;
                     if (result.getInt("isSuspended") == 1) {
                         isSuspended = true;
-                    } else {
+                    } else{
                         isSuspended = false;
+                    }
+                    if(result.getInt("isVerified") == 1){
+                        isVerified = true;
+                    }else{
+                        isVerified = false;
                     }
                     driver = new Driver(username, password, email, mobile, licenceNumber, nationalID);
                     driver.setDriverID(id);
-
+                    driver.setVerfied(isVerified);
+                    driver.setSuspended(isSuspended);
                     System.out.println("driverID:" + result.getInt("driverID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isDriverSuspended: " + result.getInt("isSuspended") + ",isDriverVerified: " + result.getInt("isVerified") + ",licenceNumber: " + result.getInt("licenceNumber") + ",nationalID: " + result.getString("nationalID") + ",averageRating: " + result.getDouble("averageRating"));
                 }
             }
@@ -656,7 +663,7 @@ public class SQLImplementation implements IPersistence {
             conn = SQLDatabaseConnection.getConnectiontoDataBase();
             Statement prestmnt = conn.createStatement();
             ResultSet result = prestmnt.executeQuery(sqlstatement);
-            if (result != null) {
+            if (result.next()) {
                 return true;
             }
         } catch (SQLException e) {

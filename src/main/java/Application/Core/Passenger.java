@@ -8,7 +8,6 @@ import java.util.ArrayList;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Passenger extends User
 {
-    private static int count;
     private int PassengerID;
     private String birthdayDate;
     @JsonIgnore
@@ -16,8 +15,6 @@ public class Passenger extends User
     private static int countRides=0;
     @JsonIgnore
     private PassengerModel passengerModel;
-
-
 
     Passenger(String username, String password, String email, String mobileNumber,  String birthdayDate)
     {
@@ -54,10 +51,6 @@ public class Passenger extends User
         return passengerModel;
     }
 
-    public static int getCount() {
-        return count;
-    }
-
     @Override
     public String getEmail() {
         return super.getEmail();
@@ -91,15 +84,8 @@ public class Passenger extends User
         return countRides;
     }
 
-    public void setCountRides() {
-        SQLImplementation connection = SQLImplementation.getInstance();
-        for(int i=0; i< rideOffers.size();i++){
-            if(rideOffers.get(i).getRequest().getRide().getisFinished() == true){
-                countRides++;
-            }
-            connection.updateCountRides((rideOffers.get(i).getRequest().getRide().getRequester()),countRides);
-        }
-
+    public static void setCountRides(int countRides) {
+        Passenger.countRides = countRides;
     }
 
     public void setPassengerID(int passengerID) {

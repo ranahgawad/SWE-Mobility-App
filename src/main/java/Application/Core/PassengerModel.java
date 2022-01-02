@@ -76,8 +76,16 @@ public class PassengerModel {
 
     }
 
+    public void setCountRides() {
+        SQLImplementation connection = SQLImplementation.getInstance();
+        for(int i=0; i< passenger.getRideOffers().size();i++){
+            if(passenger.getRideOffers().get(i).getRequest().getRide().getisFinished() == true){
+                passenger.setCountRides(passenger.getCountRides()+1);
+            }
+            connection.updateCountRides((passenger.getRideOffers().get(i).getRequest().getRide().getRequester()), passenger.getCountRides());
+        }
 
-
-
+    }
+    
 }
 

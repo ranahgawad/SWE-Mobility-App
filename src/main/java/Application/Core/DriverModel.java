@@ -40,7 +40,7 @@ public class DriverModel {
                 Date date = new Date(System.currentTimeMillis());
                 rideReq = driver.getRideRequests().get(i);
                 rideReq.getRide().setFinished(true);
-                rideReq.getRide().getRequester().setCountRides();
+                rideReq.getRide().getRequester().getPassengerModel().setCountRides();
                 rideReq.getRide().getRideEvents().add(new rideEndEvent(date, driver.getUsername(), rideReq.getRide().getRequester().getUsername()));
                 driver.getFinishedRides().add(rideReq.getRide());
                 driver.getRideRequests().remove(rideReq);

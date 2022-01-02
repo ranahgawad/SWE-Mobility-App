@@ -8,8 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 import Application.Core.*;
 
-
-
 @SpringBootApplication
 //@ComponentScan
 

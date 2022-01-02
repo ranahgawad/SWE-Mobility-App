@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Login {
-
      Login(){
      }
     static boolean perfromLogin(Driver driver) {

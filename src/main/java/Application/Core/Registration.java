@@ -45,7 +45,7 @@ class DriverRegistration extends Registration {
     DriverRegistration(String username, String password, String email, String mobileNumber, String licenseNumber, String nationalID) {
         super(username, password, email, mobileNumber);
         this.licenseNumber = licenseNumber;
-        this.nationalID = this.nationalID;
+        this.nationalID = nationalID;
         notificationSender = new UserNotificationManager("driver registration");
         driver = new Driver(username, password, email, mobileNumber, licenseNumber, nationalID);
         SQLImplementation connection = SQLImplementation.getInstance();

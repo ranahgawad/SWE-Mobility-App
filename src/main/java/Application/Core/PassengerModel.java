@@ -32,6 +32,7 @@ public class PassengerModel {
             offer.getRequest().getRide().setStarted(true);
             offer.getRequest().getRide().getRideEvents().add(new rideOfferAccepted(date, offer.getRequest().getRide().getRequester().getUsername()));
             offer.getDriver().setCurrentCapacity(offer.getDriver().getCurrentCapacity() - 1);
+            this.passenger.setCountRides();
             DiscountManager.applyDiscount(offer);
             offer.getDriver().setBalance(offer.getDriver().getBalance()+offer.getOffer());
             SQLImplementation connection = SQLImplementation.getInstance();

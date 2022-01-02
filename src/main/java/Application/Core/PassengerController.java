@@ -37,10 +37,11 @@ public class PassengerController {
 
         return pass + "rated driver " + rating;
     }
-    @PostMapping ("/acceptOffer/{offerNumber}")
-    public String acceptOffer(@PathVariable int  offerNumber)  {
-        pass.getPassengerModel().acceptOffer(pass.getPassengerModel().getOffer(offerNumber));
-        return pass+"accepted offer from"+pass.getPassengerModel().getOffer(offerNumber).getDriver();
+    @PostMapping({"/acceptOffer/{offerNumber}"})
+    public String acceptOffer(@PathVariable int offerNumber) {
+        Driver driver = this.pass.getPassengerModel().getOffer(offerNumber).getDriver();
+        this.pass.getPassengerModel().acceptOffer(this.pass.getPassengerModel().getOffer(offerNumber));
+        return this.pass + "accepted offer from" + driver;
     }
     @GetMapping ("/getOffer/{offerNumber}")
     public String getOffer(@PathVariable int offerNumber){

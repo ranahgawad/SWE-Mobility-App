@@ -59,9 +59,6 @@ public class DiscountManager {
         return discount;
     }
 
-
-
-
     public static double applyDiscount(Offer offer){
         SQLImplementation connection = SQLImplementation.getInstance();
             connection.updatePrice(offer.getRequest().getRide(),offer.offer*calculateDiscount(offer));

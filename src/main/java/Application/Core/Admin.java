@@ -6,19 +6,19 @@ import java.util.ArrayList;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Admin extends User
 {
-    private ArrayList<Registration> driverRegistration;
+//    private ArrayList<Registration> driverRegistration;
     private static ArrayList<Ride> rides= new ArrayList<>();
     private AdminModel adminModel;
 
     public Admin()
     {
-        driverRegistration = new ArrayList<Registration>();
+//        driverRegistration = new ArrayList<Registration>();
         adminModel = new AdminModel(this);
     }
 
     @Override
     public void update(Object type, Object data) {
-      driverRegistration.add((Registration)data);
+//      driverRegistration.add((Registration)data);
     }
 
     public AdminModel getAdminModel() {

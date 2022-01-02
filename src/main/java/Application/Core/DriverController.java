@@ -31,7 +31,7 @@ public class DriverController {
 
     }
 
-    @GetMapping("/sendOffer/{price}/{requestNumber}")
+    @PostMapping("/sendOffer/{price}/{requestNumber}")
     public String sendOffer(@PathVariable double price, @PathVariable int requestNumber)
     {
         driver.getDriverModel().sendOffer(price, driver.getRequest(requestNumber));
@@ -40,6 +40,7 @@ public class DriverController {
 
     @PutMapping("/finishRide")
     public String finishRide() {
+
         driver.getDriverModel().finishRide();
         return "Ride is finished.";
     }

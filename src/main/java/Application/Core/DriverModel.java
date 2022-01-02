@@ -67,6 +67,8 @@ public class DriverModel {
 
     public void subscribeToArea()
     {
+
+
         for(int i = 0; i < driver.getFavoriteAreas().size(); i++)
         {
             if(RideRequest.notificationSender.getListeners(driver.getFavoriteAreas().get(i)) != null)

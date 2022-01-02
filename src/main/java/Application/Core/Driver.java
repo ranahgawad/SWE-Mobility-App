@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Driver extends User {
@@ -60,18 +61,23 @@ public class Driver extends User {
         super.setSuspended(suspended);
     }
 
+
     public void setVerfied(boolean verfied) {
         this.isVerfied = verfied;
     }
 
     public void setFavoriteAreas(String... areas) {
+        SQLImplementation connection = SQLImplementation.getInstance();
+
         for (String area : areas) {
+            connection.insert(this,area);
             this.favoriteAreas.add(area);
         }
     }
 
-    public ArrayList<String> getFavoriteAreas() {
-        return favoriteAreas;
+    public List<String> getFavoriteAreas() {
+        SQLImplementation connection = SQLImplementation.getInstance();
+        return connection.getDriverFavoriteAreas(this);
     }
 
     void setAvailable(boolean availability) {
@@ -141,6 +147,7 @@ public class Driver extends User {
     public ArrayList<RideRequest> getRideRequests() {
         return rideRequests;
     }
+
 
     public ArrayList<Ride> getFinishedRides() {
         return finishedRides;

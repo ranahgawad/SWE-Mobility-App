@@ -240,6 +240,46 @@ public class SQLImplementation implements IPersistence {
     }
 
 
+    public boolean insert(User user, String area) {
+        String sqlstatement = "INSERT INTO FavoriteAreas(username, Area) Values(?,?)";
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            prestmnt.setString(1, user.getUsername());
+            prestmnt.setString(2, area);
+            int rowsAffected = prestmnt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public List<String> getDriverFavoriteAreas(User user) {
+        String sqlstatement = "SELECT * FROM FavoriteAreas" + " WHERE username ='" + user.getUsername() + "'";
+        List<String> favoriteAreas = new ArrayList<>();
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            Statement prestmnt = conn.createStatement();
+            ResultSet result = prestmnt.executeQuery(sqlstatement);
+
+            while (result.next()) {
+                String area = result.getString("Area");
+
+                favoriteAreas.add(area);
+                System.out.println("driver username:" + result.getString("username") + "fav area = " + result.getString("Area"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return favoriteAreas;
+    }
+
+
     @Override
     public void clearTable(String tableName) {
         String sqlstatement = "DELETE FROM " + tableName + ";";

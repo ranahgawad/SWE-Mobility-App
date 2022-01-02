@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DiscountManager {
-    static final double DISCOUNT_1 = 0.1;
-    static final double DISCOUNT_2 = 0.05;
+    static final double TEN_PERCENT_DISCOUNT = 0.1;
+    static final double FIVE_PERCENT_DISCOUNT = 0.05;
 
 
     public static boolean isBirthDay(String birthdayDate){
@@ -42,19 +42,19 @@ public class DiscountManager {
         double discount=1;
         SQLImplementation connection = SQLImplementation.getInstance();
         if(offer.getRequest().getRide().getRequester().getCountRides()==0){
-            discount-= DISCOUNT_1;
+            discount-= TEN_PERCENT_DISCOUNT;
         }
         if(isBirthDay(offer.getRequest().getRide().getRequester().getBirthdayDate())){
-            discount-=DISCOUNT_1;
+            discount-= TEN_PERCENT_DISCOUNT;
         }
         if(checkDiscountedDestinations(offer.getRequest().getRide().getDestination())){
-            discount -= DISCOUNT_1;
+            discount -= TEN_PERCENT_DISCOUNT;
         }
         if(isPublicHoliday()){
-            discount -= DISCOUNT_2;
+            discount -= FIVE_PERCENT_DISCOUNT;
         }
         if(containsTwoPassengers(offer))
-            discount -= DISCOUNT_2;
+            discount -= FIVE_PERCENT_DISCOUNT;
         connection.updateDiscount(offer.getRequest().getRide(),((1-discount)*100));
         return discount;
     }

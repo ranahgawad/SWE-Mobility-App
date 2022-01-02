@@ -115,8 +115,13 @@ public class Driver extends User {
     @Override
     public void update(Object type, Object data) {
         RideRequest request = (RideRequest)data;
-        if (isAvailable == true || request.getNumPassengers() < currentCapacity)
+        //isAvailable == true ||
+        if (currentCapacity > 0 || (request.getNumPassengers() == carCapacity - currentCapacity) ||
+                (request.getNumPassengers() == 0 && carCapacity == currentCapacity))
+        {
             rideRequests.add((RideRequest) data);
+        }
+
         System.out.println(rideRequests);
     }
 

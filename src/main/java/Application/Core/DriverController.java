@@ -24,7 +24,7 @@ public class DriverController {
 
     }
 
-    @GetMapping("/setCarCapacity/{capacity}")
+    @PostMapping("/setCarCapacity/{capacity}")
     public void setCarCapacity(@PathVariable int capacity)
     {
         driver.setCarCapacity(capacity);
@@ -56,6 +56,11 @@ public class DriverController {
         driver.setFavoriteAreas(area);
         driver.getDriverModel().subscribeToArea();
         return driver + "subscribed to " + driver.getFavoriteAreas();
+    }
+
+    @GetMapping("/getMyInfo")
+    public Driver getMyInfo() {
+        return driver;
     }
 
 }

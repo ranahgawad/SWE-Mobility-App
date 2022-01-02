@@ -96,18 +96,7 @@ public class Driver extends User {
 
     public void addRating(int rating) {
         driverRatings.add(rating);
-        calculateAverageRating();
-    }
-
-    public void calculateAverageRating() {
-        int sum = 0;
-        for (int i = 0; i < driverRatings.size(); i++) {
-            sum += driverRatings.get(i);
-        }
-        float driverRating = (float) (this.averageRating = sum / driverRatings.size());
-
-        SQLImplementation connection = SQLImplementation.getInstance();
-        connection.updateDriverRating(this, driverRating);
+        driverModel.calculateAverageRating();
     }
 
     public RideRequest getRequest(int index) {
@@ -163,9 +152,18 @@ public class Driver extends User {
         connection.updateDriverBalance(this);
     }
 
+    public ArrayList<Integer> getDriverRatings() {
+        return driverRatings;
+    }
+
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
+    }
 
     public double getBalance() {
         return balance;
     }
+
+
 }
 

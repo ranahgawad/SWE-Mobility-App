@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User <T>
 {
-//    public static int ID;
     private String username;
     private String password;
     private String email;
@@ -14,11 +13,6 @@ public class User <T>
     private boolean isLoggedIn = false;
     User(){
 
-    }
-    public User(String username, String password)
-    {
-        this.username = username;
-        this.password = password;
     }
     public User(String username, String password, String email, String mobileNumber)
     {

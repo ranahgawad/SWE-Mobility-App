@@ -16,7 +16,6 @@ public class Ride {
     private String source;
     private Passenger requester;
     private Driver receiver;
-    public static int count = 0;
     private int rideID;
     private ArrayList<Event> rideEvents;
 

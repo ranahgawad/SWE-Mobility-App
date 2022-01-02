@@ -81,6 +81,18 @@ public class DriverModel {
         }
     }
 
+    public void calculateAverageRating() {
+        int sum = 0;
+        for (int i = 0; i < driver.getDriverRatings().size(); i++) {
+            sum += driver.getDriverRatings().get(i);
+        }
+        float driverRating = (float) (sum / driver.getDriverRatings().size());
+        driver.setAverageRating(driverRating);
+
+        SQLImplementation connection = SQLImplementation.getInstance();
+        connection.updateDriverRating(driver, driverRating);
+    }
+
     void insert(Driver driver)
     {
         SQLImplementation connection = SQLImplementation.getInstance();

@@ -20,6 +20,7 @@ public class Driver extends User {
     @JsonIgnore
     public UserNotificationManager notificationSender;
     private ArrayList<Integer> driverRatings;
+    @JsonIgnore
     private ArrayList<Ride> finishedRides;
     private int currentCapacity;
     private int carCapacity;

@@ -3,11 +3,13 @@ package Application.Core;
 import java.util.List;
 
 public interface IPersistence {
+    void setUserID(User user);
+
+    void setRideID(Ride ride);
+
+    boolean setRideDriver(Ride ride, Driver driver);
+
     boolean insert(User user);
-
-    void delete(User user);
-
-    void select(User user);
 
     boolean suspendPassenger(Passenger passenger);
 
@@ -35,6 +37,10 @@ public interface IPersistence {
 
     boolean updatePrice(Ride ride, double price);
 
+    boolean insert(User user, String area);
+
+    List<String> getDriverFavoriteAreas(User user);
+
     void clearTable(String tableName);
 
     List<Passenger> getAllPasengers();
@@ -47,4 +53,11 @@ public interface IPersistence {
 
     List<Driver> getPendingDriverVerifications();
 
+    boolean insert(String destination);
+
+    boolean checkDiscountedDestinations(String destination);
+
+    boolean updateDriverBalance(Driver driver);
+
+    boolean checkPublicHoliday(String currDate);
 }

@@ -23,6 +23,7 @@ public class PassengerModel {
 
     public void acceptOffer(Offer offer)
     {
+        SQLImplementation connection = SQLImplementation.getInstance();
         if(this.passenger.getRideOffers() == null || this.passenger.getRideOffers().size() == 0){
             System.out.println("There are no ride offers to be accepted");
         }else{
@@ -30,11 +31,14 @@ public class PassengerModel {
             Date date = new Date(System.currentTimeMillis());
             offer.getRequest().getRide().setReceiver(offer.getDriver());
             offer.getRequest().getRide().setStarted(true);
+            // setting driver id
+            connection.setRideDriver(offer.getRequest().getRide(), offer.getRequest().getRide().getReceiver());
+            offer.getRequest().getRide().setDriverID(offer.getRequest().getRide().getReceiver().getDriverID());
+            // --- //
             offer.getRequest().getRide().getRideEvents().add(new rideOfferAccepted(date, offer.getRequest().getRide().getRequester().getUsername()));
             offer.getDriver().setCurrentCapacity(offer.getDriver().getCurrentCapacity() - 1);
             DiscountManager.applyDiscount(offer);
             offer.getDriver().setBalance(offer.getDriver().getBalance()+offer.getOffer());
-            SQLImplementation connection = SQLImplementation.getInstance();
             connection.updateRideisStarted(offer.getRequest().getRide(), 1);
             for (int i=0; i<this.passenger.getRideOffers().size(); i++){
                 if(this.passenger.getRideOffers().get(i) != offer){

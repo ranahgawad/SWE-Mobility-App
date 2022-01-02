@@ -31,7 +31,7 @@ public class SQLImplementation implements IPersistence {
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             ResultSet result = prestmnt.executeQuery();
             while (result.next()) {
-                if (result.getString("username") != null && result.getString("password") != null ) {
+                if (result.getString("username") != null && result.getString("password") != null && result.getInt("isSuspended") != 1) {
                     return true;
                 }
             }
@@ -49,7 +49,7 @@ public class SQLImplementation implements IPersistence {
             PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
             ResultSet result = prestmnt.executeQuery();
             while (result.next()) {
-                if (result.getString("username") != null && result.getString("password") != null ) {
+                if (result.getString("username") != null && result.getString("password") != null && result.getInt("isSuspended") != 1 && result.getInt("isVerified") == 1) {
                     return true;
                 }
             }
@@ -59,6 +59,7 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
+    @Override
     public void setUserID(User user) {
         if (user instanceof Passenger) {
             String sqlstatement = "SELECT * FROM Passenger" + " WHERE username ='" + user.getUsername()  + "'";
@@ -89,6 +90,7 @@ public class SQLImplementation implements IPersistence {
         }
     }
 
+    @Override
     public void setRideID(Ride ride){
         String sqlstatement = "SELECT * FROM Ride WHERE source ='" + ride.getSource() + "' AND destination ='" + ride.getDestination() + "' AND passengerID =" + ride.getRequester().getPassengerID();
         try {
@@ -102,6 +104,22 @@ public class SQLImplementation implements IPersistence {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public boolean setRideDriver(Ride ride, Driver driver){
+        String sqlstatement = "UPDATE Ride SET driverID="+ driver.getDriverID() +" WHERE source ='" + ride.getSource() + "' AND destination ='" + ride.getDestination() + "' AND passengerID =" + ride.getRequester().getPassengerID() + " AND rideID=" + ride.getRideID();
+        try {
+            conn = SQLDatabaseConnection.getConnectiontoDataBase();
+            PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
+            int rowsAffected = prestmnt.executeUpdate();
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
 
@@ -153,16 +171,6 @@ public class SQLImplementation implements IPersistence {
             }
         }
         return false;
-    }
-
-    @Override
-    public void delete(User user) {
-
-    }
-
-    @Override
-    public void select(User user) {
-
     }
 
     // Admin
@@ -240,6 +248,7 @@ public class SQLImplementation implements IPersistence {
     }
 
 
+    @Override
     public boolean insert(User user, String area) {
         String sqlstatement = "INSERT INTO FavoriteAreas(username, Area) Values(?,?)";
         try {
@@ -258,6 +267,7 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
+    @Override
     public List<String> getDriverFavoriteAreas(User user) {
         String sqlstatement = "SELECT * FROM FavoriteAreas" + " WHERE username ='" + user.getUsername() + "'";
         List<String> favoriteAreas = new ArrayList<>();
@@ -340,6 +350,7 @@ public class SQLImplementation implements IPersistence {
         return drivers;
     }
 
+    @Override
     public Driver getCurrentDriver(Driver user) {
         String sqlstatement = "SELECT * FROM Driver" + " WHERE username ='" + user.getUsername() + "' AND password ='" + user.getPassword() + "'";
         Driver driver = null;
@@ -376,6 +387,7 @@ public class SQLImplementation implements IPersistence {
         }
         return driver;
     }
+    @Override
     public Passenger getCurrentPassenger(Passenger pass) {
         String sqlstatement = "SELECT * FROM Passenger" + " WHERE username ='" + pass.getUsername() + "' AND password ='" + pass.getPassword() + "'";
         Passenger passenger= null;
@@ -584,6 +596,7 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
+    @Override
     public boolean insert(String destination) {
         String sqlstatement = "INSERT INTO discountDestinations(destination) Values(?)";
         try {
@@ -601,6 +614,7 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
+    @Override
     public boolean checkDiscountedDestinations(String destination) {
         String sqlstatement = "SELECT * FROM discountDestinations" + " WHERE destination ='" + destination +"'";
         try {
@@ -614,6 +628,7 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
+    @Override
     public boolean updateDriverBalance(Driver driver) {
         String sqlstatement = "UPDATE Driver SET balance=" + driver.getBalance() + " WHERE username ='" + driver.getUsername() +"'";
         try {
@@ -632,6 +647,7 @@ public class SQLImplementation implements IPersistence {
         return false;
     }
 
+    @Override
     public boolean checkPublicHoliday(String currDate) {
         String sqlstatement = "SELECT * FROM publicHolidays Where publicHolidayDate =" + currDate;
         try {

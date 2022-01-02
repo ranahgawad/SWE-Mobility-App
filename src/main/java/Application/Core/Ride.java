@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Ride {
 
     RideRequest rideRequest;
+    int driverID;
     private boolean isStarted;
     private boolean isFinished;
     private String destination;
@@ -96,6 +97,10 @@ public class Ride {
 
     public void setFinished(boolean finished) {
         isFinished = finished;
+    }
+
+    public void setDriverID(int driverID) {
+        this.driverID = driverID;
     }
 }
 

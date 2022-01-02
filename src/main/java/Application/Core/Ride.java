@@ -75,6 +75,9 @@ public class Ride {
     public Passenger getRequester() {
         return requester;
     }
+    public Driver getReceiver() {
+        return receiver;
+    }
 
     public void setRideID(int rideID) {
         this.rideID = rideID;

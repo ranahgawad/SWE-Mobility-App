@@ -399,6 +399,7 @@ public class SQLImplementation implements IPersistence {
                 if (result.getString("username") != null && result.getString("password") != null) {
                     String username = result.getString("username");
                     int id = result.getInt("passengerID");
+                    int countRides = result.getInt("countRides");
                     String email = result.getString("email");
                     String mobile = result.getString("mobileNumber");
                     String password = result.getString("password");
@@ -411,6 +412,7 @@ public class SQLImplementation implements IPersistence {
                     }
                     passenger = new Passenger(username, password, email, mobile, birthdayDate);
                     passenger.setPassengerID(id);
+                    passenger.setCountRides(countRides);
                     System.out.println("passengerID:" + result.getInt("passengerID") + ",username: " + result.getString("username") + ",email: " + result.getString("email") + ",mobile number: " + result.getString("mobileNumber") + ",isPassengerSuspended: " + result.getInt("isSuspended")  );
                 }
             }

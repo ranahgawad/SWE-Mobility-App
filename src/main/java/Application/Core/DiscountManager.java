@@ -53,8 +53,9 @@ public class DiscountManager {
         if(isPublicHoliday()){
             discount -= FIVE_PERCENT_DISCOUNT;
         }
-        if(containsTwoPassengers(offer))
+        if(containsTwoPassengers(offer)) {
             discount -= FIVE_PERCENT_DISCOUNT;
+        }
         connection.updateDiscount(offer.getRequest().getRide(),((1-discount)*100));
         return discount;
     }

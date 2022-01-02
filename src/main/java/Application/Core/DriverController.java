@@ -34,7 +34,7 @@ public class DriverController {
     @GetMapping("/sendOffer/{price}/{requestNumber}")
     public String sendOffer(@PathVariable double price, @PathVariable int requestNumber)
     {
-        driver.sendOffer(price, driver.getRequest(requestNumber));
+        driver.getDriverModel().sendOffer(price, driver.getRequest(requestNumber));
         return "Offer sent";
     }
 

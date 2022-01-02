@@ -3,13 +3,10 @@ package Application.Core;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Driver extends User {
-    private static int count = 0;
     private int driverID;
     private boolean isVerfied = false;
     private String licenseNumber;
@@ -38,9 +35,7 @@ public class Driver extends User {
         favoriteAreas = new ArrayList<String>();
         notificationSender = new UserNotificationManager();
         balance = 0;
-//        count++;
         carCapacity = 4; // default
-//        this.driverID = count;
         driverRatings = new ArrayList<>();
         finishedRides = new ArrayList<>();
         driverModel = new DriverModel(this);
@@ -63,7 +58,6 @@ public class Driver extends User {
     public void setSuspended(boolean suspended) {
         isAvailable = false;
         super.setSuspended(suspended);
-
     }
 
     public void setVerfied(boolean verfied) {
@@ -78,18 +72,6 @@ public class Driver extends User {
 
     public ArrayList<String> getFavoriteAreas() {
         return favoriteAreas;
-    }
-
-    public void sendOffer(Double bill, RideRequest request) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
-        Offer offer = new Offer(this, bill, request, 0.0);
-        offer.setDiscount(DiscountManager.calculateDiscount(offer));
-        offer.getRequest().getRide().getRideEvents().add(new rideOfferEvent(date, this.getUsername(), bill));
-        notificationSender = new UserNotificationManager(request);
-        notificationSender.subscribe(request, request.getRide().getRequester());
-        notificationSender.notify(request, offer);
-
     }
 
     void setAvailable(boolean availability) {
@@ -113,12 +95,11 @@ public class Driver extends User {
     }
 
     public void addRating(int rating) {
-
         driverRatings.add(rating);
-        setAverageRating();
+        calculateAverageRating();
     }
 
-    public void setAverageRating() {
+    public void calculateAverageRating() {
         int sum = 0;
         for (int i = 0; i < driverRatings.size(); i++) {
             sum += driverRatings.get(i);
@@ -138,11 +119,6 @@ public class Driver extends User {
         if (isAvailable == true || currentCapacity > 0)
             rideRequests.add((RideRequest) data);
         System.out.println(rideRequests);
-    }
-
-    void printRequests() {
-        System.out.println(rideRequests);
-        //System.out.println(favoriteAreas);
     }
 
     public void setDriverID(int driverID) {
@@ -186,6 +162,7 @@ public class Driver extends User {
         this.balance = balance;
         connection.updateDriverBalance(this);
     }
+
 
     public double getBalance() {
         return balance;

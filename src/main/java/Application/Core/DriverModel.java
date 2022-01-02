@@ -14,10 +14,13 @@ public class DriverModel {
         this.driver = driver;
         notificationSender = new UserNotificationManager();
     }
+
+
     public void sendOffer(Double bill, RideRequest request) {
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
-        Offer offer = new Offer(driver, bill, request, 1);
+        Offer offer = new Offer(driver, bill, request, 0.0);
+        offer.setDiscount(DiscountManager.calculateDiscount(offer));
         offer.getRequest().getRide().getRideEvents().add(new rideOfferEvent(date, driver.getUsername(), bill));
         notificationSender = new UserNotificationManager(request);
         notificationSender.subscribe(request, request.getRide().getRequester());
@@ -82,6 +85,5 @@ public class DriverModel {
     {
         SQLImplementation connection = SQLImplementation.getInstance();
         connection.insert(driver);
-
     }
 }

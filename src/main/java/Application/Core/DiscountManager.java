@@ -55,12 +55,9 @@ public class DiscountManager {
         }
         if(containsTwoPassengers(offer))
             discount -= DISCOUNT_2;
-        connection.updateDiscount(offer.getRequest().getRide(),discount);
+        connection.updateDiscount(offer.getRequest().getRide(),((1-discount)*100));
         return discount;
     }
-
-
-
 
     public static double applyDiscount(Offer offer){
         SQLImplementation connection = SQLImplementation.getInstance();

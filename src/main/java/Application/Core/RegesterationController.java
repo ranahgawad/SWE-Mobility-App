@@ -17,7 +17,8 @@ public class RegesterationController {
     }
 
     @PostMapping("/registerAsDriver")
-    public boolean PassengerReg(@RequestBody Driver driver){
+    public boolean DriverReg(@RequestBody Driver driver){
+
         return DriverRegistration.Register(driver);
     }
 }

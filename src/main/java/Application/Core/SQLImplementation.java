@@ -131,6 +131,7 @@ public class SQLImplementation implements IPersistence {
         } else if (user instanceof Driver) {
             String sqlstatement = "INSERT INTO Driver(username, password, email,mobileNumber, isSuspended, isVerified, licenceNumber, averageRating, nationalID,balance) Values(?,?,?,?,?,?,?,?,?,?)";
             try {
+                System.out.println(user);
                 conn = SQLDatabaseConnection.getConnectiontoDataBase();
                 PreparedStatement prestmnt = conn.prepareStatement(sqlstatement);
                 prestmnt.setString(1, user.getUsername());
@@ -313,8 +314,8 @@ public class SQLImplementation implements IPersistence {
                     int id = result.getInt("driverID");
                     String mobile = result.getString("mobileNumber");
                     String password = result.getString("password");
-                    String licenceNumber = String.valueOf(result.getInt("licenceNumber"));
-                    String nationalID = String.valueOf(result.getInt("licenceNumber"));
+                    String licenceNumber = String.valueOf(result.getString("licenceNumber"));
+                    String nationalID =result.getString("nationalID");
                     boolean isSuspended;
                     if (result.getInt("isSuspended") == 1) {
                         isSuspended = true;

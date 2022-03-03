@@ -3,6 +3,7 @@ package Application.Core.Ride;//package com.company;
 import Application.Core.Driver.Driver;
 import Application.Core.Event.Event;
 import Application.Core.Passenger.Passenger;
+import Application.Core.Storage.IPersistence;
 import Application.Core.Storage.SQLImplementation;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
@@ -36,7 +37,7 @@ public class Ride {
 
 
     public void insertRide(Ride ride){
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         connection.insert(ride);
         connection.setRideID(ride);
     }

@@ -1,6 +1,7 @@
 package Application.Core.API;
 
 import Application.Core.Driver.Driver;
+import Application.Core.Storage.IPersistence;
 import Application.Core.User.Login;
 import Application.Core.Ride.RideRequest;
 import Application.Core.Storage.SQLImplementation;
@@ -15,7 +16,7 @@ public class DriverController {
     Driver driver;
     @PostMapping ("/login")
     boolean login(@RequestBody Driver user)  {
-        SQLImplementation connection = new SQLImplementation();
+        IPersistence connection = new SQLImplementation();
         driver=connection.getCurrentDriver(user);
         return Login.perfromLogin(driver);
     }

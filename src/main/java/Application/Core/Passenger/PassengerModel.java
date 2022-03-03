@@ -4,6 +4,7 @@ import Application.Core.Event.rideOfferAccepted;
 import Application.Core.Ride.DiscountManager;
 import Application.Core.Ride.Offer;
 import Application.Core.Ride.RideRequest;
+import Application.Core.Storage.IPersistence;
 import Application.Core.Storage.SQLImplementation;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
@@ -28,7 +29,7 @@ public class PassengerModel {
 
     public void acceptOffer(Offer offer)
     {
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         if(this.passenger.getRideOffers() == null || this.passenger.getRideOffers().size() == 0){
             System.out.println("There are no ride offers to be accepted");
         }else{
@@ -86,7 +87,7 @@ public class PassengerModel {
     }
 
     public void setCountRides() {
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         for(int i=0; i< passenger.getRideOffers().size();i++){
             if(passenger.getRideOffers().get(i).getRequest().getRide().getisFinished() == true){
                 passenger.setCountRides(passenger.getCountRides()+1);

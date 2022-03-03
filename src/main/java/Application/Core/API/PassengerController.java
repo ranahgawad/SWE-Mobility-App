@@ -3,6 +3,7 @@ package Application.Core.API;
 import java.util.ArrayList;
 
 import Application.Core.Driver.Driver;
+import Application.Core.Storage.IPersistence;
 import Application.Core.User.Login;
 import Application.Core.Passenger.Passenger;
 import Application.Core.Ride.Offer;
@@ -25,7 +26,7 @@ public class PassengerController {
     }
     @PostMapping ("/login")
     boolean login(@RequestBody Passenger user)  {
-        SQLImplementation connection = new SQLImplementation();
+        IPersistence connection = new SQLImplementation();
         pass=connection.getCurrentPassenger(user);
         pass.getPassengerModel().printRideOffers();
         return Login.perfromLogin(pass);

@@ -1,5 +1,6 @@
 package Application.Core.Ride;
 
+import Application.Core.Storage.IPersistence;
 import Application.Core.Storage.SQLImplementation;
 
 public class publicHolidays {
@@ -27,7 +28,7 @@ public class publicHolidays {
         this.publicHolidayName = publicHolidayName;
     }
     public boolean addPublicHoliday(publicHolidays publicHolidays){
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         return connection.insert(publicHolidays);
     }
 }

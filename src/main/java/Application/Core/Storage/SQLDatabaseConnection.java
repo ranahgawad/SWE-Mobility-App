@@ -14,7 +14,7 @@ public class SQLDatabaseConnection {
     }
 
     private static Connection connect(){
-        String url = "jdbc:sqlite:databasetest.db";
+        String url = "jdbc:sqlite:MobilityApp_database.db";
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url);

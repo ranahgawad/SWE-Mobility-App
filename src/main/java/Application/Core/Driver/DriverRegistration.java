@@ -1,5 +1,6 @@
 package Application.Core.Driver;//package com.company;
 
+import Application.Core.Storage.IPersistence;
 import Application.Core.Storage.SQLImplementation;
 import Application.Core.User.UserNotificationManager;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -25,11 +26,11 @@ public class DriverRegistration  {
         this.nationalID = nationalID;
         notificationSender = new UserNotificationManager("driver registration");
         driver = new Driver(username, password, email, mobileNumber, licenseNumber, nationalID);
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         connection.insert(driver);
     }
     public static boolean Register(Driver driver){
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         if(connection.insert(driver)) {
             connection.setUserID(driver);
             return true;

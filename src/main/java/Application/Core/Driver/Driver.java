@@ -2,6 +2,7 @@
 package Application.Core.Driver;
 import Application.Core.Ride.Ride;
 import Application.Core.Ride.RideRequest;
+import Application.Core.Storage.IPersistence;
 import Application.Core.Storage.SQLImplementation;
 import Application.Core.User.User;
 import Application.Core.User.UserNotificationManager;
@@ -74,7 +75,7 @@ public class Driver extends User {
     }
 
     public void setFavoriteAreas(String... areas) {
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
 
         for (String area : areas) {
             connection.insert(this,area);
@@ -83,7 +84,7 @@ public class Driver extends User {
     }
 
     public List<String> getFavoriteAreas() {
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         return connection.getDriverFavoriteAreas(this);
     }
 
@@ -168,7 +169,7 @@ public class Driver extends User {
     }
 
     public void setBalance(double balance) {
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         this.balance = balance;
         connection.updateDriverBalance(this);
     }

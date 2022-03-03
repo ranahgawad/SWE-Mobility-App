@@ -6,6 +6,7 @@ import Application.Core.Event.rideOfferEvent;
 import Application.Core.Ride.DiscountManager;
 import Application.Core.Ride.Offer;
 import Application.Core.Ride.RideRequest;
+import Application.Core.Storage.IPersistence;
 import Application.Core.Storage.SQLImplementation;
 import Application.Core.User.UserNotificationManager;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -37,7 +38,7 @@ public class DriverModel {
     }
 
     public void finishRide() {
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         RideRequest rideReq;
         driver.setAvailable(true);
         driver.setCurrentCapacity(driver.getCurrentCapacity() + 1);
@@ -99,13 +100,13 @@ public class DriverModel {
         float driverRating = (float) (sum / driver.getDriverRatings().size());
         driver.setAverageRating(driverRating);
 
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         connection.updateDriverRating(driver, driverRating);
     }
 
     void insert(Driver driver)
     {
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         connection.insert(driver);
     }
 }

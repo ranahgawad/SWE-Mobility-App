@@ -1,5 +1,6 @@
 package Application.Core.Passenger;
 
+import Application.Core.Storage.IPersistence;
 import Application.Core.Storage.SQLImplementation;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
@@ -28,13 +29,13 @@ class PassengerRegistration  {
          this.mobileNumber = mobileNumber;
          this.birthdayDate=birthdayDate;
         passenger = new Passenger(username, password, email, mobileNumber,birthdayDate);
-        SQLImplementation connection = SQLImplementation.getInstance();
+         IPersistence connection = SQLImplementation.getInstance();
         connection.insert(passenger);
         connection.setUserID(passenger);
     }
 
     public static boolean Regestier(Passenger passenger){
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         if(connection.insert(passenger)){
             connection.setUserID(passenger);
             return true;

@@ -1,4 +1,5 @@
 package Application.Core.Ride;
+import Application.Core.Storage.IPersistence;
 import Application.Core.Storage.SQLImplementation;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class DiscountManager {
         return false;
     }
     public static boolean isPublicHoliday(){
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM");
         LocalDateTime now = LocalDateTime.now();
         String currDate=dtf.format(now);
@@ -30,18 +31,18 @@ public class DiscountManager {
     }
 
     public static boolean addDiscount(String destination){
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         return connection.insert(destination);
     }
     public static boolean checkDiscountedDestinations(String destination){
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         return connection.checkDiscountedDestinations(destination);
     }
 
 
     public static double calculateDiscount(Offer offer){
         double discount=1;
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
         if(offer.getRequest().getRide().getRequester().getCountRides()==0){
             discount-= TEN_PERCENT_DISCOUNT;
         }
@@ -62,7 +63,7 @@ public class DiscountManager {
     }
 
     public static double applyDiscount(Offer offer){
-        SQLImplementation connection = SQLImplementation.getInstance();
+        IPersistence connection = SQLImplementation.getInstance();
             connection.updatePrice(offer.getRequest().getRide(),offer.offer*calculateDiscount(offer));
             return offer.offer*calculateDiscount(offer);
     }

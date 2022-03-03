@@ -12,6 +12,6 @@ A project for Advanced Software Engineering course in Cairo University - Faculty
 
 ## How to use the app: 
 1. Download the source code using git or as a zip file from above. 
-2. Download [DB Browser for SQLite](https://sqlitebrowser.org/dl/) and install it.
-3. Download [Postman](https://www.postman.com/downloads/) and install it.
-4. Use our [Postman collection](https://github.com/ranahgawad/SWE-Mobility-App/blob/merge_trial/MobilityApp_PostmanCollection.json).
+2. Download [DB Browser for SQLite](https://sqlitebrowser.org/dl/) {:target="_blank"} and install it.
+3. Download [Postman](https://www.postman.com/downloads/) {:target="_blank"} and install it.
+4. Use our [Postman collection](https://github.com/ranahgawad/SWE-Mobility-App/blob/merge_trial/MobilityApp_PostmanCollection.json) {:target="_blank"}.

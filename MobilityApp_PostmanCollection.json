@@ -1,0 +1,368 @@
+{
+  "info": {
+    "_postman_id": "b448c050-03f4-4fa4-9c00-89c5eb064689",
+    "name": "SWE",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "getAllPassengers",
+          "id": "108822a7-badc-4603-8dfa-d0cf6ec8883d",
+          "protocolProfileBehavior": { "disableBodyPruning": true },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"ahmed\", \r\n    \"age\": 20\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/admin/getAllPassengers"
+          },
+          "response": []
+        },
+        {
+          "name": "verifyDriver",
+          "id": "edd6a686-9675-46f0-b2e1-eb71d86c5cda",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": " {\r\n        \"username\": \"dohaDriver222\",\r\n        \"password\": \"akadoha\",\r\n        \"email\": \"dohaDriver@gmail.com\",\r\n        \"mobileNumber\": \"012\",\r\n        \"isSuspended\": false,\r\n        \"isLoggedIn\": false,\r\n        \"driverID\": 11,\r\n        \"isVerfied\": false,\r\n        \"licenseNumber\": \"2019\",\r\n        \"nationalID\": \"2019\",\r\n        \"isAvailable\": true,\r\n        \"favoriteAreas\": [],\r\n        \"rideRequests\": [],\r\n        \"averageRating\": 0.0,\r\n        \"driverRatings\": [],\r\n        \"finishedRides\": [],\r\n        \"currentCapacity\": 0,\r\n        \"carCapacity\": 4,\r\n        \"balance\": 0.0,\r\n        \"isVerified\": false,\r\n        \"loggedIn\": false\r\n    }",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/admin/verifyDriver"
+          },
+          "response": []
+        },
+        {
+          "name": "getAllDrivers",
+          "id": "2455a9d4-be0d-4741-8f34-8bb5945369e0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/admin/getAllDrivers"
+          },
+          "response": []
+        },
+        {
+          "name": "register",
+          "id": "627d8180-7b4a-4869-bd7a-f84115f67da5",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/admin/register"
+          },
+          "response": []
+        },
+        {
+          "name": "showRideEvents",
+          "id": "76c1fb01-8460-4b1e-8fc5-27a05e6b2fb5",
+          "protocolProfileBehavior": { "disableBodyPruning": true },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n        \"rideRequest\": null,\r\n        \"driverID\": 11,\r\n        \"isStarted\": true,\r\n        \"isFinished\": true,\r\n        \"destination\": \"matrouh\",\r\n        \"source\": \"alex\",\r\n        \"requester\": {\r\n            \"username\": \"yassin\",\r\n            \"password\": \"dummy123\",\r\n            \"email\": \"yassin@gmail.com\",\r\n            \"mobileNumber\": \"011\",\r\n            \"isSuspended\": false,\r\n            \"isLoggedIn\": true,\r\n            \"PassengerID\": 21,\r\n            \"birthdayDate\": \"04-01-2000\",\r\n            \"loggedIn\": true,\r\n            \"countRides\": 3,\r\n            \"passengerID\": 21\r\n        },\r\n        \"receiver\": {\r\n            \"username\": \"dohaDriver222\",\r\n            \"password\": \"akadoha\",\r\n            \"email\": \"dohaDriver@gmail.com\",\r\n            \"mobileNumber\": \"012\",\r\n            \"isSuspended\": false,\r\n            \"isLoggedIn\": true,\r\n            \"driverID\": 11,\r\n            \"isVerfied\": true,\r\n            \"licenseNumber\": \"2019\",\r\n            \"nationalID\": \"11561\",\r\n            \"isAvailable\": true,\r\n            \"favoriteAreas\": [\r\n                \"alex\",\r\n                \"blabla\",\r\n                \"dahab\",\r\n                \"haram\",\r\n                \"makan\",\r\n                \"makan2\",\r\n                \"newcairo\",\r\n                \"zamalek\"\r\n            ],\r\n            \"averageRating\": 0.0,\r\n            \"driverRatings\": [],\r\n            \"currentCapacity\": 4,\r\n            \"carCapacity\": 4,\r\n            \"balance\": 200.0,\r\n            \"isVerified\": true,\r\n            \"loggedIn\": true\r\n        },\r\n        \"rideID\": 77\r\n }",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/admin/showRideEvents"
+          },
+          "response": []
+        },
+        {
+          "name": "getPendingVerifications",
+          "id": "2f1bcc79-93aa-40d3-9091-225cdc8b18db",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/admin/getPendingVerifications"
+          },
+          "response": []
+        },
+        {
+          "name": "adddiscount",
+          "id": "dbfed3b6-3848-47bc-b952-2f1c68bcaed1",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "http://localhost:8080/admin/adddiscount/haram"
+          },
+          "response": []
+        },
+        {
+          "name": "addpublicholiday",
+          "id": "00729539-30e8-4831-8a80-7a5c2e252eaf",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"publicHolidayName\" : \"New Years's Eve\", \r\n    \"publicHolidayDate\" : \"31-12\"\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/admin/addpublicholiday"
+          },
+          "response": []
+        },
+        {
+          "name": "suspendDriver",
+          "id": "f90a15bc-c62f-486a-9d13-2e84975328e8",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": " {\r\n        \"username\": \"dohaDriver222\",\r\n        \"password\": \"akadoha\",\r\n        \"email\": \"dohaDriver@gmail.com\",\r\n        \"mobileNumber\": \"012\",\r\n        \"isSuspended\": false,\r\n        \"isLoggedIn\": false,\r\n        \"driverID\": 0,\r\n        \"isVerfied\": false,\r\n        \"licenseNumber\": \"2019\",\r\n        \"nationalID\": \"2019\",\r\n        \"isAvailable\": true,\r\n        \"favoriteAreas\": [],\r\n        \"rideRequests\": [],\r\n        \"averageRating\": 0.0,\r\n        \"driverRatings\": [],\r\n        \"finishedRides\": [],\r\n        \"currentCapacity\": 0,\r\n        \"carCapacity\": 4,\r\n        \"balance\": 0.0,\r\n        \"isVerified\": false,\r\n        \"loggedIn\": false\r\n    }",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/admin/suspendDriver"
+          },
+          "response": []
+        },
+        {
+          "name": "suspendPassenger",
+          "id": "c866a91d-f919-410f-8855-45898f83dcab",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n        \"username\": \"passenger22222\",\r\n        \"password\": \"dummy123\",\r\n        \"email\": \"pass22222@gmail.com\",\r\n        \"mobileNumber\": \"012\",\r\n        \"isSuspended\": false,\r\n        \"isLoggedIn\": false,\r\n        \"PassengerID\": 17,\r\n        \"birthdayDate\": \"16-11-2001\",\r\n        \"rideOffers\": [],\r\n        \"loggedIn\": false,\r\n        \"countRides\": 0,\r\n        \"passengerID\": 17\r\n    }",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/admin/suspendPassenger"
+          },
+          "response": []
+        },
+        {
+          "name": "getAllRides",
+          "id": "a6fe1e5c-bb76-495d-aece-06a591b2e7dd",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/admin/getAllRides"
+          },
+          "response": []
+        }
+      ],
+      "id": "91766f1d-f65d-4a12-8fa2-548894025f2d"
+    },
+    {
+      "name": "Passenger",
+      "item": [
+        {
+          "name": "registerAsPassenger",
+          "id": "7261dbe1-b541-4121-b1c7-77eece8053d0",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\" : \"yassin\", \r\n    \"password\" : \"dummy123\", \r\n    \"email\" : \"yassin@gmail.com\",\r\n    \"mobileNumber\" : \"011\", \r\n    \"birthdayDate\" : \"16-10-2000\"\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/registerAsPassenger"
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "id": "e40cb48c-eb99-4ca6-a851-20ed70018917",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\" : \"yassin\", \r\n    \"password\" : \"dummy123\"\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/passenger/login"
+          },
+          "response": []
+        },
+        {
+          "name": "requestRide",
+          "id": "c1f934d9-f1cf-4f16-83bd-f6f27121c1bc",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "source", "value": "alex", "type": "default" },
+                { "key": "destination", "value": "matrouh", "type": "default" },
+                { "key": "num_passengers", "value": "0", "type": "default" }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/passenger/requestRide",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["passenger", "requestRide"],
+              "query": [
+                { "key": "\"source\"", "value": "\"haram\"", "disabled": true },
+                {
+                  "key": "\"destination\"",
+                  "value": "\"dokki\"",
+                  "disabled": true
+                },
+                { "key": "\"num_passengers\"", "value": "2", "disabled": true }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllOffers",
+          "id": "539bef30-4e84-4d05-ad97-87a2342a5ccb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/passenger/getAllOffers"
+          },
+          "response": []
+        },
+        {
+          "name": "acceptOffer",
+          "id": "b928c1e1-6d40-4a39-9e92-1d4a68f817b2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "http://localhost:8080/passenger/acceptOffer/0"
+          },
+          "response": []
+        },
+        {
+          "name": "rateDriver",
+          "id": "84d660a3-a801-4b93-adbe-3bc6b6e9b8a8",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "http://localhost:8080/passenger/rateDriver/3"
+          },
+          "response": []
+        }
+      ],
+      "id": "a48e1506-6d11-48d0-a434-f319b0f466cc"
+    },
+    {
+      "name": "Driver",
+      "item": [
+        {
+          "name": "registerAsDriver",
+          "id": "a19e7b66-b8de-4dc8-a0b1-d20880e26806",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\" : \"lailaDriver222\", \r\n    \"password\" : \"akalaila\",\r\n    \"email\" : \"lailaDriver@gmail.com\", \r\n    \"mobileNumber\" : \"012\", \r\n    \"licenseNumber\" : \"2019\" ,\r\n    \"nationalID\" : \"11561\"\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/registerAsDriver"
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "id": "825a0b75-01d9-4ddd-8357-e5569dec2905",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"username\" : \"dohaDriver222\", \r\n    \"password\" : \"akadoha\"\r\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "http://localhost:8080/driver/login"
+          },
+          "response": []
+        },
+        {
+          "name": "subscribeToArea",
+          "id": "a8689b91-28dc-4757-a85c-1e37574bc172",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "http://localhost:8080/driver/subscribeToArea/alex"
+          },
+          "response": []
+        },
+        {
+          "name": "sendOffer",
+          "id": "686de919-d90c-418f-95d9-21a78acba171",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": { "mode": "raw", "raw": "" },
+            "url": "http://localhost:8080/driver/sendOffer/100.0/0"
+          },
+          "response": []
+        },
+        {
+          "name": "viewRideRequests",
+          "id": "5fa15825-ec75-459f-8d13-70913ce1f3c9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/driver/viewRideRequests"
+          },
+          "response": []
+        },
+        {
+          "name": "finishRide",
+          "id": "c208da7b-65d0-4bf3-bae5-2adf7cf2a4b2",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "http://localhost:8080/driver/finishRide"
+          },
+          "response": []
+        },
+        {
+          "name": "arriveAtLocation",
+          "id": "f8a80a7d-9cc8-492c-9730-c868da135620",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "http://localhost:8080/driver/arriveAtLocation"
+          },
+          "response": []
+        },
+        {
+          "name": "setCarCapacity",
+          "id": "c4787aab-6639-478b-9e6b-4644b436504d",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "http://localhost:8080/driver/setCarCapacity/2"
+          },
+          "response": []
+        },
+        {
+          "name": "getMyInfo",
+          "id": "81253466-5d36-441d-8fad-1f9028b5251d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/driver/getMyInfo"
+          },
+          "response": []
+        }
+      ],
+      "id": "93e598dc-66f4-49d4-8ca0-ec663dce89e8"
+    }
+  ]
+}

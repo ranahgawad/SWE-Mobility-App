@@ -1,18 +1,24 @@
 //package com.company;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, ParseException {
 
         Admin admin = new Admin();
 
         System.out.println("Registering as an already registered user:");
         Registration driver1reg = new DriverRegistration("hassanYoussef", "bleeding54321", "hassanYoussef@gmail.com", "012", "2627", "2010");
         Registration driver2reg = new DriverRegistration("mohebGamal2", "lannister12345", "mohebGamal2@gmail", "011", "7262", "2019");
-        Registration passenger1Reg = new PassengerRegistration("lailaAhmed", "idk12345", "lailaAhmed@gmail.com", "011");
+        Registration passenger1Reg = new PassengerRegistration("lailaAhmed", "idk12345", "lailaAhmed@gmail.com", "011","31-12-2002");
         Driver driver = new Driver("kareemDriver3", "california12345", "kareemDriver3@gmail", "011", "7262", "2019");
-
+        admin.addDiscount("dokki");
+        admin.addPublicHoliday(new publicHolidays("laborDay","31-5"));
+        admin.addPublicHoliday(new publicHolidays("3eedElDe7k","23-3"));
+        admin.addPublicHoliday(new publicHolidays("happynewyear","31-12"));
 
         System.out.println("\n" + "Logging in as a registered passenger: ");
         Login log = new Login("lailaAhmed", "idk12345");
@@ -26,7 +32,7 @@ class Main {
 
         System.out.println("\n" + "Registering as a new user: ");
         Registration driver4reg = new DriverRegistration("mohamedDriver4", "mohamed12345", "mohamedDriver5@gmail", "011", "7265", "2019");
-        Registration passenger2Reg = new PassengerRegistration("bakiza", "bakiza12345", "bakiza@gmail.com", "012");
+        Registration passenger2Reg = new PassengerRegistration("bakiza", "bakiza12345", "bakiza@gmail.com", "012","31-12-2001");
 
         System.out.println("\n" + "Verifying a driver: ");
         admin.verifyDriver(((DriverRegistration) driver2reg).getDriver());
@@ -69,6 +75,7 @@ class Main {
 
         System.out.println("\n" + "rating a driver: ");
         driver.finishRide();
+        testPassenger.setCountRides();
         testPassenger.rateDriver(3);
         System.out.println("Driver's average rating:" + driver.getAverageRating());
 
@@ -88,6 +95,7 @@ class Main {
         testPassenger.acceptOffer(testPassenger.getOffer(0));
         driver.arriveAtLocation();
         driver.finishRide();
+        testPassenger.setCountRides();
 
         System.out.println("\nShowing the events that happended on the last ride");
         admin.showEvents(driver.getFinishedRides().get(driver.getFinishedRides().size() -1 ));
@@ -107,6 +115,11 @@ class Main {
 
         System.out.println("\nRetriving all drivers pending requests");
         admin.getPendingDriverVerifications();
+
+
+
+
+
     }
 }
 
